@@ -32,12 +32,14 @@ git clone https://github.com/julia-hebel/itechart-internship-blog.git
 ```sh 
 npm run start 
 ```
+Application runs on `localhost:3000`
 
 ### Running the Server
 
 ```sh
 npm run server
 ```
+Server runs on `localhost:5000`
 
 ### Running tests
 
