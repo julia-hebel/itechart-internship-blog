@@ -5,7 +5,7 @@ import PageNotFound from './pages/PageNotFound';
 
 function App() {
   return (
-    <div className='bg-zinc-800 min-h-screen text-white' style={{ fontFamily: "'Lato', sans-serif" }}>
+    <div className='bg-[rgb(24,25,26)] min-h-screen text-white' style={{ fontFamily: "'Lato', sans-serif" }}>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Layout />}>

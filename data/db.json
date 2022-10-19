@@ -3,13 +3,13 @@
     {
       "id": 1,
       "userId": 1,
-      "title": "test",
-      "content": "test content",
+      "title": "The standard Lorem Ipsum passage, used since the 1500s",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
       "image": "https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_3x2.jpg",
-      "date": "2022-10-18T15:52:47.973Z",
+      "date": "2022-10-19T12:14:00.042Z",
       "reactions": {
         "like": 1,
-        "love": 0,
+        "love": 5,
         "wow": 0,
         "sad": 0,
         "dislike": 0
@@ -18,13 +18,14 @@
     {
       "id": 2,
       "userId": 2,
-      "title": "test2",
-      "content": "test2 content",
+      "title": "Section 1.10.32 of \"de Finibus Bonorum et Malorum\"",
+      "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/1200px-Cat_November_2010-1a.jpg",
       "date": "2022-10-18T15:53:11.634Z",
       "reactions": {
         "like": 2,
         "love": 0,
-        "wow": 0,
+        "wow": 1,
         "sad": 0,
         "dislike": 0
       }
