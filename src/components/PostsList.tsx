@@ -11,15 +11,13 @@ function PostsList() {
     dispatch(getPosts());
   }, [dispatch]);
 
-  console.log('posts', posts);
-  const date = new Date().toISOString();
-  console.log(date);
-
-  return <div>{posts.map((post: any) => {
-    return (
-        <Post key={post.id} post={post} />
-    )
-  })}</div>;
+  return (
+    <div>
+      {posts.map((post: any) => {
+        return <Post key={post.id} post={post} />;
+      })}
+    </div>
+  );
 }
 
 export default PostsList;
