@@ -6,6 +6,8 @@ import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { CgClose } from 'react-icons/cg';
 
 function AddNewPost() {
@@ -14,22 +16,21 @@ function AddNewPost() {
   const [postContent, setPostContent] = useState('');
   const [postImageURL, setPostImageURL] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [confirmationMessage, setConfirmationMessage] = useState('');
+  const [confirmationMessage, setConfirmationMessage] = useState(false);
 
   const dispatch = useDispatch<any>();
 
-  const renderMessage = () => {
+  const renderErrorMessage = () => {
     if (errorMessage) {
       return (
-        <div className='w-full text-red-500 text-center pt-3 pb-2'>
+        <MuiAlert
+          elevation={6}
+          variant='filled'
+          severity='error'
+          sx={{ borderRadius: '0.5rem', marginTop: '4px' }}
+        >
           {errorMessage}
-        </div>
-      );
-    } else if (confirmationMessage) {
-      return (
-        <div className='w-full text-green-500 text-center pt-3 pb-2'>
-          {confirmationMessage}
-        </div>
+        </MuiAlert>
       );
     } else {
       return null;
@@ -38,7 +39,7 @@ function AddNewPost() {
 
   const onSubmitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setConfirmationMessage('');
+    setConfirmationMessage(false);
 
     if (!postTitle || !postContent) {
       setErrorMessage('Title and content inputs cannot be empty!');
@@ -54,7 +55,7 @@ function AddNewPost() {
         postImageURL.includes('.gif')
       )
     ) {
-      setErrorMessage('URL is invalid');
+      setErrorMessage('URL is invalid, please try another');
       return;
     }
 
@@ -79,13 +80,13 @@ function AddNewPost() {
     };
 
     try {
-      console.log('post add');
       dispatch(addNewPost(newPost));
       setPostTitle('');
       setPostContent('');
       setPostImageURL('');
       setErrorMessage('');
-      setConfirmationMessage('Post added successfully!');
+      setConfirmationMessage(true);
+      setModalOpen(false);
     } catch (error: any) {
       console.error('Failed to save the post', error);
       setErrorMessage('Post failed to add');
@@ -193,16 +194,20 @@ function AddNewPost() {
                       <input
                         type='text'
                         name='image'
-                        className='w-full bg-[rgb(62,63,64)] rounded-lg p-2 text-sm sm:text-base'
+                        className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 text-sm sm:text-base ${
+                          errorMessage === 'URL is invalid, please try another' &&
+                          'border border-red-500'
+                        }`}
                         placeholder='Image URL'
                         value={postImageURL}
                         onChange={(e) => setPostImageURL(e.target.value)}
                       />
                     </div>
-                    {renderMessage()}
+                    {renderErrorMessage()}
                     <button
                       type='submit'
-                      className='w-full text-center bg-green-600 rounded-lg py-2 mt-4'
+                      className='w-full h-12 text-center bg-green-600 rounded-lg py-2 mt-4 disabled:bg-zinc-700'
+                      disabled={!(postTitle && postContent)}
                     >
                       Add a new post
                     </button>
@@ -211,6 +216,20 @@ function AddNewPost() {
               </Box>
             </Fade>
           </Modal>
+          <Snackbar
+            open={confirmationMessage}
+            autoHideDuration={6000}
+            onClose={() => setConfirmationMessage(false)}
+          >
+            <MuiAlert
+              elevation={6}
+              variant='filled'
+              onClose={() => setConfirmationMessage(false)}
+              severity='success'
+            >
+              Post was successfully added
+            </MuiAlert>
+          </Snackbar>
         </div>
       </div>
     </div>
