@@ -9,7 +9,7 @@ function Header() {
       </button>
       <div className='flex items-center text-2xl h-8'>
         <BiBook className='mr-1 h-full w-full' />
-        <span className='mb-1'>PostBook</span>
+        <h1 className='mb-1'>PostBook</h1>
       </div>
       <button className='mr-2'>Login</button>
     </header>
