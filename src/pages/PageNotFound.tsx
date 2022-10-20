@@ -8,7 +8,7 @@ function PageNotFound() {
       <div className='my-4'>The resource could not be found on this server</div>
       <Link
         to='/'
-        className='my-4 border border-white rounded-lg bg-[rgb(117,11,150)] p-2'
+        className='my-4 border border-zinc-500 rounded-lg bg-[rgb(117,11,150)] p-2'
       >
         Take me home
       </Link>
