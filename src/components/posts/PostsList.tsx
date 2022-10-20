@@ -21,16 +21,17 @@ function PostsList() {
         </div>
       );
     } else if (status === 'succeeded') {
-      return posts.map((post: any) => {
+      const orderedPosts = posts
+        .slice()
+        .sort((a: any, b: any) => b.date.localeCompare(a.date));
+      return orderedPosts.map((post: any) => {
         return <Post key={post.id} post={post} />;
       });
     }
   };
 
   return (
-    <div className='pb-2 max-w-[640px] m-auto'>
-      {renderPostListContent()}
-    </div>
+    <div className='pb-2 max-w-[640px] m-auto'>{renderPostListContent()}</div>
   );
 }
 
