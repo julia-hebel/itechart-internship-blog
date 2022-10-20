@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, nanoid, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const POSTS_URL = 'http://localhost:5000/posts';
@@ -7,7 +7,7 @@ const initialState = {
   posts: [],
   status: 'idle', // idle | loading | succeeded | failed
   error: null,
-};
+} as any;
 
 export const getPosts = createAsyncThunk('posts/getPosts', async () => {
   try {
@@ -17,6 +17,18 @@ export const getPosts = createAsyncThunk('posts/getPosts', async () => {
     return error.message;
   }
 });
+
+export const addNewPost = createAsyncThunk(
+  'posts/addNewPost',
+  async (newPost: any) => {
+    try {
+      const response = await axios.post(POSTS_URL, newPost);
+      return response.data;
+    } catch (error: any) {
+      return error.message;
+    }
+  }
+);
 
 const postsSlice = createSlice({
   name: 'posts',
@@ -33,6 +45,10 @@ const postsSlice = createSlice({
           return post;
         });
         state.posts = state.posts.concat(loadedPosts);
+      })
+      .addCase(addNewPost.fulfilled, (state, action: PayloadAction<any>) => {
+        // console.log('payload', action.payload)
+        state.posts.push(action.payload);
       });
   },
 });
