@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { BiBook } from 'react-icons/bi';
 import { HiMenu } from 'react-icons/hi';
 
@@ -7,11 +8,13 @@ function Header() {
       <button className='h-9'>
         <HiMenu className='h-full w-full' />
       </button>
-      <div className='flex items-center text-2xl h-8'>
+      <Link to='/' className='flex items-center text-2xl h-8'>
         <BiBook className='mr-1 h-full w-full' />
         <h1 className='mb-1'>PostBook</h1>
-      </div>
-      <button className='mr-2'>Login</button>
+      </Link>
+      <Link to='/login' className='mr-2'>
+        Login
+      </Link>
     </header>
   );
 }
