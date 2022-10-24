@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { USERS_URL } from '../../redux/userSlice';
 import { loginUser } from '../../redux/userSlice';
-import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 const bcrypt = require('bcryptjs');
 
@@ -12,7 +11,6 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [userResponse, setUserResponse] = useState({});
 
   const dispatch = useDispatch<any>();
 
