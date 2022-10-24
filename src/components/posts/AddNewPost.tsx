@@ -8,7 +8,7 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import Snackbar from '@mui/material/Snackbar';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import MuiAlert from '@mui/material/Alert';
 import { CgClose } from 'react-icons/cg';
 
 function AddNewPost() {
@@ -21,6 +21,7 @@ function AddNewPost() {
 
   const dispatch = useDispatch<any>();
   const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn);
+  const currentUser = useSelector((state: any) => state.user.currentUser);
 
   const navigate = useNavigate();
 
@@ -81,6 +82,10 @@ function AddNewPost() {
         sad: 0,
         dislike: 0,
       },
+      user: {
+        username: currentUser.username,
+        profilePictureURL: currentUser.profilePictureURL,
+      },
     };
 
     try {
@@ -101,9 +106,13 @@ function AddNewPost() {
       <div className='mx-5 mt-6 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
         <div className='w-full h-10 my-1 flex items-center justify-start'>
           <img
-            src='https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'
+            src={
+              isLoggedIn
+                ? currentUser.profilePictureURL
+                : 'https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'
+            }
             alt='profile pic'
-            className='rounded-full h-full'
+            className='rounded-full h-10 w-10'
           />
           <button
             className='ml-3 pl-4 pb-[1px] w-full h-full bg-[rgb(62,63,64)] hover:bg-[rgb(74,75,76)] text-zinc-400 text-left text-sm sm:text-base rounded-full'
@@ -155,12 +164,12 @@ function AddNewPost() {
                 <div>
                   <div className='w-full mb-3 mt-1 flex items-center justify-start'>
                     <img
-                      src='https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'
+                      src={currentUser.profilePictureURL}
                       alt='profile pic'
                       className='rounded-full h-10'
                     />
                     <span className='ml-3 flex flex-col justify-center font-bold'>
-                      Author
+                      {currentUser.username}
                     </span>
                   </div>
                   <form onSubmit={(e) => onSubmitPost(e)} className='mt-3'>

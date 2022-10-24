@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { USERS_URL } from '../../redux/userSlice';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { addNewUser } from '../../redux/userSlice';
 import MuiAlert from '@mui/material/Alert';
 const bcrypt = require('bcryptjs');
@@ -16,6 +16,8 @@ function Register() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const dispatch = useDispatch<any>();
+
+  const navigate = useNavigate();
 
   const preventSpace = (e: any) => {
     if (e.key === ' ') {
@@ -72,7 +74,8 @@ function Register() {
       return;
     }
 
-    if (await checkIfUsernameExists(username)) {
+    const isUsernameTaken = await checkIfUsernameExists(username);
+    if (isUsernameTaken) {
       setErrorMessage('Username already taken');
       return;
     }
@@ -112,7 +115,7 @@ function Register() {
 
     // add user to database
     const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = bcrypt.hashSync(password, salt);
 
     const newUser = {
       id: nanoid(),
@@ -125,6 +128,7 @@ function Register() {
     };
 
     dispatch(addNewUser(newUser));
+    navigate('/');
   };
 
   return (
@@ -185,7 +189,7 @@ function Register() {
               required
             />
           </div>
-          <div className='my-3'>
+          <div className='mt-3 mb-4'>
             <label htmlFor='image' className='block mb-1 ml-0.5'>
               Profile photo URL (optional)
             </label>

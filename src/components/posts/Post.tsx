@@ -43,12 +43,12 @@ function Post({ post }: any) {
     <article className='mx-5 my-6 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
       <div className='w-full mb-3 mt-1 flex items-center justify-start'>
         <img
-          src='https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'
+          src={post.user.profilePictureURL}
           alt='profile pic'
           className='rounded-full h-10'
         />
         <div className='ml-3 pb-[3px] flex flex-col justify-center'>
-          <span className='font-bold'>Author</span>
+          <span className='font-bold'>{post.user.username}</span>
           <span className='text-sm'>
             <TimeAgo date={post.date} />
           </span>

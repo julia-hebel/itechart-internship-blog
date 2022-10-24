@@ -13,6 +13,10 @@
         "wow": 0,
         "sad": 0,
         "dislike": 0
+      },
+      "user": {
+        "username": "admin",
+        "profilePictureURL": "https://nationaltoday.com/wp-content/uploads/2020/08/international-cat-day.jpg"
       }
     },
     {
@@ -28,8 +32,20 @@
         "wow": 1,
         "sad": 0,
         "dislike": 0
+      },
+      "user": {
+        "username": "admin",
+        "profilePictureURL": "https://nationaltoday.com/wp-content/uploads/2020/08/international-cat-day.jpg"
       }
     }
   ],
-  "users": []
+  "users": [
+    {
+      "id": "5Sxy8gHtcHxX-ZjciCoBI",
+      "username": "admin",
+      "password": "$2a$10$r0o4xP.B40KlknodceBGEOzhLev1tfP8frlllPts1zQ4O.uSNBVXK",
+      "profilePictureURL": "https://nationaltoday.com/wp-content/uploads/2020/08/international-cat-day.jpg",
+      "reactions": []
+    }
+  ]
 }
