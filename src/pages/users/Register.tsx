@@ -1,6 +1,12 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
+import { USERS_URL } from '../../redux/userSlice';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { addNewUser } from '../../redux/userSlice';
 import MuiAlert from '@mui/material/Alert';
+const bcrypt = require('bcryptjs');
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -8,6 +14,8 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [profileImageURL, setProfileImageURL] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const dispatch = useDispatch<any>();
 
   const preventSpace = (e: any) => {
     if (e.key === ' ') {
@@ -44,10 +52,28 @@ function Register() {
     return contains;
   };
 
-  const onSubmitRegister = (e: React.FormEvent<HTMLFormElement>) => {
+  const checkIfUsernameExists = async (username: string) => {
+    try {
+      const response = await axios.get(`${USERS_URL}?username=${username}`);
+      if (response.data.length === 0) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error: any) {
+      return error.message;
+    }
+  };
+
+  const onSubmitRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!username || !password || !confirmPassword) {
       setErrorMessage('Required fields cannot be empty!');
+      return;
+    }
+
+    if (await checkIfUsernameExists(username)) {
+      setErrorMessage('Username already taken');
       return;
     }
 
@@ -72,19 +98,33 @@ function Register() {
     }
 
     if (
-        profileImageURL &&
-        !(
-          profileImageURL.includes('.jpg') ||
-          profileImageURL.includes('.jpeg') ||
-          profileImageURL.includes('.png') ||
-          profileImageURL.includes('.gif')
-        )
-      ) {
-        setErrorMessage('URL is invalid, please try another');
-        return;
-      }
+      profileImageURL &&
+      !(
+        profileImageURL.includes('.jpg') ||
+        profileImageURL.includes('.jpeg') ||
+        profileImageURL.includes('.png') ||
+        profileImageURL.includes('.gif')
+      )
+    ) {
+      setErrorMessage('URL is invalid, please try another');
+      return;
+    }
 
+    // add user to database
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
+    const newUser = {
+      id: nanoid(),
+      username: username,
+      password: hashedPassword,
+      profilePictureURL: profileImageURL
+        ? profileImageURL
+        : 'https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg',
+      reactions: [],
+    };
+
+    dispatch(addNewUser(newUser));
   };
 
   return (
@@ -164,13 +204,13 @@ function Register() {
           {renderErrorMessage()}
           <button
             type='submit'
-            className='w-full h-10 sm:h-11 text-center bg-green-600 rounded-lg py-2 mt-4 disabled:bg-zinc-700 sm:text-lg'
+            className='w-full h-10 sm:h-11 text-center bg-green-600 rounded-lg py-2 mt-4 mb-2 disabled:bg-zinc-700 sm:text-lg'
           >
             Register
           </button>
         </form>
       </div>
-      <hr className='border-zinc-500 mt-10 mb-8' />
+      <hr className='border-zinc-500 mt-5 mb-4 sm:mt-10 sm:mb-8' />
       <div className='px-4 w-full text-center'>
         <div className='text-lg sm:text-xl'>Already have an account?</div>
         <Link to='/login'>

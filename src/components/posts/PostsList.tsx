@@ -13,7 +13,7 @@ function PostsList() {
     if (postsStatus === 'idle') {
       dispatch(getPosts());
     }
-  }, [dispatch]);
+  }, [dispatch, postsStatus]);
 
   const renderPostListContent = () => {
     if (postsStatus === 'loading') {

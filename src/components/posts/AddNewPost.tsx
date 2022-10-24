@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { addNewPost } from '../../redux/postsSlice';
+import { useNavigate } from 'react-router-dom';
 import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -19,6 +20,9 @@ function AddNewPost() {
   const [confirmationMessage, setConfirmationMessage] = useState(false);
 
   const dispatch = useDispatch<any>();
+  const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn);
+
+  const navigate = useNavigate();
 
   const renderErrorMessage = () => {
     if (errorMessage) {
@@ -103,7 +107,9 @@ function AddNewPost() {
           />
           <button
             className='ml-3 pl-4 pb-[1px] w-full h-full bg-[rgb(62,63,64)] hover:bg-[rgb(74,75,76)] text-zinc-400 text-left text-sm sm:text-base rounded-full'
-            onClick={() => setModalOpen(!modalOpen)}
+            onClick={() =>
+              isLoggedIn ? setModalOpen(!modalOpen) : navigate('/login')
+            }
           >
             What's on your mind?
           </button>
@@ -195,7 +201,8 @@ function AddNewPost() {
                         type='text'
                         name='image'
                         className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 text-sm sm:text-base ${
-                          errorMessage === 'URL is invalid, please try another' &&
+                          errorMessage ===
+                            'URL is invalid, please try another' &&
                           'border border-red-500'
                         }`}
                         placeholder='Image URL'

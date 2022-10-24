@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const POSTS_URL = 'http://localhost:5000/posts';

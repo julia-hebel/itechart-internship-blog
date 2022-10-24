@@ -71,13 +71,13 @@ function Login() {
           </div>
           <button
             type='submit'
-            className='w-full h-10 sm:h-11 text-center bg-green-600 rounded-lg py-2 mt-4 disabled:bg-zinc-700 sm:text-lg'
+            className='w-full h-10 sm:h-11 text-center bg-green-600 rounded-lg py-2 mt-4 mb-2 disabled:bg-zinc-700 sm:text-lg'
           >
             Log in
           </button>
         </form>
       </div>
-      <hr className='border-zinc-500 mt-10 mb-8' />
+      <hr className='border-zinc-500 mt-5 mb-4 sm:mt-10 sm:mb-8' />
       <div className='px-4 w-full text-center'>
         <div className='text-lg sm:text-xl'>Don't have an account?</div>
         <Link to='/register'>
