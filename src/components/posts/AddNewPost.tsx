@@ -65,8 +65,8 @@ function AddNewPost() {
     }
 
     // in case of double quotes add backslash
-    setPostTitle(postTitle.replace('"', '"'));
-    setPostContent(postContent.replace('"', '"'));
+    setPostTitle(postTitle.replace('"', '\\"'));
+    setPostContent(postContent.replace('"', '\\"'));
 
     const newPost = {
       id: nanoid(),
@@ -112,10 +112,10 @@ function AddNewPost() {
                 : 'https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'
             }
             alt='profile pic'
-            className='rounded-full h-10 w-10'
+            className='object-cover rounded-full h-10 w-10 mr-3 '
           />
           <button
-            className='ml-3 pl-4 pb-[1px] w-full h-full bg-[rgb(62,63,64)] hover:bg-[rgb(74,75,76)] text-zinc-400 text-left text-sm sm:text-base rounded-full'
+            className='grow pl-4 pb-[1px] h-full bg-[rgb(62,63,64)] hover:bg-[rgb(74,75,76)] text-zinc-400 text-left text-sm sm:text-base rounded-full'
             onClick={() =>
               isLoggedIn ? setModalOpen(!modalOpen) : navigate('/login')
             }
@@ -166,7 +166,7 @@ function AddNewPost() {
                     <img
                       src={currentUser.profilePictureURL}
                       alt='profile pic'
-                      className='rounded-full h-10'
+                      className='object-cover rounded-full h-10 w-10'
                     />
                     <span className='ml-3 flex flex-col justify-center font-bold'>
                       {currentUser.username}

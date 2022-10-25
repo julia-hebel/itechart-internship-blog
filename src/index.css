@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+  margin-top: 6px;
+  background-color: rgb(43, 44, 45) !important;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  border-radius: 0.5rem !important;
+  right: 10px !important;
+  left: initial !important;
+  color: white !important;
+}

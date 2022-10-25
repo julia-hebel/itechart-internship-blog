@@ -54,16 +54,11 @@ function Login() {
   const verifyLoginData = async (username: string, password: string) => {
     try {
       const response = await axios.get(`${USERS_URL}?username=${username}`);
-      console.log('res', response.data);
       if (response.data.length === 1) {
-        console.log('response success');
         if (bcrypt.compareSync(password, response.data[0].password)) {
-          console.log('passwords match, returning true');
           return response.data[0];
         }
-        console.log('passwords not good');
       }
-      console.log('res empty');
       return null;
     } catch (error: any) {
       return error.message;
@@ -81,12 +76,9 @@ function Login() {
     const loginDataResponse = await verifyLoginData(username, password);
     if (!loginDataResponse) {
       await setErrorMessage('Username or password incorrect!');
-      console.log('login fail');
       return;
     }
 
-    console.log('login success');
-    console.log('login response', loginDataResponse)
     dispatch(loginUser(loginDataResponse));
     navigate('/');
   };

@@ -30,7 +30,6 @@ export const loadUserFromCookie = createAsyncThunk(
       const cookieUserId = Cookies.get('currentUser');
       if (cookieUserId) {
         const response = await axios.get(`${USERS_URL}/${cookieUserId}`);
-        console.log('res data', response.data);
         return response.data;
       }
     } catch (error: any) {
@@ -44,10 +43,17 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     loginUser: (state, action) => {
-      console.log('payload', action.payload);
       state.currentUser = action.payload;
       state.isLoggedIn = true;
-      Cookies.set('currentUser', action.payload.id);
+      Cookies.set('currentUser', action.payload.id, {
+        expires: 365,
+        sameSite: 'strict',
+      });
+    },
+    logoutUser: (state) => {
+      state.currentUser = {};
+      state.isLoggedIn = false;
+      Cookies.remove('currentUser');
     },
   },
   extraReducers: (builder) => {
@@ -55,15 +61,22 @@ const userSlice = createSlice({
       .addCase(addNewUser.fulfilled, (state, action) => {
         state.currentUser = action.payload;
         state.isLoggedIn = true;
-        Cookies.set('currentUser', action.payload.id);
+        Cookies.set('currentUser', action.payload.id, {
+          expires: 365,
+          sameSite: 'strict',
+        });
       })
-      .addCase(loadUserFromCookie.pending, (state, action) => {
+      .addCase(loadUserFromCookie.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(loadUserFromCookie.fulfilled, (state, action) => {
         if (action.payload) {
           state.currentUser = action.payload;
           state.isLoggedIn = true;
+          Cookies.set('currentUser', action.payload.id, {
+            expires: 365,
+            sameSite: 'strict',
+          });
         }
         state.status = 'succeeded';
       })
@@ -74,7 +87,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { loginUser } = userSlice.actions;
+export const { loginUser, logoutUser } = userSlice.actions;
 
 const userReducer = userSlice.reducer;
 export default userReducer;

@@ -45,7 +45,7 @@ function Post({ post }: any) {
         <img
           src={post.user.profilePictureURL}
           alt='profile pic'
-          className='rounded-full h-10'
+          className='object-cover rounded-full h-10 w-10'
         />
         <div className='ml-3 pb-[3px] flex flex-col justify-center'>
           <span className='font-bold'>{post.user.username}</span>
@@ -61,7 +61,7 @@ function Post({ post }: any) {
           <img
             src={post.image}
             alt={post.title}
-            className='mt-4 mx-auto max-h-[400px]'
+            className='object-cover mt-4 mx-auto max-h-[400px]'
           />
         )}
       </div>

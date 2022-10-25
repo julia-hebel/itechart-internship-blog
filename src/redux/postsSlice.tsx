@@ -47,7 +47,6 @@ const postsSlice = createSlice({
         state.posts = state.posts.concat(loadedPosts);
       })
       .addCase(addNewPost.fulfilled, (state, action: PayloadAction<any>) => {
-        // console.log('payload', action.payload)
         state.posts.push(action.payload);
       });
   },
