@@ -133,7 +133,9 @@ function Register() {
       id: nanoid(),
       username: username,
       password: hashedPassword,
-      profilePictureURL: profileImageURL,
+      profilePictureURL: profileImageURL
+        ? profileImageURL
+        : 'https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg',
     };
 
     dispatch(addNewUser(newUser));
