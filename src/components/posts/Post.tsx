@@ -1,9 +1,18 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { getCurrentUser } from '../../redux/userSlice';
+import postTypes from '../../types/postTypes';
 import PostReactions from './PostReactions';
 import TimeAgo from './TimeAgo';
 
-function Post({ post }: any) {
+interface propsTypes {
+  key: string;
+  post: postTypes;
+}
+
+function Post({ post }: propsTypes) {
   const [showMore, setShowMore] = useState(false);
+  const currentUser = useSelector(getCurrentUser);
 
   const renderPostContent = () => {
     if (post.content.length > 300) {
@@ -65,7 +74,7 @@ function Post({ post }: any) {
           />
         )}
       </div>
-      <PostReactions post={post} />
+      <PostReactions post={post} currentUser={currentUser} />
     </article>
   );
 }

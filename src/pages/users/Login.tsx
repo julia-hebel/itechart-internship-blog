@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState, KeyboardEvent } from 'react';
+import { useAppDispatch } from '../../app/hooks';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { USERS_URL } from '../../redux/userSlice';
@@ -12,14 +12,25 @@ function Login() {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
-  const preventSpace = (e: any) => {
+  const preventInvalidCharsUsername = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === ' ') {
       e.preventDefault();
       setErrorMessage('Username cannot contain space');
+    }
+    if (e.key === '"') {
+      e.preventDefault();
+      setErrorMessage('Username cannot contain "');
+    }
+  };
+
+  const preventInvalidCharsPassword = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === '"') {
+      e.preventDefault();
+      setErrorMessage('Password cannot contain "');
     }
   };
 
@@ -103,7 +114,7 @@ function Login() {
               className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg ${
                 usernameError() && 'border border-red-500'
               }`}
-              onKeyDown={(e) => preventSpace(e)}
+              onKeyDown={(e) => preventInvalidCharsUsername(e)}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -120,6 +131,7 @@ function Login() {
               className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg ${
                 passwordError() && 'border border-red-500'
               }`}
+              onKeyDown={(e) => preventInvalidCharsPassword(e)}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

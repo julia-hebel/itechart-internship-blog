@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { loadUserFromCookie } from './redux/userSlice';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from './app/hooks';
+import { getUserStatus, loadUserFromCookie } from './redux/userSlice';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/users/Login';
 import Register from './pages/users/Register';
@@ -10,9 +11,9 @@ import PageNotFound from './pages/PageNotFound';
 import { CircularProgress } from '@mui/material';
 
 function App() {
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
-  const userStatus = useSelector((state: any) => state.user.status);
+  const userStatus = useSelector(getUserStatus);
 
   useEffect(() => {
     if (userStatus === 'idle') {

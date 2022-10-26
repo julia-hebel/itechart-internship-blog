@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../app/hooks';
 import { nanoid } from '@reduxjs/toolkit';
 import { addNewPost } from '../../redux/postsSlice';
+import { getCurrentUser, getIsLoggedIn } from '../../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
@@ -19,9 +21,9 @@ function AddNewPost() {
   const [errorMessage, setErrorMessage] = useState('');
   const [confirmationMessage, setConfirmationMessage] = useState(false);
 
-  const dispatch = useDispatch<any>();
-  const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn);
-  const currentUser = useSelector((state: any) => state.user.currentUser);
+  const dispatch = useAppDispatch();
+  const isLoggedIn = useSelector(getIsLoggedIn);
+  const currentUser = useSelector(getCurrentUser);
 
   const navigate = useNavigate();
 
@@ -69,20 +71,20 @@ function AddNewPost() {
     setPostContent(postContent.replace('"', '\\"'));
 
     const newPost = {
-      id: nanoid(),
-      userId: 1,
+      id: nanoid() as string,
       title: postTitle,
       content: postContent,
       image: postImageURL,
       date: new Date().toUTCString(),
       reactions: {
-        like: 0,
-        love: 0,
-        wow: 0,
-        sad: 0,
-        dislike: 0,
+        like: [] as string[],
+        love: [] as string[],
+        wow: [] as string[],
+        sad: [] as string[],
+        dislike: [] as string[],
       },
       user: {
+        userId: currentUser.id,
         username: currentUser.username,
         profilePictureURL: currentUser.profilePictureURL,
       },

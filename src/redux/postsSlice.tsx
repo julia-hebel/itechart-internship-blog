@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import postTypes from '../types/postTypes';
+import stateTypes from '../types/stateTypes';
 
 const POSTS_URL = 'http://localhost:5000/posts';
 
@@ -20,7 +22,7 @@ export const getPosts = createAsyncThunk('posts/getPosts', async () => {
 
 export const addNewPost = createAsyncThunk(
   'posts/addNewPost',
-  async (newPost: any) => {
+  async (newPost: postTypes) => {
     try {
       const response = await axios.post(POSTS_URL, newPost);
       return response.data;
@@ -36,21 +38,24 @@ const postsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getPosts.pending, (state, action) => {
+      .addCase(getPosts.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(getPosts.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        const loadedPosts = action.payload.map((post: any) => {
+        const loadedPosts = action.payload.map((post: postTypes) => {
           return post;
         });
         state.posts = state.posts.concat(loadedPosts);
       })
-      .addCase(addNewPost.fulfilled, (state, action: PayloadAction<any>) => {
+      .addCase(addNewPost.fulfilled, (state, action: PayloadAction<postTypes>) => {
         state.posts.push(action.payload);
       });
   },
 });
+
+export const getAllPosts = (state: stateTypes) => state.posts.posts;
+export const getPostsStatus = (state: stateTypes) => state.posts.status;
 
 const postsReducer = postsSlice.reducer;
 export default postsReducer;

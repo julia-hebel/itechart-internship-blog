@@ -1,4 +1,4 @@
-function TimeAgo({ date }: any) {
+function TimeAgo({ date }: { date: string }) {
   const getTimeAgo = () => {
     const seconds = Math.floor(
       (new Date().getTime() - Date.parse(date)) / 1000

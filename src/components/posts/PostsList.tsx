@@ -1,13 +1,15 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../app/hooks';
 import { CircularProgress } from '@mui/material';
-import { getPosts } from '../../redux/postsSlice';
+import { getAllPosts, getPosts, getPostsStatus } from '../../redux/postsSlice';
 import Post from './Post';
+import postTypes from '../../types/postTypes';
 
 function PostsList() {
-  const dispatch = useDispatch<any>();
-  const posts = useSelector((state: any) => state.posts.posts);
-  const postsStatus = useSelector((state: any) => state.posts.status);
+  const dispatch = useAppDispatch();
+  const posts = useSelector(getAllPosts);
+  const postsStatus = useSelector(getPostsStatus);
 
   useEffect(() => {
     if (postsStatus === 'idle') {
@@ -25,8 +27,8 @@ function PostsList() {
     } else if (postsStatus === 'succeeded') {
       const orderedPosts = posts
         .slice()
-        .sort((a: any, b: any) => b.date.localeCompare(a.date));
-      return orderedPosts.map((post: any) => {
+        .sort((a: postTypes, b: postTypes) => b.date.localeCompare(a.date));
+      return orderedPosts.map((post: postTypes) => {
         return <Post key={post.id} post={post} />;
       });
     }

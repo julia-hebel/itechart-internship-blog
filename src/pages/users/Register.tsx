@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState, KeyboardEvent } from 'react';
+import { useAppDispatch } from '../../app/hooks';
 import { nanoid } from '@reduxjs/toolkit';
 import { USERS_URL } from '../../redux/userSlice';
 import axios from 'axios';
@@ -15,14 +15,25 @@ function Register() {
   const [profileImageURL, setProfileImageURL] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
-  const preventSpace = (e: any) => {
+  const preventInvalidCharsUsername = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === ' ') {
       e.preventDefault();
       setErrorMessage('Username cannot contain space');
+    }
+    if (e.key === '"') {
+      e.preventDefault();
+      setErrorMessage('Username cannot contain "');
+    }
+  };
+
+  const preventInvalidCharsPassword = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === '"') {
+      e.preventDefault();
+      setErrorMessage('Password cannot contain "');
     }
   };
 
@@ -124,7 +135,6 @@ function Register() {
       profilePictureURL: profileImageURL
         ? profileImageURL
         : 'https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg',
-      reactions: [],
     };
 
     dispatch(addNewUser(newUser));
@@ -151,7 +161,7 @@ function Register() {
               className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg ${
                 usernameError() && 'border border-red-500'
               }`}
-              onKeyDown={(e) => preventSpace(e)}
+              onKeyDown={(e) => preventInvalidCharsUsername(e)}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -168,6 +178,7 @@ function Register() {
               className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg ${
                 passwordError() && 'border border-red-500'
               }`}
+              onKeyDown={(e) => preventInvalidCharsPassword(e)}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -184,6 +195,7 @@ function Register() {
               className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg ${
                 passwordError() && 'border border-red-500'
               }`}
+              onKeyDown={(e) => preventInvalidCharsPassword(e)}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required

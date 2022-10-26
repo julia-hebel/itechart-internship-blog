@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { logoutUser } from '../redux/userSlice';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../app/hooks';
+import { getCurrentUser, getIsLoggedIn, logoutUser } from '../redux/userSlice';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
@@ -11,10 +12,10 @@ import { BiBook } from 'react-icons/bi';
 import { HiMenu } from 'react-icons/hi';
 
 function Header() {
-  const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn);
-  const currentUser = useSelector((state: any) => state.user.currentUser);
+  const isLoggedIn = useSelector(getIsLoggedIn);
+  const currentUser = useSelector(getCurrentUser);
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const [showLogoutMessage, setShowLogoutMessage] = useState(false);
 

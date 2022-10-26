@@ -1,5 +1,7 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import stateTypes from '../types/stateTypes';
+import userTypes from '../types/userTypes';
 const Cookies = require('js-cookie');
 
 export const USERS_URL = 'http://localhost:5000/users';
@@ -13,7 +15,7 @@ const initialState = {
 
 export const addNewUser = createAsyncThunk(
   'user/addNewUser',
-  async (newUser: any) => {
+  async (newUser: userTypes) => {
     try {
       const response = await axios.post(USERS_URL, newUser);
       return response.data;
@@ -86,6 +88,10 @@ const userSlice = createSlice({
       });
   },
 });
+
+export const getCurrentUser = (state: stateTypes) => state.user.currentUser;
+export const getIsLoggedIn = (state: stateTypes) => state.user.isLoggedIn;
+export const getUserStatus = (state: stateTypes) => state.user.status;
 
 export const { loginUser, logoutUser } = userSlice.actions;
 
