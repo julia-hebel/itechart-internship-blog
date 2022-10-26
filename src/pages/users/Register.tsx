@@ -112,13 +112,14 @@ function Register() {
     }
 
     if (
-      profileImageURL &&
-      !(
-        profileImageURL.includes('.jpg') ||
-        profileImageURL.includes('.jpeg') ||
-        profileImageURL.includes('.png') ||
-        profileImageURL.includes('.gif')
-      )
+      (profileImageURL &&
+        !(
+          profileImageURL.includes('.jpg') ||
+          profileImageURL.includes('.jpeg') ||
+          profileImageURL.includes('.png') ||
+          profileImageURL.includes('.gif')
+        )) ||
+      profileImageURL.includes('"')
     ) {
       setErrorMessage('URL is invalid, please try another');
       return;
@@ -132,9 +133,7 @@ function Register() {
       id: nanoid(),
       username: username,
       password: hashedPassword,
-      profilePictureURL: profileImageURL
-        ? profileImageURL
-        : 'https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg',
+      profilePictureURL: profileImageURL,
     };
 
     dispatch(addNewUser(newUser));

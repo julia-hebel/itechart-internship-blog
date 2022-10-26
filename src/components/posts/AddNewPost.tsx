@@ -4,7 +4,6 @@ import { useAppDispatch } from '../../app/hooks';
 import { nanoid } from '@reduxjs/toolkit';
 import { addNewPost } from '../../redux/postsSlice';
 import { getCurrentUser, getIsLoggedIn } from '../../redux/userSlice';
-import { useNavigate } from 'react-router-dom';
 import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -20,12 +19,11 @@ function AddNewPost() {
   const [postImageURL, setPostImageURL] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [confirmationMessage, setConfirmationMessage] = useState(false);
+  const [notLoggedInMessage, setNotLoggedInMessage] = useState(false);
 
   const dispatch = useAppDispatch();
   const isLoggedIn = useSelector(getIsLoggedIn);
   const currentUser = useSelector(getCurrentUser);
-
-  const navigate = useNavigate();
 
   const renderErrorMessage = () => {
     if (errorMessage) {
@@ -42,6 +40,44 @@ function AddNewPost() {
     } else {
       return null;
     }
+  };
+
+  const renderNotLoggedInMessage = () => {
+    return (
+      <Snackbar
+        open={notLoggedInMessage}
+        autoHideDuration={6000}
+        onClose={() => setNotLoggedInMessage(false)}
+      >
+        <MuiAlert
+          elevation={6}
+          variant='filled'
+          onClose={() => setNotLoggedInMessage(false)}
+          severity='error'
+        >
+          You must be logged in to post
+        </MuiAlert>
+      </Snackbar>
+    );
+  };
+
+  const renderConfirmationMessage = () => {
+    return (
+      <Snackbar
+        open={confirmationMessage}
+        autoHideDuration={6000}
+        onClose={() => setConfirmationMessage(false)}
+      >
+        <MuiAlert
+          elevation={6}
+          variant='filled'
+          onClose={() => setConfirmationMessage(false)}
+          severity='success'
+        >
+          Post was successfully added
+        </MuiAlert>
+      </Snackbar>
+    );
   };
 
   const onSubmitPost = (e: React.FormEvent<HTMLFormElement>) => {
@@ -103,6 +139,7 @@ function AddNewPost() {
       setErrorMessage('Post failed to add');
     }
   };
+
   return (
     <div className='max-w-[640px] m-auto'>
       <div className='mx-5 mt-6 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
@@ -119,7 +156,9 @@ function AddNewPost() {
           <button
             className='grow pl-4 pb-[1px] h-full bg-[rgb(62,63,64)] hover:bg-[rgb(74,75,76)] text-zinc-400 text-left text-sm sm:text-base rounded-full'
             onClick={() =>
-              isLoggedIn ? setModalOpen(!modalOpen) : navigate('/login')
+              isLoggedIn
+                ? setModalOpen(!modalOpen)
+                : setNotLoggedInMessage(true)
             }
           >
             What's on your mind?
@@ -234,20 +273,8 @@ function AddNewPost() {
               </Box>
             </Fade>
           </Modal>
-          <Snackbar
-            open={confirmationMessage}
-            autoHideDuration={6000}
-            onClose={() => setConfirmationMessage(false)}
-          >
-            <MuiAlert
-              elevation={6}
-              variant='filled'
-              onClose={() => setConfirmationMessage(false)}
-              severity='success'
-            >
-              Post was successfully added
-            </MuiAlert>
-          </Snackbar>
+          {renderNotLoggedInMessage()}
+          {renderConfirmationMessage()}
         </div>
       </div>
     </div>

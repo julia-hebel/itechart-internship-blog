@@ -12,6 +12,7 @@ interface propsTypes {
 
 function Post({ post }: propsTypes) {
   const [showMore, setShowMore] = useState(false);
+
   const currentUser = useSelector(getCurrentUser);
 
   const renderPostContent = () => {

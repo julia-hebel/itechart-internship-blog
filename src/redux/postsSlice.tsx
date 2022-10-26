@@ -32,6 +32,21 @@ export const addNewPost = createAsyncThunk(
   }
 );
 
+export const updatePost = createAsyncThunk(
+  'posts/updatePost',
+  async (updatedPost: postTypes) => {
+    try {
+      const response = await axios.put(
+        `${POSTS_URL}/${updatedPost.id}`,
+        updatedPost
+      );
+      return response.data;
+    } catch (error: any) {
+      return error.message;
+    }
+  }
+);
+
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -48,8 +63,17 @@ const postsSlice = createSlice({
         });
         state.posts = state.posts.concat(loadedPosts);
       })
-      .addCase(addNewPost.fulfilled, (state, action: PayloadAction<postTypes>) => {
-        state.posts.push(action.payload);
+      .addCase(
+        addNewPost.fulfilled,
+        (state, action: PayloadAction<postTypes>) => {
+          state.posts.push(action.payload);
+        }
+      )
+      .addCase(updatePost.fulfilled, (state, action) => {
+        const posts = state.posts.filter(
+          (post: postTypes) => post.id !== action.payload.id
+        );
+        state.posts = [...posts, action.payload];
       });
   },
 });

@@ -8,7 +8,9 @@
       "date": "20 Oct 2022 11:35:11 GMT",
       "reactions": {
         "like": [],
-        "love": ["admin", "user1"],
+        "love": [
+          "admin"
+        ],
         "wow": [],
         "sad": [],
         "dislike": []
