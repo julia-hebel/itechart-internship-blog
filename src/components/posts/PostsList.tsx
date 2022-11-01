@@ -35,7 +35,9 @@ function PostsList() {
   };
 
   return (
-    <div className='pb-2 max-w-[640px] m-auto'>{renderPostListContent()}</div>
+    <section className='pb-2 max-w-[640px] m-auto'>
+      {renderPostListContent()}
+    </section>
   );
 }
 

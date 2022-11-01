@@ -8,13 +8,21 @@ import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import MuiAlert from '@mui/material/Alert';
 import { CgClose } from 'react-icons/cg';
+import userTypes from '../../types/userTypes';
+
+interface propsTypes {
+  currentUser: userTypes;
+  modalOpen: boolean;
+  setModalOpen: Function;
+  setConfirmationMessage: Function;
+}
 
 function CreatePostModal({
   currentUser,
   modalOpen,
   setModalOpen,
   setConfirmationMessage,
-}: any) {
+}: propsTypes) {
   const [postTitle, setPostTitle] = useState('');
   const [postContent, setPostContent] = useState('');
   const [postImageURL, setPostImageURL] = useState('');
