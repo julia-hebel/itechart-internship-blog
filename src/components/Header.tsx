@@ -7,7 +7,8 @@ import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Menu from '@mui/material/Menu';
-import Logout from '@mui/icons-material/Logout';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
 import { BiBook } from 'react-icons/bi';
 import { HiMenu } from 'react-icons/hi';
 
@@ -102,15 +103,16 @@ function Header() {
                   setShowLogoutMessage(true);
                 }}
               >
-                <Logout />
+                <LogoutIcon />
                 <span className='mx-4 mb-[3px]'>Logout</span>
               </button>
             </div>
           </Menu>
         </div>
       ) : (
-        <Link to='/login' className='mr-2'>
-          Login
+        <Link to='/login' className='mr-2 flex items-center hover:underline'>
+          <LoginIcon className='mr-2' />
+          <span className='mb-1'>Login</span>
         </Link>
       )}
       {renderLogoutMessage()}
