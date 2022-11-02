@@ -50,7 +50,7 @@ function PostMenu({ post }: any) {
         aria-expanded={open ? 'true' : undefined}
         aria-haspopup='true'
         onClick={handleClick}
-        sx={{ color: 'white', padding: '0' }}
+        sx={{ color: 'rgb(210,210,210)', padding: '0' }}
       >
         <MoreVertIcon sx={{ height: '30px', width: '30px' }} />
       </IconButton>
