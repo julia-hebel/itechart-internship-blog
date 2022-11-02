@@ -42,7 +42,7 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
         />
       </Button>
       <Menu
-        id='basic-menu'
+        id='user-menu'
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}

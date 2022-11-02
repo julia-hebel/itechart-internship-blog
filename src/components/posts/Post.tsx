@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getCurrentUser } from '../../redux/userSlice';
 import postTypes from '../../types/postTypes';
+import PostMenu from './PostMenu';
 import PostReactions from './PostReactions';
 import TimeAgo from './TimeAgo';
 
@@ -57,11 +58,18 @@ function Post({ post }: propsTypes) {
           alt='profile pic'
           className='object-cover rounded-full h-10 w-10'
         />
-        <div className='ml-3 pb-[3px] flex flex-col justify-center'>
-          <span className='font-bold'>{post.user.username}</span>
-          <span className='text-sm'>
-            <TimeAgo date={post.date} />
-          </span>
+        <div className='w-full flex items-center justify-between'>
+          <div className='ml-3 pb-[3px] flex flex-col justify-center'>
+            <span className='font-bold'>{post.user.username}</span>
+            <span className='text-sm'>
+              <TimeAgo date={post.date} />
+            </span>
+          </div>
+          {post.user.userId === currentUser.id ? (
+            <PostMenu post={post}
+            currentUser={currentUser}
+            />
+          ) : null}
         </div>
       </div>
       <div className='mb-2'>
