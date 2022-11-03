@@ -203,7 +203,7 @@ function EditPostModal({
                 className='w-full h-12 text-center bg-green-600 rounded-lg py-2 mt-4 disabled:bg-zinc-700'
                 disabled={!(postTitle && postContent)}
               >
-                Add a new post
+                Edit post
               </button>
             </form>
           </div>

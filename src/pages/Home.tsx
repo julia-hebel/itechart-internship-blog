@@ -3,7 +3,7 @@ import PostsList from '../components/posts/PostsList';
 
 function Home() {
   return (
-    <main>
+    <main className='max-w-[640px] m-auto'>
       <AddNewPost />
       <PostsList />
     </main>

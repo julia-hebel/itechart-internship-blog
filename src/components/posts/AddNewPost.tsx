@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useAppDispatch } from '../../app/hooks';
 import { getCurrentUser, getIsLoggedIn } from '../../redux/userSlice';
 import CreatePostModal from './CreatePostModal';
 import Snackbar from '@mui/material/Snackbar';
@@ -11,7 +10,6 @@ function AddNewPost() {
   const [confirmationMessage, setConfirmationMessage] = useState(false);
   const [notLoggedInMessage, setNotLoggedInMessage] = useState(false);
 
-  const dispatch = useAppDispatch();
   const isLoggedIn = useSelector(getIsLoggedIn);
   const currentUser = useSelector(getCurrentUser);
 
@@ -54,7 +52,7 @@ function AddNewPost() {
   };
 
   return (
-    <div className='max-w-[640px] m-auto'>
+    <div className=''>
       <div className='mx-5 mt-6 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
         <div className='w-full h-10 my-1 flex items-center justify-start'>
           <img

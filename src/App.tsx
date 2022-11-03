@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Layout from './pages/Layout';
 import PageNotFound from './pages/PageNotFound';
 import { CircularProgress } from '@mui/material';
+import UserProfile from './pages/users/UserProfile';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -19,7 +20,7 @@ function App() {
     if (userStatus === 'idle') {
       dispatch(loadUserFromCookie());
     }
-  }, [dispatch, userStatus]);
+  }, []);
 
   return (
     <div
@@ -33,6 +34,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path='login' element={<Login />} />
               <Route path='register' element={<Register />} />
+              <Route path='profile/:username' element={<UserProfile />} />
             </Route>
             <Route path='*' element={<PageNotFound />} />
           </Routes>

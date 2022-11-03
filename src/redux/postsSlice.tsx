@@ -51,7 +51,7 @@ export const deletePost = createAsyncThunk(
   'posts/detetePost',
   async (postId: string) => {
     try {
-      const response = await axios.delete(`${POSTS_URL}/${postId}`);
+      await axios.delete(`${POSTS_URL}/${postId}`);
       return postId;
     } catch (error: any) {
       return error.message;

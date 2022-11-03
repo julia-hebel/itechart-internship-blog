@@ -15,7 +15,7 @@ function PostsList() {
     if (postsStatus === 'idle') {
       dispatch(getPosts());
     }
-  }, [dispatch, postsStatus]);
+  }, []);
 
   const renderPostListContent = () => {
     if (postsStatus === 'loading') {
@@ -35,7 +35,7 @@ function PostsList() {
   };
 
   return (
-    <section className='pb-2 max-w-[640px] m-auto'>
+    <section className='pb-2'>
       {renderPostListContent()}
     </section>
   );

@@ -1,5 +1,7 @@
 import { useState, KeyboardEvent } from 'react';
 import { useAppDispatch } from '../../app/hooks';
+import { useSelector } from 'react-redux';
+import { getIsLoggedIn } from '../../redux/userSlice';
 import { nanoid } from '@reduxjs/toolkit';
 import { USERS_URL } from '../../redux/userSlice';
 import axios from 'axios';
@@ -16,6 +18,7 @@ function Register() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const dispatch = useAppDispatch();
+  const isLoggedIn = useSelector(getIsLoggedIn);
 
   const navigate = useNavigate();
 
@@ -142,8 +145,16 @@ function Register() {
     navigate('/');
   };
 
+  if (isLoggedIn) {
+    return (
+      <main className='h-screen w-full flex flex-col justify-center items-center'>
+        <span className='text-xl font-bold mb-12'>Already logged in</span>
+      </main>
+    );
+  }
+
   return (
-    <div className='pb-2 max-w-[500px] m-auto'>
+    <main className='pb-2 max-w-[500px] m-auto'>
       <div className='m-3 sm:m-6 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
         <div className='text-center my-2'>
           <h2 className='ml-0.5 text-xl sm:text-2xl font-bold'>
@@ -236,7 +247,7 @@ function Register() {
           </div>
         </Link>
       </div>
-    </div>
+    </main>
   );
 }
 

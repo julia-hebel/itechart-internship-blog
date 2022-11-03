@@ -1,5 +1,7 @@
 import { useState, KeyboardEvent } from 'react';
 import { useAppDispatch } from '../../app/hooks';
+import { useSelector } from 'react-redux';
+import { getIsLoggedIn } from '../../redux/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { USERS_URL } from '../../redux/userSlice';
@@ -13,6 +15,7 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const dispatch = useAppDispatch();
+  const isLoggedIn = useSelector(getIsLoggedIn);
 
   const navigate = useNavigate();
 
@@ -93,6 +96,14 @@ function Login() {
     dispatch(loginUser(loginDataResponse));
     navigate('/');
   };
+
+  if (isLoggedIn) {
+    return (
+      <main className='h-screen w-full flex flex-col justify-center items-center'>
+        <span className='text-xl font-bold mb-12'>Already logged in</span>
+      </main>
+    );
+  }
 
   return (
     <div className='pb-2 max-w-[500px] m-auto'>

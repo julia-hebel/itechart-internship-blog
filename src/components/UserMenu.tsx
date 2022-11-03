@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../app/hooks';
 import { logoutUser } from '../redux/userSlice';
+import { useNavigate } from 'react-router-dom';
 import userTypes from '../types/userTypes';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -13,6 +14,7 @@ interface propsTypes {
 
 function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -52,7 +54,10 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
       >
         <div className='pb-2 px-2 border-b border-zinc-500'>
           <button
-            onClick={handleClose}
+            onClick={() => {
+              navigate(`/profile/${currentUser.username}`);
+              handleClose();
+            }}
             className='px-3 py-1 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
           >
             <img
