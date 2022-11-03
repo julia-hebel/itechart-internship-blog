@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getCurrentUser } from '../../redux/userSlice';
 import postTypes from '../../types/postTypes';
 import PostMenu from './PostMenu';
@@ -51,24 +52,26 @@ function Post({ post }: propsTypes) {
   };
 
   return (
-    <article className='mx-5 my-6 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
+    <article className='my-5 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
       <div className='w-full mb-3 mt-1 flex items-center justify-start'>
-        <img
-          src={post.user.profilePictureURL}
-          alt='profile pic'
-          className='object-cover rounded-full h-10 w-10'
-        />
+        <Link to={`/profile/${post.user.username}`}>
+          <img
+            src={post.user.profilePictureURL}
+            alt='profile pic'
+            className='object-cover rounded-full h-10 w-10'
+          />
+        </Link>
         <div className='w-full flex items-center justify-between'>
           <div className='ml-3 pb-[3px] flex flex-col justify-center'>
-            <span className='font-bold'>{post.user.username}</span>
+            <Link to={`/profile/${post.user.username}`} className='font-bold hover:underline'>
+              {post.user.username}
+            </Link>
             <span className='text-sm'>
               <TimeAgo date={post.date} />
             </span>
           </div>
           {post.user.userId === currentUser.id ? (
-            <PostMenu post={post}
-            currentUser={currentUser}
-            />
+            <PostMenu post={post} currentUser={currentUser} />
           ) : null}
         </div>
       </div>
