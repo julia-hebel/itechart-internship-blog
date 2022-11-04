@@ -62,7 +62,14 @@ export const deletePost = createAsyncThunk(
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {},
+  reducers: {
+    updatePostAuthor: (state, action) => {
+      const postIndex = state.posts.findIndex(
+        (post: postTypes) => post.id === action.payload.postId
+      );
+      state.posts[postIndex].user = action.payload.author;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getPosts.pending, (state) => {
@@ -75,12 +82,9 @@ const postsSlice = createSlice({
         });
         state.posts = state.posts.concat(loadedPosts);
       })
-      .addCase(
-        addNewPost.fulfilled,
-        (state, action: PayloadAction<postTypes>) => {
-          state.posts.push(action.payload);
-        }
-      )
+      .addCase(addNewPost.fulfilled, (state, action) => {
+        state.posts.push(action.payload);
+      })
       .addCase(updatePost.fulfilled, (state, action) => {
         const posts = state.posts.filter(
           (post: postTypes) => post.id !== action.payload.id
@@ -98,6 +102,8 @@ const postsSlice = createSlice({
 
 export const getAllPosts = (state: stateTypes) => state.posts.posts;
 export const getPostsStatus = (state: stateTypes) => state.posts.status;
+
+export const { updatePostAuthor } = postsSlice.actions;
 
 const postsReducer = postsSlice.reducer;
 export default postsReducer;

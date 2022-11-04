@@ -11,7 +11,7 @@ import PostsList from '../../components/posts/PostsList';
 import postTypes from '../../types/postTypes';
 import AddNewPost from '../../components/posts/AddNewPost';
 
-interface userTypes {
+interface userInterface {
   username?: string;
   profilePictureURL?: string;
 }
@@ -24,7 +24,7 @@ function UserProfile() {
 
   const { username } = useParams();
 
-  const [user, setUser] = useState({} as userTypes);
+  const [user, setUser] = useState({} as userInterface);
   const [fetchingUser, setFetchingUser] = useState(true);
 
   useEffect(() => {

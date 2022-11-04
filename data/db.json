@@ -16,9 +16,7 @@
         "dislike": []
       },
       "user": {
-        "userId": "5Sxy8gHtcHxX-ZjciCoBI",
-        "username": "admin",
-        "profilePictureURL": "https://nationaltoday.com/wp-content/uploads/2020/08/international-cat-day.jpg"
+        "userId": "5Sxy8gHtcHxX-ZjciCoBI"
       }
     },
     {
@@ -35,9 +33,24 @@
         "dislike": []
       },
       "user": {
-        "userId": "5Sxy8gHtcHxX-ZjciCoBI",
-        "username": "admin",
-        "profilePictureURL": "https://nationaltoday.com/wp-content/uploads/2020/08/international-cat-day.jpg"
+        "userId": "5Sxy8gHtcHxX-ZjciCoBI"
+      }
+    },
+    {
+      "id": "FimT4Z1gDn5eDZ_RVR8CM",
+      "title": "This pizza is so tasty",
+      "content": "Very good pizza",
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2022/08/31553210-v-720x720.jpg",
+      "date": "Fri, 04 Nov 2022 13:14:18 GMT",
+      "reactions": {
+        "like": [],
+        "love": [],
+        "wow": [],
+        "sad": [],
+        "dislike": []
+      },
+      "user": {
+        "userId": "x7SqZevMh4CQ5tOk7RotQ"
       }
     }
   ],

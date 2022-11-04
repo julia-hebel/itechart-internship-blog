@@ -7,10 +7,11 @@ export default interface postTypes {
   reactions: reactionsTypes;
   user: {
     userId: string;
-    username: string;
-    profilePictureURL: string;
+    username?: string;
+    profilePictureURL?: string;
   };
   slice?: any;
+  find?: any;
 }
 
 export interface reactionsTypes {

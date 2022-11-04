@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { nanoid } from '@reduxjs/toolkit';
-import { addNewPost } from '../../redux/postsSlice';
+import { addNewPost, updatePostAuthor } from '../../redux/postsSlice';
 import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -88,8 +88,6 @@ function CreatePostModal({
       },
       user: {
         userId: currentUser.id,
-        username: currentUser.username,
-        profilePictureURL: currentUser.profilePictureURL,
       },
     };
 

@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { useAppDispatch } from '../../app/hooks';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getCurrentUser } from '../../redux/userSlice';
+import { getCurrentUser, USERS_URL } from '../../redux/userSlice';
+import { getAllPosts, updatePostAuthor } from '../../redux/postsSlice';
 import postTypes from '../../types/postTypes';
 import PostMenu from './PostMenu';
 import PostReactions from './PostReactions';
@@ -15,7 +18,46 @@ interface propsTypes {
 function Post({ post }: propsTypes) {
   const [showMore, setShowMore] = useState(false);
 
+  const posts = useSelector(getAllPosts);
   const currentUser = useSelector(getCurrentUser);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const fetchAuthor = async () => {
+      if (!post.user.username || !post.user.profilePictureURL) {
+        const author = {
+          userId: post.user.userId,
+          username: '',
+          profilePictureURL: '',
+        };
+        const prevPostByUser = posts.find(
+          (postInArray: postTypes) =>
+            postInArray.user.userId === post.user.userId &&
+            postInArray.user.username &&
+            postInArray.user.profilePictureURL
+        );
+
+        if (prevPostByUser) {
+          author.username = prevPostByUser.user.username;
+          author.profilePictureURL = prevPostByUser.user.profilePictureURL;
+        } else {
+          try {
+            const response = await axios.get(
+              `${USERS_URL}/${post.user.userId}`
+            );
+            author.username = response.data.username;
+            author.profilePictureURL = response.data.profilePictureURL;
+          } catch (error: any) {
+            return error.message;
+          }
+        }
+        dispatch(updatePostAuthor({ postId: post.id, author: author }));
+        //
+      }
+    };
+    fetchAuthor();
+  }, []);
 
   const renderPostContent = () => {
     if (post.content.length > 300) {
@@ -63,7 +105,10 @@ function Post({ post }: propsTypes) {
         </Link>
         <div className='w-full flex items-center justify-between'>
           <div className='ml-3 pb-[3px] flex flex-col justify-center'>
-            <Link to={`/profile/${post.user.username}`} className='font-bold hover:underline'>
+            <Link
+              to={`/profile/${post.user.username}`}
+              className='font-bold hover:underline'
+            >
               {post.user.username}
             </Link>
             <span className='text-sm'>
