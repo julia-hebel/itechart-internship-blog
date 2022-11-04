@@ -12,6 +12,7 @@ import postTypes from '../../types/postTypes';
 import AddNewPost from '../../components/posts/AddNewPost';
 
 interface userInterface {
+  id?: string;
   username?: string;
   profilePictureURL?: string;
 }
@@ -36,7 +37,8 @@ function UserProfile() {
       try {
         const response = await axios.get(`${USERS_URL}?username=${username}`);
         setUser(
-          (({ username, profilePictureURL }) => ({
+          (({ id, username, profilePictureURL }) => ({
+            id,
             username,
             profilePictureURL,
           }))(response.data[0])
@@ -69,7 +71,7 @@ function UserProfile() {
 
   const userPosts = posts
     .slice()
-    .filter((post: postTypes) => post.user.username === user.username)
+    .filter((post: postTypes) => post.user.userId === user.id)
     .sort((a: postTypes, b: postTypes) => b.date.localeCompare(a.date));
 
   return (
