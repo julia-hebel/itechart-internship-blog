@@ -40,6 +40,21 @@ export const loadUserFromCookie = createAsyncThunk(
   }
 );
 
+export const updateUser = createAsyncThunk(
+  'user/updateUser',
+  async (updatedUser: userTypes) => {
+    try {
+      const response = await axios.put(
+        `${USERS_URL}/${updatedUser.id}`,
+        updatedUser
+      );
+      return response.data;
+    } catch (error: any) {
+      return error.message;
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -85,6 +100,9 @@ const userSlice = createSlice({
       .addCase(loadUserFromCookie.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.currentUser = action.payload;
       });
   },
 });

@@ -53,11 +53,25 @@ function Post({ post }: propsTypes) {
           }
         }
         dispatch(updatePostAuthor({ postId: post.id, author: author }));
-        //
+      } else if (
+        post.user.userId === currentUser.id &&
+        (post.user.username !== currentUser.username ||
+          post.user.profilePictureURL !== currentUser.profilePictureURL)
+      ) {
+        dispatch(
+          updatePostAuthor({
+            postId: post.id,
+            author: {
+              userId: currentUser.id,
+              username: currentUser.username,
+              profilePictureURL: currentUser.profilePictureURL,
+            },
+          })
+        );
       }
     };
     fetchAuthor();
-  }, []);
+  }, [currentUser, post.user, posts]);
 
   const renderPostContent = () => {
     if (post.content.length > 300) {

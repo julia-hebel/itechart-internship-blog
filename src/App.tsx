@@ -10,6 +10,7 @@ import Layout from './pages/Layout';
 import PageNotFound from './pages/PageNotFound';
 import { CircularProgress } from '@mui/material';
 import UserProfile from './pages/users/UserProfile';
+import EditProfile from './pages/users/EditProfile';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -35,6 +36,7 @@ function App() {
               <Route path='login' element={<Login />} />
               <Route path='register' element={<Register />} />
               <Route path='profile/:username' element={<UserProfile />} />
+              <Route path='editprofile' element={<EditProfile />} />
             </Route>
             <Route path='*' element={<PageNotFound />} />
           </Routes>

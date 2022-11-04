@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import userTypes from '../types/userTypes';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
+import EditIcon from '@mui/icons-material/Edit';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 interface propsTypes {
@@ -62,19 +63,31 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
               alt='profile pic'
               className='object-cover rounded-full w-10 h-10'
             />
-            <span className='mx-3 font-bold'>{currentUser.username}</span>
+            <span className='ml-5 mr-2 font-bold'>{currentUser.username}</span>
           </Link>
         </div>
         <div className='px-2 mt-2'>
+          <Link
+            to='/editprofile'
+            className='mt-1 px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
+            onClick={handleClose}
+          >
+            <span className='w-10 text-center'>
+              <EditIcon />
+            </span>
+            <span className='ml-5 mr-3'>Edit Profile</span>
+          </Link>
           <button
-            className='px-5 py-1 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
+            className='mt-1 px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
             onClick={() => {
               dispatch(logoutUser());
               setShowLogoutMessage(true);
             }}
           >
-            <LogoutIcon />
-            <span className='mx-4 mb-[3px]'>Logout</span>
+            <span className='w-10 text-center'>
+              <LogoutIcon />
+            </span>
+            <span className='ml-5 mr-3'>Logout</span>
           </button>
         </div>
       </Menu>
