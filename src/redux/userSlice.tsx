@@ -28,14 +28,17 @@ export const addNewUser = createAsyncThunk(
 export const loadUserFromCookie = createAsyncThunk(
   'user/loadUserFromCookie',
   async () => {
-    try {
-      const cookieUserId = Cookies.get('currentUser');
-      if (cookieUserId) {
+    const cookieUserId = Cookies.get('currentUser');
+    console.log(cookieUserId);
+    if (cookieUserId) {
+      try {
         const response = await axios.get(`${USERS_URL}/${cookieUserId}`);
         return response.data;
+      } catch (error: any) {
+        Cookies.remove('currentUser');
+        window.location.reload();
+        return error.message;
       }
-    } catch (error: any) {
-      return error.message;
     }
   }
 );
@@ -90,10 +93,12 @@ const userSlice = createSlice({
         if (action.payload) {
           state.currentUser = action.payload;
           state.isLoggedIn = true;
-          Cookies.set('currentUser', action.payload.id, {
-            expires: 365,
-            sameSite: 'strict',
-          });
+          if (action.payload.id) {
+            Cookies.set('currentUser', action.payload.id, {
+              expires: 365,
+              sameSite: 'strict',
+            });
+          }
         }
         state.status = 'succeeded';
       })

@@ -56,17 +56,23 @@ function AddNewPost() {
     <div className='w-full'>
       <div className='px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
         <div className='w-full h-10 my-1 flex items-center justify-start'>
-          <Link to={`/profile/${currentUser.username}`}>
+          {isLoggedIn ? (
+            <Link to={`/profile/${currentUser.username}`}>
+              <img
+                src={currentUser.profilePictureURL}
+                alt='profile pic'
+                className='object-cover rounded-full h-10 w-10 mr-3 '
+              />
+            </Link>
+          ) : (
             <img
               src={
-                isLoggedIn
-                  ? currentUser.profilePictureURL
-                  : 'https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'
+                'https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'
               }
               alt='profile pic'
               className='object-cover rounded-full h-10 w-10 mr-3 '
             />
-          </Link>
+          )}
 
           <button
             className='grow pl-4 pb-[1px] h-full bg-[rgb(62,63,64)] hover:bg-[rgb(74,75,76)] text-zinc-400 text-left text-sm sm:text-base rounded-full'
