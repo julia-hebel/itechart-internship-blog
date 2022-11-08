@@ -60,7 +60,7 @@ function DeletePostModal({
                 </button>
               </div>
             </div>
-            <hr className='my-4 border-zinc-600' />
+            <hr className='mt-6 mb-8 border-zinc-600' />
             <div className='flex flex-row items-center justify-around'>
               <button
                 className='w-[122px] py-2 px-4 border border-zinc-500 rounded-md bg-green-700'

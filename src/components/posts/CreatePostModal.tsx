@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { nanoid } from '@reduxjs/toolkit';
-import { addNewPost, updatePostAuthor } from '../../redux/postsSlice';
+import { addNewPost } from '../../redux/postsSlice';
 import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -51,8 +51,8 @@ function CreatePostModal({
     e.preventDefault();
     setConfirmationMessage(false);
 
-    if (!postTitle || !postContent) {
-      setErrorMessage('Title and content inputs cannot be empty!');
+    if (!postTitle) {
+      setErrorMessage('Title input cannot be empty!');
       return;
     }
 
@@ -183,7 +183,6 @@ function CreatePostModal({
                   placeholder='Post content'
                   value={postContent}
                   onChange={(e) => setPostContent(e.target.value)}
-                  required
                 />
               </div>
               <div className='my-3'>
@@ -206,7 +205,7 @@ function CreatePostModal({
               <button
                 type='submit'
                 className='w-full h-12 text-center bg-green-600 rounded-lg py-2 mt-4 disabled:bg-zinc-700'
-                disabled={!(postTitle && postContent)}
+                disabled={!postTitle}
               >
                 Add a new post
               </button>

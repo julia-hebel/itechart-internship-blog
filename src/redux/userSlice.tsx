@@ -29,7 +29,6 @@ export const loadUserFromCookie = createAsyncThunk(
   'user/loadUserFromCookie',
   async () => {
     const cookieUserId = Cookies.get('currentUser');
-    console.log(cookieUserId);
     if (cookieUserId) {
       try {
         const response = await axios.get(`${USERS_URL}/${cookieUserId}`);
