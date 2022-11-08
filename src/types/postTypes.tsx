@@ -11,6 +11,7 @@ export default interface postTypes {
     profilePictureURL?: string;
   };
   slice?: any;
+  filter?: any;
   find?: any;
 }
 

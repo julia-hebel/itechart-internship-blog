@@ -11,6 +11,7 @@ import { USERS_URL } from '../../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import DeleteUserModal from '../../components/users/DeleteUserModal';
 const bcrypt = require('bcryptjs');
 
 function EditProfile() {
@@ -30,6 +31,7 @@ function EditProfile() {
   );
   const [errorMessage, setErrorMessage] = useState('');
   const [confirmationMessage, setConfirmationMessage] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -215,10 +217,10 @@ function EditProfile() {
   };
 
   return (
-    <main className='pb-0.5 max-w-[500px] m-auto'>
+    <main className='px-3 sm:px-6 pb-0.5 max-w-[500px] m-auto mt-6'>
       <form
         onSubmit={(e) => onSubmitEdit(e)}
-        className='m-3 sm:m-6 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'
+        className='px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'
       >
         <div className='my-3 mb-16'>
           <h3 className='text-xl font-bold text-center mb-2'>
@@ -319,6 +321,20 @@ function EditProfile() {
         </button>
       </form>
       {renderConfirmationMessage()}
+      <div className='my-16 text-center font-bold text-xl'>or</div>
+      <div className='flex justify-center mx-3'>
+        <button
+          onClick={() => setDeleteModalOpen(true)}
+          className='w-full h-10 sm:h-11 text-center bg-red-600 rounded-lg py-2 mb-10 sm:text-lg'
+        >
+          Delete my account
+        </button>
+        <DeleteUserModal
+          user={currentUser}
+          deleteModalOpen={deleteModalOpen}
+          setDeleteModalOpen={setDeleteModalOpen}
+        />
+      </div>
     </main>
   );
 }

@@ -57,6 +57,18 @@ export const updateUser = createAsyncThunk(
   }
 );
 
+export const deleteUser = createAsyncThunk(
+  'user/deleteUser',
+  async (userId: string) => {
+    try {
+      await axios.delete(`${USERS_URL}/${userId}`);
+      return userId;
+    } catch (error: any) {
+      return error.message;
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -107,6 +119,11 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.currentUser = action.payload;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.currentUser = {};
+        state.isLoggedIn = false;
+        Cookies.remove('currentUser');
       });
   },
 });

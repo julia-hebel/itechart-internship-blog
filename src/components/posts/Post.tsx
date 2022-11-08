@@ -71,7 +71,7 @@ function Post({ post }: propsTypes) {
       }
     };
     fetchAuthor();
-  }, [currentUser, post.user, posts]);
+  }, [currentUser, post.user]);
 
   const renderPostContent = () => {
     if (post.content.length > 300) {

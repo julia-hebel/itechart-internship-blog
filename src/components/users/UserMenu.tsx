@@ -75,7 +75,7 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
             <span className='w-10 text-center'>
               <EditIcon />
             </span>
-            <span className='ml-5 mr-3'>Edit Profile</span>
+            <span className='ml-5 mr-3'>Manage Profile</span>
           </Link>
           <button
             className='mt-1 px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
