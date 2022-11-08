@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getCurrentUser, getIsLoggedIn } from '../redux/userSlice';
 import { Link } from 'react-router-dom';
-import UserMenu from './UserMenu';
+import UserMenu from './users/UserMenu';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import LoginIcon from '@mui/icons-material/Login';

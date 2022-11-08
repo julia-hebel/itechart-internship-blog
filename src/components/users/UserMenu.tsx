@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useAppDispatch } from '../app/hooks';
-import { logoutUser } from '../redux/userSlice';
+import { useAppDispatch } from '../../app/hooks';
+import { logoutUser } from '../../redux/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
-import userTypes from '../types/userTypes';
+import userTypes from '../../types/userTypes';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import EditIcon from '@mui/icons-material/Edit';
