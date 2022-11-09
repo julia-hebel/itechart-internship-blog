@@ -29,7 +29,7 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
   };
 
   return (
-    <div>
+    <div className='justify-self-end my-auto'>
       <Button
         id='basic-button'
         aria-controls={open ? 'basic-menu' : undefined}
@@ -41,7 +41,7 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
         <img
           src={currentUser.profilePictureURL}
           alt='profile pic'
-          className='object-cover rounded-full w-10 h-10'
+          className='object-cover rounded-full h-9 w-9 sm:w-10 sm:h-10'
         />
       </Button>
       <Menu

@@ -110,14 +110,14 @@ function Post({ post }: propsTypes) {
   return (
     <article className='my-5 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
       <div className='w-full mb-3 mt-1 flex items-center justify-start'>
-        <Link to={`/profile/${post.user.username}`}>
+        <Link to={`/profile/${post.user.username}`} className='w-10 h-10'>
           <img
             src={post.user.profilePictureURL}
             alt='profile pic'
             className='object-cover rounded-full h-10 w-10'
           />
         </Link>
-        <div className='w-full flex items-center justify-between'>
+        <div className='flex-grow flex items-center justify-between'>
           <div className='ml-3 pb-[3px] flex flex-col justify-center'>
             <Link
               to={`/profile/${post.user.username}`}

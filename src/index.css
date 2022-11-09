@@ -16,6 +16,11 @@
   left: initial !important;
 }
 
+#language-menu .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+  top: 44px !important;
+  left: 10px !important;
+}
+
 #post-menu ul {
   padding: 0 !important;
 }

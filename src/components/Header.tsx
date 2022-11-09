@@ -7,7 +7,11 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import LoginIcon from '@mui/icons-material/Login';
 import { BiBook } from 'react-icons/bi';
+import { MdLogin } from 'react-icons/md';
+import { IoLanguageOutline } from 'react-icons/io5';
+import { VscAccount } from 'react-icons/vsc';
 import { HiMenu } from 'react-icons/hi';
+import LanguageMenu from './LanguageMenu';
 
 function Header() {
   const isLoggedIn = useSelector(getIsLoggedIn);
@@ -35,13 +39,14 @@ function Header() {
   };
 
   return (
-    <header className='flex items-center justify-between px-3 h-12 bg-[rgb(117,11,150)]'>
-      <button className='h-9'>
-        <HiMenu className='h-full w-full' />
-      </button>
-      <Link to='/' className='flex items-center text-2xl h-8'>
-        <BiBook className='mr-1 h-full w-full' />
-        <h1 className='mb-1'>PostBook</h1>
+    <header className='grid grid-cols-4 grid-rows-1 justify-items-center content-center px-3 sm:px-4 h-12 bg-[rgb(117,11,150)]'>
+      <LanguageMenu />
+      <Link
+        to='/'
+        className='col-span-2 flex items-center text-2xl sm:text-3xl'
+      >
+        <BiBook className='mr-1 h-[32px] w-full' />
+        <h1 className='mb-[3px]'>PostBook</h1>
       </Link>
       {isLoggedIn ? (
         <UserMenu
@@ -49,9 +54,11 @@ function Header() {
           setShowLogoutMessage={setShowLogoutMessage}
         />
       ) : (
-        <Link to='/login' className='mr-2 flex items-center hover:underline'>
-          <LoginIcon className='mr-2' />
-          <span className='mb-1'>Login</span>
+        <Link
+          to='/login'
+          className='justify-self-end flex items-center sm:text-base'
+        >
+          <VscAccount className='h-8 sm:h-9 w-full mr-0.5' />
         </Link>
       )}
       {renderLogoutMessage()}
