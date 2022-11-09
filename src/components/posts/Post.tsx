@@ -130,7 +130,7 @@ function Post({ post }: propsTypes) {
             </span>
           </div>
           {post.user.userId === currentUser.id ? (
-            <PostMenu post={post} currentUser={currentUser} />
+            <PostMenu post={post} />
           ) : null}
         </div>
       </div>

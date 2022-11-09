@@ -5,13 +5,21 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import { CgClose } from 'react-icons/cg';
+import postTypes from '../../types/postTypes';
+
+interface propsTypes {
+  post: postTypes;
+  deleteModalOpen: boolean;
+  setDeleteModalOpen: Function;
+  setConfirmationMessage: Function;
+}
 
 function DeletePostModal({
   post,
   deleteModalOpen,
   setDeleteModalOpen,
   setConfirmationMessage,
-}: any) {
+}: propsTypes) {
   const dispatch = useAppDispatch();
 
   const onDelete = () => {

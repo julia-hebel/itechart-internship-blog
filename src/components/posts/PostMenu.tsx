@@ -8,8 +8,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditPostModal from './EditPostModal';
 import DeletePostModal from './DeletePostModal';
+import postTypes from '../../types/postTypes';
 
-function PostMenu({ post }: any) {
+interface propsTypes {
+  post: postTypes;
+}
+
+function PostMenu({ post }: propsTypes) {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState('');

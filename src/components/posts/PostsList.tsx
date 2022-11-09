@@ -4,7 +4,11 @@ import { getPostsStatus } from '../../redux/postsSlice';
 import Post from './Post';
 import postTypes from '../../types/postTypes';
 
-function PostsList({ postsToShow }: any) {
+interface propsTypes {
+  postsToShow: postTypes[];
+}
+
+function PostsList({ postsToShow }: propsTypes) {
   const postsStatus = useSelector(getPostsStatus);
 
   const renderPostListContent = () => {

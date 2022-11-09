@@ -15,8 +15,19 @@ import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import { CgClose } from 'react-icons/cg';
 import postTypes from '../../types/postTypes';
+import userTypes from '../../types/userTypes';
 
-function DeleteUserModal({ user, deleteModalOpen, setDeleteModalOpen }: any) {
+interface propsTypes {
+  user: userTypes;
+  deleteModalOpen: boolean;
+  setDeleteModalOpen: Function;
+}
+
+function DeleteUserModal({
+  user,
+  deleteModalOpen,
+  setDeleteModalOpen,
+}: propsTypes) {
   const dispatch = useAppDispatch();
 
   const postsStatus = useSelector(getPostsStatus);
