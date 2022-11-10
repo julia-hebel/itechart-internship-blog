@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { logoutUser } from '../../redux/userSlice';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import userTypes from '../../types/userTypes';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -15,7 +15,6 @@ interface propsTypes {
 
 function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);

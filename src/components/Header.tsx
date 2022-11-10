@@ -5,12 +5,8 @@ import { Link } from 'react-router-dom';
 import UserMenu from './users/UserMenu';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import LoginIcon from '@mui/icons-material/Login';
 import { BiBook } from 'react-icons/bi';
-import { MdLogin } from 'react-icons/md';
-import { IoLanguageOutline } from 'react-icons/io5';
 import { VscAccount } from 'react-icons/vsc';
-import { HiMenu } from 'react-icons/hi';
 import LanguageMenu from './LanguageMenu';
 
 function Header() {
