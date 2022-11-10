@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+  margin-top: 6px;
+  background-color: rgb(43, 44, 45) !important;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  border: 1px solid rgb(80, 80, 80) !important;
+  border-radius: 0.5rem !important;
+  color: white !important;
+}
+
+#user-menu .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+  right: 10px !important;
+  left: initial !important;
+}
+
+#language-menu .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+  top: 44px !important;
+  left: 10px !important;
+}
+
+#post-menu ul {
+  padding: 0 !important;
+}

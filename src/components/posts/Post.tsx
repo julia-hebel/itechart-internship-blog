@@ -1,9 +1,77 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { useAppDispatch } from '../../app/hooks';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { getCurrentUser, USERS_URL } from '../../redux/userSlice';
+import { getAllPosts, updatePostAuthor } from '../../redux/postsSlice';
+import postTypes from '../../types/postTypes';
+import PostMenu from './PostMenu';
 import PostReactions from './PostReactions';
 import TimeAgo from './TimeAgo';
 
-function Post({ post }: any) {
+interface propsTypes {
+  key: string;
+  post: postTypes;
+}
+
+function Post({ post }: propsTypes) {
   const [showMore, setShowMore] = useState(false);
+
+  const posts = useSelector(getAllPosts);
+  const currentUser = useSelector(getCurrentUser);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const fetchAuthor = async () => {
+      if (!post.user.username || !post.user.profilePictureURL) {
+        const author = {
+          userId: post.user.userId,
+          username: '',
+          profilePictureURL: '',
+        };
+        const prevPostByUser = posts.find(
+          (postInArray: postTypes) =>
+            postInArray.user.userId === post.user.userId &&
+            postInArray.user.username &&
+            postInArray.user.profilePictureURL
+        );
+
+        if (prevPostByUser) {
+          author.username = prevPostByUser.user.username;
+          author.profilePictureURL = prevPostByUser.user.profilePictureURL;
+        } else {
+          try {
+            const response = await axios.get(
+              `${USERS_URL}/${post.user.userId}`
+            );
+            author.username = response.data.username;
+            author.profilePictureURL = response.data.profilePictureURL;
+          } catch (error: any) {
+            return error.message;
+          }
+        }
+        dispatch(updatePostAuthor({ postId: post.id, author: author }));
+      } else if (
+        post.user.userId === currentUser.id &&
+        (post.user.username !== currentUser.username ||
+          post.user.profilePictureURL !== currentUser.profilePictureURL)
+      ) {
+        dispatch(
+          updatePostAuthor({
+            postId: post.id,
+            author: {
+              userId: currentUser.id,
+              username: currentUser.username,
+              profilePictureURL: currentUser.profilePictureURL,
+            },
+          })
+        );
+      }
+    };
+    fetchAuthor();
+  }, [currentUser, post.user]);
 
   const renderPostContent = () => {
     if (post.content.length > 300) {
@@ -40,18 +108,30 @@ function Post({ post }: any) {
   };
 
   return (
-    <article className='mx-5 my-6 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
+    <article className='my-5 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
       <div className='w-full mb-3 mt-1 flex items-center justify-start'>
-        <img
-          src='https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'
-          alt='profile pic'
-          className='rounded-full h-10'
-        />
-        <div className='ml-3 pb-[3px] flex flex-col justify-center'>
-          <span className='font-bold'>Author</span>
-          <span className='text-sm'>
-            <TimeAgo date={post.date} />
-          </span>
+        <Link to={`/profile/${post.user.username}`} className='w-10 h-10'>
+          <img
+            src={post.user.profilePictureURL}
+            alt='profile pic'
+            className='object-cover rounded-full h-10 w-10'
+          />
+        </Link>
+        <div className='flex-grow flex items-center justify-between'>
+          <div className='ml-3 pb-[3px] flex flex-col justify-center'>
+            <Link
+              to={`/profile/${post.user.username}`}
+              className='font-bold hover:underline'
+            >
+              {post.user.username}
+            </Link>
+            <span className='text-sm'>
+              <TimeAgo date={post.date} />
+            </span>
+          </div>
+          {post.user.userId === currentUser.id ? (
+            <PostMenu post={post} />
+          ) : null}
         </div>
       </div>
       <div className='mb-2'>
@@ -61,11 +141,11 @@ function Post({ post }: any) {
           <img
             src={post.image}
             alt={post.title}
-            className='mt-4 mx-auto max-h-[400px]'
+            className='object-cover mt-4 mx-auto max-h-[400px]'
           />
         )}
       </div>
-      <PostReactions post={post} />
+      <PostReactions post={post} currentUser={currentUser} />
     </article>
   );
 }

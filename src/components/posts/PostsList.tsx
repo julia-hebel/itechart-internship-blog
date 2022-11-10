@@ -1,38 +1,39 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
-import { getPosts } from '../../redux/postsSlice';
+import { getPostsStatus } from '../../redux/postsSlice';
 import Post from './Post';
+import postTypes from '../../types/postTypes';
 
-function PostsList() {
-  const dispatch = useDispatch<any>();
-  const posts = useSelector((state: any) => state.posts.posts);
-  const status = useSelector((state: any) => state.posts.status);
+interface propsTypes {
+  postsToShow: postTypes[];
+}
 
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch]);
+function PostsList({ postsToShow }: propsTypes) {
+  const postsStatus = useSelector(getPostsStatus);
 
   const renderPostListContent = () => {
-    if (status === 'loading') {
+    if (postsStatus === 'loading') {
       return (
         <div className='fixed top-0 left-0 h-full w-full flex flex-col justify-center items-center'>
           <CircularProgress size='4rem' />
         </div>
       );
-    } else if (status === 'succeeded') {
-      const orderedPosts = posts
-        .slice()
-        .sort((a: any, b: any) => b.date.localeCompare(a.date));
-      return orderedPosts.map((post: any) => {
-        return <Post key={post.id} post={post} />;
-      });
+    } else if (postsStatus === 'succeeded') {
+      if (postsToShow.length > 0) {
+        return postsToShow.map((post: postTypes) => {
+          return <Post key={post.id} post={post} />;
+        });
+      } else {
+        return (
+          <div className='w-full text-center text-lg font-bold mt-8'>
+            No posts to show
+          </div>
+        );
+      }
     }
   };
 
-  return (
-    <div className='pb-2 max-w-[640px] m-auto'>{renderPostListContent()}</div>
-  );
+  return <section className='pb-2'>{renderPostListContent()}</section>;
 }
 
 export default PostsList;
