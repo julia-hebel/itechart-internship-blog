@@ -1,8 +1,14 @@
 import { useState } from 'react';
+
 import { useAppDispatch } from '../../app/hooks';
 import { logoutUser } from '../../redux/userSlice';
+
 import { Link } from 'react-router-dom';
+
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import userTypes from '../../types/userTypes';
+
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import EditIcon from '@mui/icons-material/Edit';
@@ -18,6 +24,8 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const intl = useIntl();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -39,7 +47,10 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
       >
         <img
           src={currentUser.profilePictureURL}
-          alt='profile pic'
+          alt={intl.formatMessage({
+            id: 'AddNewPost.profilePicAlt',
+            defaultMessage: 'Your profile picture',
+          })}
           className='object-cover rounded-full h-9 w-9 sm:w-10 sm:h-10'
         />
       </Button>
@@ -52,20 +63,27 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <div className='pb-2 px-2 border-b border-zinc-500'>
-          <Link
-            to={`/profile/${currentUser.username}`}
-            className='px-3 py-1 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
-          >
-            <img
-              src={currentUser.profilePictureURL}
-              alt='profile pic'
-              className='object-cover rounded-full w-10 h-10'
-            />
-            <span className='ml-5 mr-2 font-bold'>{currentUser.username}</span>
-          </Link>
-        </div>
-        <div className='px-2 mt-2'>
+        <li>
+          <div className='pb-2 px-2 w-full border-b border-zinc-500'>
+            <Link
+              to={`/profile/${currentUser.username}`}
+              className='px-3 py-1 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
+            >
+              <img
+                src={currentUser.profilePictureURL}
+                alt={intl.formatMessage({
+                  id: 'AddNewPost.profilePicAlt',
+                  defaultMessage: 'Your profile picture',
+                })}
+                className='object-cover rounded-full w-10 h-10'
+              />
+              <span className='ml-5 mr-2 font-bold'>
+                {currentUser.username}
+              </span>
+            </Link>
+          </div>
+        </li>
+        <li className='px-2 mt-2'>
           <Link
             to='/editprofile'
             className='mt-1 px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
@@ -74,8 +92,15 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
             <span className='w-10 text-center'>
               <EditIcon />
             </span>
-            <span className='ml-5 mr-3'>Manage Profile</span>
+            <span className='ml-5 mr-3'>
+              <FormattedMessage
+                id='UserMenu.manageProfile'
+                defaultMessage='Manage Profile'
+              />
+            </span>
           </Link>
+        </li>
+        <li className='px-2'>
           <button
             className='mt-1 px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
             onClick={() => {
@@ -86,9 +111,11 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
             <span className='w-10 text-center'>
               <LogoutIcon />
             </span>
-            <span className='ml-5 mr-3'>Logout</span>
+            <span className='ml-5 mr-3'>
+              <FormattedMessage id='UserMenu.logout' defaultMessage='Log Out' />
+            </span>
           </button>
-        </div>
+        </li>
       </Menu>
     </div>
   );

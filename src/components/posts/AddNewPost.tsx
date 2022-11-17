@@ -1,8 +1,14 @@
 import { useState } from 'react';
+
 import { useSelector } from 'react-redux';
 import { getCurrentUser, getIsLoggedIn } from '../../redux/userSlice';
+
 import { Link } from 'react-router-dom';
+
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import CreatePostModal from './CreatePostModal';
+
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
@@ -13,6 +19,8 @@ function AddNewPost() {
 
   const isLoggedIn = useSelector(getIsLoggedIn);
   const currentUser = useSelector(getCurrentUser);
+
+  const intl = useIntl();
 
   const renderNotLoggedInMessage = () => {
     return (
@@ -27,7 +35,10 @@ function AddNewPost() {
           onClose={() => setNotLoggedInMessage(false)}
           severity='error'
         >
-          You must be logged in to post
+          <FormattedMessage
+            id='AddNewPost.notLoggedInMessage'
+            defaultMessage='You must be logged in to post'
+          />
         </MuiAlert>
       </Snackbar>
     );
@@ -46,7 +57,10 @@ function AddNewPost() {
           onClose={() => setConfirmationMessage(false)}
           severity='success'
         >
-          Post was successfully added
+          <FormattedMessage
+            id='AddNewPost.postAddedMessage'
+            defaultMessage='Post was successfully added'
+          />
         </MuiAlert>
       </Snackbar>
     );
@@ -60,7 +74,10 @@ function AddNewPost() {
             <Link to={`/profile/${currentUser.username}`}>
               <img
                 src={currentUser.profilePictureURL}
-                alt='profile pic'
+                alt={intl.formatMessage({
+                  id: 'AddNewPost.profilePicAlt',
+                  defaultMessage: 'Your profile picture',
+                })}
                 className='object-cover rounded-full h-10 w-10 mr-3 '
               />
             </Link>
@@ -69,7 +86,10 @@ function AddNewPost() {
               src={
                 'https://t3.ftcdn.net/jpg/03/53/11/00/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'
               }
-              alt='profile pic'
+              alt={intl.formatMessage({
+                id: 'AddNewPost.defaultProfilePicAlt',
+                defaultMessage: 'Default profile picture',
+              })}
               className='object-cover rounded-full h-10 w-10 mr-3 '
             />
           )}
@@ -82,7 +102,10 @@ function AddNewPost() {
                 : setNotLoggedInMessage(true)
             }
           >
-            What's on your mind?
+            <FormattedMessage
+              id='AddNewPost.postPlaceholder'
+              defaultMessage="What's on your mind?"
+            />
           </button>
           <CreatePostModal
             currentUser={currentUser}

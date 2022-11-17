@@ -1,15 +1,22 @@
 import { useState, useEffect } from 'react';
+
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../app/hooks';
 import { getAllPosts, getPosts, getPostsStatus } from '../../redux/postsSlice';
-import { getCurrentUser } from '../../redux/userSlice';
-import { USERS_URL } from '../../redux/userSlice';
-import { useParams } from 'react-router-dom';
+import { getCurrentUser, USERS_URL } from '../../redux/userSlice';
+
 import axios from 'axios';
-import { CircularProgress } from '@mui/material';
-import PostsList from '../../components/posts/PostsList';
+
+import { useParams } from 'react-router-dom';
+
+import { FormattedMessage } from 'react-intl';
+
 import postTypes from '../../types/postTypes';
+
 import AddNewPost from '../../components/posts/AddNewPost';
+import PostsList from '../../components/posts/PostsList';
+
+import { CircularProgress } from '@mui/material';
 
 interface userInterface {
   id?: string;
@@ -63,7 +70,10 @@ function UserProfile() {
     return (
       <main className='h-screen w-full flex flex-col justify-center items-center'>
         <span className='text-xl font-bold mb-12'>
-          This user does not exist
+          <FormattedMessage
+            id='UserProfile.userDoesNotExist'
+            defaultMessage='This user does not exist'
+          />
         </span>
       </main>
     );

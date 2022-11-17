@@ -1,4 +1,12 @@
 import { useState } from 'react';
+
+import { FormattedMessage } from 'react-intl';
+
+import postTypes from '../../types/postTypes';
+
+import EditPostModal from './EditPostModal';
+import DeletePostModal from './DeletePostModal';
+
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
@@ -6,9 +14,6 @@ import Menu from '@mui/material/Menu';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditPostModal from './EditPostModal';
-import DeletePostModal from './DeletePostModal';
-import postTypes from '../../types/postTypes';
 
 interface propsTypes {
   post: postTypes;
@@ -68,26 +73,37 @@ function PostMenu({ post }: propsTypes) {
         open={open}
         onClose={handleClose}
       >
-        <button
-          className='px-1 py-1 w-full flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
-          onClick={() => {
-            setEditModalOpen(true);
-            handleClose();
-          }}
-        >
-          <EditIcon className='p-[2px] ml-1' />
-          <span className='mx-4 mb-[3px] w-full text-left'>Edit</span>
-        </button>
-        <button
-          className='px-1 py-1 w-full flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
-          onClick={() => {
-            setDeleteModalOpen(true);
-            handleClose();
-          }}
-        >
-          <DeleteIcon className='p-[2px] ml-1' />
-          <span className='mx-4 mb-[3px] w-full text-left'>Delete</span>
-        </button>
+        <li>
+          <button
+            className='px-1 py-1 w-full flex items-center rounded-md hover:bg-[rgb(74,75,76)] cursor-pointer'
+            onClick={() => {
+              setEditModalOpen(true);
+              handleClose();
+            }}
+          >
+            <EditIcon className='p-[2px] ml-1' />
+            <span className='mx-4 mb-[3px] w-full text-left'>
+              <FormattedMessage id='PostMenu.editLabel' defaultMessage='Edit' />
+            </span>
+          </button>
+        </li>
+        <li>
+          <button
+            className='px-1 py-1 w-full flex items-center rounded-md hover:bg-[rgb(74,75,76)] cursor-pointer'
+            onClick={() => {
+              setDeleteModalOpen(true);
+              handleClose();
+            }}
+          >
+            <DeleteIcon className='p-[2px] ml-1' />
+            <span className='mx-4 mb-[3px] w-full text-left'>
+              <FormattedMessage
+                id='PostMenu.deleteLabel'
+                defaultMessage='Delete'
+              />
+            </span>
+          </button>
+        </li>
       </Menu>
       <EditPostModal
         post={post}

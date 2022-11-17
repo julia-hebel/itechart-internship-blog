@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
+
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../app/hooks';
 import { getAllPosts, getPosts, getPostsStatus } from '../redux/postsSlice';
+
+import postTypes from '../types/postTypes';
+
 import AddNewPost from '../components/posts/AddNewPost';
 import PostsList from '../components/posts/PostsList';
-import postTypes from '../types/postTypes';
 
 function Home() {
   const dispatch = useAppDispatch();

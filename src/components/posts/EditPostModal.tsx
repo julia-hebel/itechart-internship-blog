@@ -1,15 +1,21 @@
 import { useState } from 'react';
+
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../app/hooks';
 import { getCurrentUser } from '../../redux/userSlice';
 import { updatePost } from '../../redux/postsSlice';
+
+import { FormattedMessage, useIntl } from 'react-intl';
+
+import postTypes from '../../types/postTypes';
+
 import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import MuiAlert from '@mui/material/Alert';
+
 import { CgClose } from 'react-icons/cg';
-import postTypes from '../../types/postTypes';
 
 interface propsTypes {
   post: postTypes;
@@ -33,6 +39,8 @@ function EditPostModal({
 
   const currentUser = useSelector(getCurrentUser);
 
+  const intl = useIntl();
+
   const renderErrorMessage = () => {
     if (errorMessage) {
       return (
@@ -54,8 +62,13 @@ function EditPostModal({
     e.preventDefault();
     setConfirmationMessage(false);
 
-    if (!postTitle || !postContent) {
-      setErrorMessage('Title and content inputs cannot be empty!');
+    if (!postTitle) {
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'CreatePostModal.errorMessage.titleEmpty',
+          defaultMessage: 'Title input cannot be empty!',
+        })
+      );
       return;
     }
 
@@ -68,7 +81,12 @@ function EditPostModal({
         postImageURL.includes('.gif')
       )
     ) {
-      setErrorMessage('URL is invalid, please try another');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'CreatePostModal.errorMessage.invalidURL',
+          defaultMessage: 'URL is invalid, please try another',
+        })
+      );
       return;
     }
 
@@ -92,11 +110,21 @@ function EditPostModal({
       setPostContent('');
       setPostImageURL('');
       setErrorMessage('');
-      setConfirmationMessage('Post was successfully updated');
+      setConfirmationMessage(
+        intl.formatMessage({
+          id: 'EditPostModal.confirmationMessage',
+          defaultMessage: 'Post was successfully updated',
+        })
+      );
       setEditModalOpen(false);
     } catch (error: any) {
       console.error('Failed to update the post', error);
-      setErrorMessage('Post failed to update');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'EditPostModal.errorMessage.failedToUpdate',
+          defaultMessage: 'Post failed to update',
+        })
+      );
     }
   };
 
@@ -128,7 +156,10 @@ function EditPostModal({
           <div className='w-full grid grid-cols-5'>
             <span className='col-span-1'></span>
             <h2 className='col-span-3 font-bold text-xl text-center'>
-              Create a new post
+              <FormattedMessage
+                id='EditPostModal.errorMessage.editPost'
+                defaultMessage='Edit your post'
+              />
             </h2>
             <div className='col-span-1 flex items-center justify-end h-8'>
               <button
@@ -144,7 +175,10 @@ function EditPostModal({
             <div className='w-full mb-3 mt-1 flex items-center justify-start'>
               <img
                 src={currentUser.profilePictureURL}
-                alt='profile pic'
+                alt={intl.formatMessage({
+                  id: 'AddNewPost.profilePicAlt',
+                  defaultMessage: 'Your profile picture',
+                })}
                 className='object-cover rounded-full h-10 w-10'
               />
               <span className='ml-3 flex flex-col justify-center font-bold'>
@@ -154,13 +188,20 @@ function EditPostModal({
             <form onSubmit={(e) => onSubmitPost(e)} className='mt-3'>
               <div className='my-3'>
                 <label htmlFor='title' className='block mb-1 ml-0.5'>
-                  Title<span className='text-red-500'>*</span>
+                  <FormattedMessage
+                    id='CreatePostModal.title'
+                    defaultMessage='Title'
+                  />
+                  <span className='text-red-500'>*</span>
                 </label>
                 <input
                   type='text'
                   name='title'
                   className='w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-xl'
-                  placeholder='Post title'
+                  placeholder={intl.formatMessage({
+                    id: 'CreatePostModal.titlePlaceholder',
+                    defaultMessage: 'Post title',
+                  })}
                   value={postTitle}
                   onChange={(e) => setPostTitle(e.target.value)}
                   required
@@ -168,22 +209,30 @@ function EditPostModal({
               </div>
               <div className='my-3'>
                 <label htmlFor='content' className='block mb-1 ml-0.5'>
-                  Content<span className='text-red-500'>*</span>
+                  <FormattedMessage
+                    id='CreatePostModal.content'
+                    defaultMessage='Content'
+                  />
                 </label>
                 <textarea
                   name='content'
                   cols={30}
                   rows={8}
                   className='w-full bg-[rgb(62,63,64)] rounded-lg p-2 text-sm sm:text-base resize-none'
-                  placeholder='Post content'
+                  placeholder={intl.formatMessage({
+                    id: 'CreatePostModal.contentPlacehonder',
+                    defaultMessage: 'Post content',
+                  })}
                   value={postContent}
                   onChange={(e) => setPostContent(e.target.value)}
-                  required
                 />
               </div>
               <div className='my-3'>
                 <label htmlFor='image' className='block mb-1 ml-0.5'>
-                  Photo URL (optional)
+                  <FormattedMessage
+                    id='CreatePostModal.image'
+                    defaultMessage='Image URL (optional)'
+                  />
                 </label>
                 <input
                   type='text'
@@ -192,7 +241,10 @@ function EditPostModal({
                     errorMessage === 'URL is invalid, please try another' &&
                     'border border-red-500'
                   }`}
-                  placeholder='Image URL'
+                  placeholder={intl.formatMessage({
+                    id: 'CreatePostModal.imagePlaceholder',
+                    defaultMessage: 'Image URL',
+                  })}
                   value={postImageURL}
                   onChange={(e) => setPostImageURL(e.target.value)}
                 />
@@ -201,9 +253,12 @@ function EditPostModal({
               <button
                 type='submit'
                 className='w-full h-12 text-center bg-green-600 rounded-lg py-2 mt-4 disabled:bg-zinc-700'
-                disabled={!(postTitle && postContent)}
+                disabled={!postTitle}
               >
-                Edit post
+                <FormattedMessage
+                  id='EditPostModal.updatePostButton'
+                  defaultMessage='Update post'
+                />
               </button>
             </form>
           </div>

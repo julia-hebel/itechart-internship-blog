@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  font-family: 'Lato', sans-serif !important;
+  font-weight: 400;
+  overflow: auto !important;
+  padding-right: 0 !important;
+}
+
 .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
   margin-top: 6px;
   background-color: rgb(43, 44, 45) !important;
@@ -11,16 +18,24 @@
   color: white !important;
 }
 
-#user-menu .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper ul {
+  padding: 0 2 !important;
+  display: flex;
+  flex-direction: column;
+}
+
+#user-menu
+  .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
   right: 10px !important;
   left: initial !important;
 }
 
-#language-menu .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+#language-menu
+  .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
   top: 44px !important;
   left: 10px !important;
 }
 
 #post-menu ul {
-  padding: 0 !important;
+  padding: 8px !important;
 }

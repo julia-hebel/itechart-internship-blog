@@ -1,19 +1,29 @@
 import { useState } from 'react';
+
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../app/hooks';
 import { updatePost } from '../../redux/postsSlice';
 import { getIsLoggedIn } from '../../redux/userSlice';
+
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import postTypes, { reactionsTypes } from '../../types/postTypes';
 import userTypes from '../../types/userTypes';
+
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import Tooltip from '@mui/material/Tooltip';
+
+import { AiFillLike, AiFillHeart, AiFillDislike } from 'react-icons/ai';
+import { ImShocked2 } from 'react-icons/im';
+import { FaSadTear } from 'react-icons/fa';
 
 const reactionEmoji = {
-  like: '👍',
-  love: '❤️',
-  wow: '😮',
-  sad: '😢',
-  dislike: '👎',
+  like: <AiFillLike className='h-5 sm:h-6 w-6 text-blue-500' />,
+  love: <AiFillHeart className='h-5 sm:h-6 w-6 text-red-500' />,
+  wow: <ImShocked2 className='h-5 sm:h-6 w-6 py-[1px] text-yellow-400' />,
+  sad: <FaSadTear className='h-5 sm:h-6 w-6 pb-[1px] text-yellow-400' />,
+  dislike: <AiFillDislike className='h-5 sm:h-6 w-6 text-red-400' />,
 };
 
 interface propsTypes {
@@ -27,6 +37,8 @@ function PostReactions({ post, currentUser }: propsTypes) {
   const isLoggedIn = useSelector(getIsLoggedIn);
 
   const dispatch = useAppDispatch();
+
+  const intl = useIntl();
 
   const getCurrentReaction = () => {
     const arrayOfReactionArrays = Object.entries(post.reactions);
@@ -87,32 +99,70 @@ function PostReactions({ post, currentUser }: propsTypes) {
           onClose={() => setNotLoggedInMessage(false)}
           severity='error'
         >
-          You must be logged in to react
+          <FormattedMessage
+            id='PostReactions.notLoggedInMessage'
+            defaultMessage='You must be logged in to react'
+          />
         </MuiAlert>
       </Snackbar>
     );
   };
 
   return (
-    <div className='w-full flex items-center justify-around text-center py-2'>
+    <ul
+      className='w-full flex items-center justify-around text-center py-2'
+      role='reactionList'
+      aria-label={intl.formatMessage({
+        id: 'PostReactions.aria.reactionList',
+        defaultMessage: 'List of reactions. ',
+      })}
+      tabIndex={0}
+    >
       {Object.entries(reactionEmoji).map(([reactionName, emoji]) => {
         return (
-          <button
-            key={reactionName}
-            className={`py-1.5 px-2 sm:px-3 text-sm sm:text-base hover:bg-zinc-600 rounded-md ${
-              getCurrentReaction() === reactionName && 'bg-zinc-600'
-            }`}
-            onClick={() => giveReaction(reactionName)}
-          >
-            <div className='mx-1'>{emoji}</div>
-            <div className='mx-1'>
-              {post.reactions[reactionName as keyof reactionsTypes].length}
-            </div>
-          </button>
+          <li key={reactionName}>
+            <Tooltip
+              title={intl.formatMessage({
+                id: `PostReactions.${reactionName}`,
+                defaultMessage:
+                  reactionName.charAt(0).toUpperCase() + reactionName.slice(1),
+              })}
+              placement='top'
+              arrow
+              role='reaction details'
+              aria-label={
+                intl.formatMessage({
+                  id: `PostReactions.${reactionName}`,
+                  defaultMessage:
+                    reactionName.charAt(0).toUpperCase() +
+                    reactionName.slice(1),
+                }) +
+                intl.formatMessage({
+                  id: 'PostReactions.aria.numberOfReactions',
+                  defaultMessage: '. Number of reactions: ',
+                }) +
+                post.reactions[
+                  reactionName as keyof reactionsTypes
+                ].length.toString()
+              }
+            >
+              <button
+                className={`py-1.5 px-2 sm:px-3 text-sm sm:text-base hover:bg-zinc-600 rounded-md ${
+                  getCurrentReaction() === reactionName && 'bg-zinc-600'
+                }`}
+                onClick={() => giveReaction(reactionName)}
+              >
+                <div className='mx-1 mb-1'>{emoji}</div>
+                <span className='mx-1' role='numberofreactions'>
+                  {post.reactions[reactionName as keyof reactionsTypes].length}
+                </span>
+              </button>
+            </Tooltip>
+          </li>
         );
       })}
       {renderNotLoggedInMessage()}
-    </div>
+    </ul>
   );
 }
 
