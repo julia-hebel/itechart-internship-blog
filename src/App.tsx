@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from './app/hooks';
@@ -7,7 +6,6 @@ import {
   getLanguage,
   getLanguageStatus,
   loadLanguageFromCookie,
-  setLanguage,
 } from './redux/languageSlice';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -59,9 +57,6 @@ function App() {
 
   return (
     <IntlProvider locale={locale} messages={messages}>
-      <div
-        className='bg-[rgb(24,25,26)] min-h-screen text-white'
-      >
         {userStatus === 'succeeded' ? (
           <BrowserRouter>
             <Routes>
@@ -80,7 +75,6 @@ function App() {
             <CircularProgress size='4rem' />
           </div>
         )}
-      </div>
     </IntlProvider>
   );
 }

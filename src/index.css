@@ -8,6 +8,8 @@ body {
   margin: 0;
   padding: 0;
   background-color: rgb(24, 25, 26);
+  min-height: 100vh;
+  color: white !important;
   scrollbar-width: none;
   overflow: scroll;
   overflow-x: hidden;
