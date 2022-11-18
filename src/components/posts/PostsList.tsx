@@ -1,8 +1,13 @@
 import { useSelector } from 'react-redux';
-import { CircularProgress } from '@mui/material';
 import { getPostsStatus } from '../../redux/postsSlice';
-import Post from './Post';
+
 import postTypes from '../../types/postTypes';
+
+import { FormattedMessage } from 'react-intl';
+
+import Post from './Post';
+
+import { CircularProgress } from '@mui/material';
 
 interface propsTypes {
   postsToShow: postTypes[];
@@ -26,7 +31,10 @@ function PostsList({ postsToShow }: propsTypes) {
       } else {
         return (
           <div className='w-full text-center text-lg font-bold mt-8'>
-            No posts to show
+            <FormattedMessage
+              id='PostsList.noPosts'
+              defaultMessage='No posts to show'
+            />
           </div>
         );
       }

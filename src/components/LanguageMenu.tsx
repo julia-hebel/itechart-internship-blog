@@ -1,9 +1,18 @@
 import { useState } from 'react';
+
+import { useAppDispatch } from '../app/hooks';
+import { useSelector } from 'react-redux';
+import { getLanguage, setLanguage } from '../redux/languageSlice';
+
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
+
 import { IoLanguageOutline } from 'react-icons/io5';
+import { FiCheck } from 'react-icons/fi';
 
 function LanguageMenu() {
+  const dispatch = useAppDispatch();
+  const language = useSelector(getLanguage);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -38,7 +47,38 @@ function LanguageMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <div className='px-2 flex flex-col gap-1'></div>
+        <li className='px-2'>
+          <button
+            onClick={() => {
+              dispatch(setLanguage('English'));
+              handleClose();
+            }}
+            className='px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
+          >
+            <FiCheck
+              className={`mt-1 mr-3 ${
+                language !== 'English' ? 'invisible' : ''
+              }`}
+            />
+            <span className='mr-3'>English</span>
+          </button>
+        </li>
+        <li className='px-2'>
+          <button
+            onClick={() => {
+              dispatch(setLanguage('Polish'));
+              handleClose();
+            }}
+            className='px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
+          >
+            <FiCheck
+              className={`mt-1 mr-3 ${
+                language !== 'Polish' ? 'invisible' : ''
+              }`}
+            />
+            <span className='mr-3'>Polski</span>
+          </button>
+        </li>
       </Menu>
     </div>
   );

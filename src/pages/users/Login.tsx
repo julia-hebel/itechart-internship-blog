@@ -1,12 +1,17 @@
-import { useState, KeyboardEvent } from 'react';
+import { useState } from 'react';
+
 import { useAppDispatch } from '../../app/hooks';
 import { useSelector } from 'react-redux';
-import { getIsLoggedIn } from '../../redux/userSlice';
-import { Link, useNavigate } from 'react-router-dom';
+import { getIsLoggedIn, USERS_URL, loginUser } from '../../redux/userSlice';
+
 import axios from 'axios';
-import { USERS_URL } from '../../redux/userSlice';
-import { loginUser } from '../../redux/userSlice';
+
+import { Link, useNavigate } from 'react-router-dom';
+
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import MuiAlert from '@mui/material/Alert';
+
 const bcrypt = require('bcryptjs');
 
 function Login() {
@@ -19,23 +24,7 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const preventInvalidCharsUsername = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === ' ') {
-      e.preventDefault();
-      setErrorMessage('Username cannot contain space');
-    }
-    if (e.key === '"') {
-      e.preventDefault();
-      setErrorMessage('Username cannot contain "');
-    }
-  };
-
-  const preventInvalidCharsPassword = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === '"') {
-      e.preventDefault();
-      setErrorMessage('Password cannot contain "');
-    }
-  };
+  const intl = useIntl();
 
   const renderErrorMessage = () => {
     if (errorMessage) {
@@ -43,7 +32,12 @@ function Login() {
         <MuiAlert
           elevation={6}
           variant='filled'
-          onClose={() => setErrorMessage('')}
+          onClose={() => {
+            setErrorMessage('');
+            document.querySelectorAll('.border-red-500').forEach((element) => {
+              element.classList.remove('border', 'border-red-500');
+            });
+          }}
           severity='error'
           sx={{ borderRadius: '0.5rem' }}
         >
@@ -53,16 +47,6 @@ function Login() {
     } else {
       return null;
     }
-  };
-
-  const usernameError = () => {
-    const contains = errorMessage.toLowerCase().includes('username');
-    return contains;
-  };
-
-  const passwordError = () => {
-    const contains = errorMessage.toLowerCase().includes('password');
-    return contains;
   };
 
   const verifyLoginData = async (username: string, password: string) => {
@@ -83,13 +67,23 @@ function Login() {
     e.preventDefault();
 
     if (!username || !password) {
-      setErrorMessage('Required fields cannot be empty!');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'Register.error.requiredFieldsEmpty',
+          defaultMessage: 'Required fields cannot be empty!',
+        })
+      );
       return;
     }
 
     const loginDataResponse = await verifyLoginData(username, password);
     if (!loginDataResponse) {
-      await setErrorMessage('Username or password incorrect!');
+      await setErrorMessage(
+        intl.formatMessage({
+          id: 'Login.incorrectUserData',
+          defaultMessage: 'Username or password incorrect!',
+        })
+      );
       return;
     }
 
@@ -100,7 +94,12 @@ function Login() {
   if (isLoggedIn) {
     return (
       <main className='h-screen w-full flex flex-col justify-center items-center'>
-        <span className='text-xl font-bold mb-12'>Already logged in</span>
+        <span className='text-xl font-bold mb-12'>
+          <FormattedMessage
+            id='Register.alreadyLoggedIn'
+            defaultMessage='Already logged in'
+          />
+        </span>
       </main>
     );
   }
@@ -110,22 +109,28 @@ function Login() {
       <div className='m-3 sm:m-6 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
         <div className='text-center my-2'>
           <h2 className='ml-0.5 text-xl sm:text-2xl font-bold'>
-            Welcome back!
+            <FormattedMessage
+              id='Login.welcomeBack'
+              defaultMessage='Welcome back!'
+            />
           </h2>
         </div>
         <form onSubmit={(e) => onSubmitLogin(e)}>
           <div className='my-3'>
             <label htmlFor='username' className='block mb-1 ml-0.5'>
-              Username
+              <FormattedMessage
+                id='Register.usernameLabel'
+                defaultMessage='Username'
+              />
             </label>
             <input
               type='text'
               name='username'
-              placeholder='Username'
-              className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg ${
-                usernameError() && 'border border-red-500'
-              }`}
-              onKeyDown={(e) => preventInvalidCharsUsername(e)}
+              placeholder={intl.formatMessage({
+                id: 'Register.usernameLabel',
+                defaultMessage: 'Username',
+              })}
+              className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -133,16 +138,19 @@ function Login() {
           </div>
           <div className='mt-3 mb-4'>
             <label htmlFor='password' className='block mb-1 ml-0.5'>
-              Password
+              <FormattedMessage
+                id='Register.passwordLabel'
+                defaultMessage='Password'
+              />
             </label>
             <input
               type='password'
               name='password'
-              placeholder='Password'
-              className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg ${
-                passwordError() && 'border border-red-500'
-              }`}
-              onKeyDown={(e) => preventInvalidCharsPassword(e)}
+              placeholder={intl.formatMessage({
+                id: 'Register.passwordLabel',
+                defaultMessage: 'Password',
+              })}
+              className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -153,16 +161,24 @@ function Login() {
             type='submit'
             className='w-full h-10 sm:h-11 text-center bg-green-600 rounded-lg py-2 mt-4 mb-2 disabled:bg-zinc-700 sm:text-lg'
           >
-            Log in
+            <FormattedMessage id='Login.login' defaultMessage='Log in' />
           </button>
         </form>
       </div>
       <hr className='border-zinc-500 mt-5 mb-4 sm:mt-10 sm:mb-8' />
       <div className='px-4 w-full text-center'>
-        <div className='text-lg sm:text-xl'>Don't have an account?</div>
+        <div className='text-lg sm:text-xl'>
+          <FormattedMessage
+            id='Login.doNotHaveAccount'
+            defaultMessage="Don't have an account?"
+          />{' '}
+        </div>
         <Link to='/register'>
           <div className='h-10 sm:h-11 p-2 mt-3 mx-3 sm:mx-6 bg-blue-700 rounded-lg sm:text-lg'>
-            Register
+            <FormattedMessage
+              id='Login.registerHere'
+              defaultMessage='Register here'
+            />
           </div>
         </Link>
       </div>

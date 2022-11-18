@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+
 import { useAppDispatch } from '../../app/hooks';
 import { useSelector } from 'react-redux';
 import {
@@ -8,14 +9,20 @@ import {
   getPostsStatus,
 } from '../../redux/postsSlice';
 import { deleteUser } from '../../redux/userSlice';
+
 import { useNavigate } from 'react-router-dom';
+
+import { FormattedMessage } from 'react-intl';
+
+import postTypes from '../../types/postTypes';
+import userTypes from '../../types/userTypes';
+
 import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
+
 import { CgClose } from 'react-icons/cg';
-import postTypes from '../../types/postTypes';
-import userTypes from '../../types/userTypes';
 
 interface propsTypes {
   user: userTypes;
@@ -82,7 +89,10 @@ function DeleteUserModal({
             <div className='w-full grid grid-cols-5'>
               <span className='col-span-1'></span>
               <h2 className='col-span-3 font-bold text-xl text-center'>
-                Are you sure to delete your account?
+                <FormattedMessage
+                  id='DeleteUserModal.headingMessage'
+                  defaultMessage='Are you sure to delete your account?'
+                />
               </h2>
               <div className='col-span-1 flex items-center justify-end h-8'>
                 <button
@@ -94,8 +104,10 @@ function DeleteUserModal({
               </div>
             </div>
             <p className='mt-6'>
-              This operation is irreversible. Your account and all your posts
-              will be deleted permanently
+              <FormattedMessage
+                id='DeleteUserModal.paragraphWarning'
+                defaultMessage='This operation is irreversible. Your account and all your posts will be deleted permanently'
+              />
             </p>
             <hr className='mt-6 mb-8 border-zinc-600' />
             <div className='flex flex-row items-center justify-around'>
@@ -103,13 +115,19 @@ function DeleteUserModal({
                 className='w-[122px] py-2 px-4 border border-zinc-500 rounded-md bg-green-700'
                 onClick={() => onDelete()}
               >
-                Yes, delete it
+                <FormattedMessage
+                  id='DeleteUserModal.confirmButton'
+                  defaultMessage='Yes, delete it'
+                />
               </button>
               <button
                 className='w-[122px] py-2 px-4 border border-zinc-500 rounded-md bg-red-700'
                 onClick={() => setDeleteModalOpen(false)}
               >
-                No, go back
+                <FormattedMessage
+                  id='DeleteUserModal.cancelButton'
+                  defaultMessage='No, go back'
+                />
               </button>
             </div>
           </div>

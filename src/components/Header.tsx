@@ -1,19 +1,28 @@
 import { useState } from 'react';
+
 import { useSelector } from 'react-redux';
 import { getCurrentUser, getIsLoggedIn } from '../redux/userSlice';
+
 import { Link } from 'react-router-dom';
+
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import UserMenu from './users/UserMenu';
+import LanguageMenu from './LanguageMenu';
+
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+
 import { BiBook } from 'react-icons/bi';
 import { VscAccount } from 'react-icons/vsc';
-import LanguageMenu from './LanguageMenu';
 
 function Header() {
   const isLoggedIn = useSelector(getIsLoggedIn);
   const currentUser = useSelector(getCurrentUser);
 
   const [showLogoutMessage, setShowLogoutMessage] = useState(false);
+
+  const intl = useIntl();
 
   const renderLogoutMessage = () => {
     return (
@@ -28,7 +37,10 @@ function Header() {
           onClose={() => setShowLogoutMessage(false)}
           severity='success'
         >
-          Logged out successfully
+          <FormattedMessage
+            id='Header.logoutMessage'
+            defaultMessage='Logged out successfully'
+          />
         </MuiAlert>
       </Snackbar>
     );

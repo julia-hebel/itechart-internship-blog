@@ -1,13 +1,18 @@
 import { useState, KeyboardEvent } from 'react';
+
 import { useAppDispatch } from '../../app/hooks';
 import { useSelector } from 'react-redux';
-import { getIsLoggedIn } from '../../redux/userSlice';
+import { getIsLoggedIn, USERS_URL, addNewUser } from '../../redux/userSlice';
 import { nanoid } from '@reduxjs/toolkit';
-import { USERS_URL } from '../../redux/userSlice';
+
 import axios from 'axios';
+
 import { Link, useNavigate } from 'react-router-dom';
-import { addNewUser } from '../../redux/userSlice';
+
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import MuiAlert from '@mui/material/Alert';
+
 const bcrypt = require('bcryptjs');
 
 function Register() {
@@ -22,21 +27,78 @@ function Register() {
 
   const navigate = useNavigate();
 
+  const intl = useIntl();
+
   const preventInvalidCharsUsername = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === ' ') {
       e.preventDefault();
-      setErrorMessage('Username cannot contain space');
-    }
-    if (e.key === '"') {
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'Register.error.usernameNoSpace',
+          defaultMessage: 'Username cannot contain space',
+        })
+      );
+      document
+        .getElementsByName('username')[0]
+        .classList.add('border', 'border-red-500');
+    } else if (e.key === '"') {
       e.preventDefault();
-      setErrorMessage('Username cannot contain "');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'Register.error.usernameNoQuotation',
+          defaultMessage: 'Username cannot contain "',
+        })
+      );
+      document
+        .getElementsByName('username')[0]
+        .classList.add('border', 'border-red-500');
+    } else if (e.keyCode >= 33) {
+      setErrorMessage('');
+      document
+        .getElementsByName('username')[0]
+        .classList.remove('border', 'border-red-500');
     }
   };
 
   const preventInvalidCharsPassword = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === '"') {
       e.preventDefault();
-      setErrorMessage('Password cannot contain "');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'Register.error.passwordNoQuotation',
+          defaultMessage: 'Password cannot contain "',
+        })
+      );
+      document
+        .getElementsByName('password')[0]
+        .classList.add('border', 'border-red-500');
+    } else if (e.keyCode >= 33) {
+      setErrorMessage('');
+      document
+        .getElementsByName('password')[0]
+        .classList.remove('border', 'border-red-500');
+    }
+  };
+
+  const preventInvalidCharsConfirmPassword = (
+    e: KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === '"') {
+      e.preventDefault();
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'Register.error.passwordNoQuotation',
+          defaultMessage: 'Password cannot contain "',
+        })
+      );
+      document
+        .getElementsByName('confirmPassword')[0]
+        .classList.add('border', 'border-red-500');
+    } else if (e.keyCode >= 33) {
+      setErrorMessage('');
+      document
+        .getElementsByName('confirmPassword')[0]
+        .classList.remove('border', 'border-red-500');
     }
   };
 
@@ -46,7 +108,12 @@ function Register() {
         <MuiAlert
           elevation={6}
           variant='filled'
-          onClose={() => setErrorMessage('')}
+          onClose={() => {
+            setErrorMessage('');
+            document.querySelectorAll('.border-red-500').forEach((element) => {
+              element.classList.remove('border', 'border-red-500');
+            });
+          }}
           severity='error'
           sx={{ borderRadius: '0.5rem' }}
         >
@@ -56,16 +123,6 @@ function Register() {
     } else {
       return null;
     }
-  };
-
-  const usernameError = () => {
-    const contains = errorMessage.toLowerCase().includes('username');
-    return contains;
-  };
-
-  const passwordError = () => {
-    const contains = errorMessage.toLowerCase().includes('password');
-    return contains;
   };
 
   const checkIfUsernameExists = async (username: string) => {
@@ -84,33 +141,87 @@ function Register() {
   const onSubmitRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!username || !password || !confirmPassword) {
-      setErrorMessage('Required fields cannot be empty!');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'Register.error.requiredFieldsEmpty',
+          defaultMessage: 'Required fields cannot be empty!',
+        })
+      );
       return;
     }
 
     const isUsernameTaken = await checkIfUsernameExists(username);
     if (isUsernameTaken) {
-      setErrorMessage('Username already taken');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'Register.error.usernameTaken',
+          defaultMessage: 'Username already taken',
+        })
+      );
+      document
+        .getElementsByName('username')[0]
+        .classList.add('border', 'border-red-500');
       return;
     }
 
     if (password !== confirmPassword) {
-      setErrorMessage('Passwords do not match');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'Register.error.passwordsDoNotMatch',
+          defaultMessage: 'Passwords do not match',
+        })
+      );
+      document
+        .getElementsByName('password')[0]
+        .classList.add('border', 'border-red-500');
+      document
+        .getElementsByName('confirmPassword')[0]
+        .classList.add('border', 'border-red-500');
       return;
     }
 
     if (password.length < 8) {
-      setErrorMessage('Password should contain at least 8 characters');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'Register.error.passwordTooShort',
+          defaultMessage: 'Password should contain at least 8 characters',
+        })
+      );
+      document
+        .getElementsByName('password')[0]
+        .classList.add('border', 'border-red-500');
+      document
+        .getElementsByName('confirmPassword')[0]
+        .classList.add('border', 'border-red-500');
       return;
     }
 
     if (username.length > 30) {
-      setErrorMessage('Username too long');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'Register.error.usernameTooLong',
+          defaultMessage: 'Username too long',
+        })
+      );
+      document
+        .getElementsByName('username')[0]
+        .classList.add('border', 'border-red-500');
       return;
     }
 
     if (password.length > 30) {
-      setErrorMessage('Password too long');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'Register.error.passwordTooLong',
+          defaultMessage: 'Password too long',
+        })
+      );
+      document
+        .getElementsByName('password')[0]
+        .classList.add('border', 'border-red-500');
+      document
+        .getElementsByName('confirmPassword')[0]
+        .classList.add('border', 'border-red-500');
       return;
     }
 
@@ -124,7 +235,12 @@ function Register() {
         )) ||
       profileImageURL.includes('"')
     ) {
-      setErrorMessage('URL is invalid, please try another');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'Register.error.URLinvalid',
+          defaultMessage: 'URL is invalid, please try another',
+        })
+      );
       return;
     }
 
@@ -148,7 +264,12 @@ function Register() {
   if (isLoggedIn) {
     return (
       <main className='h-screen w-full flex flex-col justify-center items-center'>
-        <span className='text-xl font-bold mb-12'>Already logged in</span>
+        <span className='text-xl font-bold mb-12'>
+          <FormattedMessage
+            id='Register.alreadyLoggedIn'
+            defaultMessage='Already logged in'
+          />
+        </span>
       </main>
     );
   }
@@ -158,21 +279,29 @@ function Register() {
       <div className='m-3 sm:m-6 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
         <div className='text-center my-2'>
           <h2 className='ml-0.5 text-xl sm:text-2xl font-bold'>
-            Register here
+            <FormattedMessage
+              id='Register.register'
+              defaultMessage='Register here'
+            />
           </h2>
         </div>
         <form onSubmit={(e) => onSubmitRegister(e)}>
           <div className='my-3'>
             <label htmlFor='username' className='block mb-1 ml-0.5'>
-              Username<span className='text-red-500'>*</span>
+              <FormattedMessage
+                id='Register.usernameLabel'
+                defaultMessage='Username'
+              />
+              <span className='text-red-500'>*</span>
             </label>
             <input
               type='text'
               name='username'
-              placeholder='Username'
-              className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg ${
-                usernameError() && 'border border-red-500'
-              }`}
+              placeholder={intl.formatMessage({
+                id: 'Register.usernameLabel',
+                defaultMessage: 'Username',
+              })}
+              className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
               onKeyDown={(e) => preventInvalidCharsUsername(e)}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -181,15 +310,20 @@ function Register() {
           </div>
           <div className='my-3'>
             <label htmlFor='password' className='block mb-1 ml-0.5'>
-              Password<span className='text-red-500'>*</span>
+              <FormattedMessage
+                id='Register.passwordLabel'
+                defaultMessage='Password'
+              />
+              <span className='text-red-500'>*</span>
             </label>
             <input
               type='password'
               name='password'
-              placeholder='Password'
-              className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg ${
-                passwordError() && 'border border-red-500'
-              }`}
+              placeholder={intl.formatMessage({
+                id: 'Register.passwordLabel',
+                defaultMessage: 'Password',
+              })}
+              className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
               onKeyDown={(e) => preventInvalidCharsPassword(e)}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -198,16 +332,21 @@ function Register() {
           </div>
           <div className='my-3'>
             <label htmlFor='confirmPassword' className='block mb-1 ml-0.5'>
-              Confirm Password<span className='text-red-500'>*</span>
+              <FormattedMessage
+                id='Register.confirmPasswordLabel'
+                defaultMessage='Confirm Password'
+              />
+              <span className='text-red-500'>*</span>
             </label>
             <input
               type='password'
               name='confirmPassword'
-              placeholder='Confirm Password'
-              className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg ${
-                passwordError() && 'border border-red-500'
-              }`}
-              onKeyDown={(e) => preventInvalidCharsPassword(e)}
+              placeholder={intl.formatMessage({
+                id: 'Register.confirmPasswordLabel',
+                defaultMessage: 'Confirm Password',
+              })}
+              className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
+              onKeyDown={(e) => preventInvalidCharsConfirmPassword(e)}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
@@ -215,16 +354,21 @@ function Register() {
           </div>
           <div className='mt-3 mb-4'>
             <label htmlFor='image' className='block mb-1 ml-0.5'>
-              Profile photo URL (optional)
+              <FormattedMessage
+                id='Register.profilePhotoURLLabel'
+                defaultMessage='Profile photo URL (optional)'
+              />
             </label>
             <input
               type='text'
               name='image'
               className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg ${
-                errorMessage === 'URL is invalid, please try another' &&
-                'border border-red-500'
+                errorMessage.includes('URL') && 'border border-red-500'
               }`}
-              placeholder='Image URL'
+              placeholder={intl.formatMessage({
+                id: 'Register.URL',
+                defaultMessage: 'URL',
+              })}
               value={profileImageURL}
               onChange={(e) => setProfileImageURL(e.target.value)}
             />
@@ -234,16 +378,27 @@ function Register() {
             type='submit'
             className='w-full h-10 sm:h-11 text-center bg-green-600 rounded-lg py-2 mt-4 mb-2 disabled:bg-zinc-700 sm:text-lg'
           >
-            Register
+            <FormattedMessage
+              id='Register.register'
+              defaultMessage='Register'
+            />
           </button>
         </form>
       </div>
       <hr className='border-zinc-500 mt-5 mb-4 sm:mt-10 sm:mb-8' />
       <div className='px-4 w-full text-center'>
-        <div className='text-lg sm:text-xl'>Already have an account?</div>
+        <div className='text-lg sm:text-xl'>
+          <FormattedMessage
+            id='Register.alreadyHaveAccount'
+            defaultMessage='Already have an account?'
+          />
+        </div>
         <Link to='/login'>
           <div className='h-10 sm:h-11 p-2 mt-3 mx-3 sm:mx-6 bg-blue-700 rounded-lg sm:text-lg'>
-            Log in here
+            <FormattedMessage
+              id='Register.loginHere'
+              defaultMessage='Log in here'
+            />
           </div>
         </Link>
       </div>

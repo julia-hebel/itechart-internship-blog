@@ -1,11 +1,16 @@
 import { useAppDispatch } from '../../app/hooks';
 import { deletePost } from '../../redux/postsSlice';
+
+import { FormattedMessage, useIntl } from 'react-intl';
+
+import postTypes from '../../types/postTypes';
+
 import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
+
 import { CgClose } from 'react-icons/cg';
-import postTypes from '../../types/postTypes';
 
 interface propsTypes {
   post: postTypes;
@@ -22,9 +27,16 @@ function DeletePostModal({
 }: propsTypes) {
   const dispatch = useAppDispatch();
 
+  const intl = useIntl();
+
   const onDelete = () => {
     dispatch(deletePost(post.id));
-    setConfirmationMessage('Post successfully deteted');
+    setConfirmationMessage(
+      intl.formatMessage({
+        id: 'DeletePostModal.confirmationMessage',
+        defaultMessage: 'Post successfully deteted',
+      })
+    );
     setDeleteModalOpen(false);
   };
 
@@ -57,7 +69,10 @@ function DeletePostModal({
             <div className='w-full grid grid-cols-5'>
               <span className='col-span-1'></span>
               <h2 className='col-span-3 font-bold text-xl text-center'>
-                Are you sure to delete post?
+                <FormattedMessage
+                  id='DeletePostModal.heading'
+                  defaultMessage='Are you sure to delete post?'
+                />
               </h2>
               <div className='col-span-1 flex items-center justify-end h-8'>
                 <button
@@ -74,13 +89,19 @@ function DeletePostModal({
                 className='w-[122px] py-2 px-4 border border-zinc-500 rounded-md bg-green-700'
                 onClick={() => onDelete()}
               >
-                Yes, delete it
+                <FormattedMessage
+                  id='DeletePostModal.confirmButton'
+                  defaultMessage='Yes, delete it'
+                />
               </button>
               <button
                 className='w-[122px] py-2 px-4 border border-zinc-500 rounded-md bg-red-700'
                 onClick={() => setDeleteModalOpen(false)}
               >
-                No, go back
+                <FormattedMessage
+                  id='DeletePostModal.cancelButton'
+                  defaultMessage='No, go back'
+                />
               </button>
             </div>
           </div>

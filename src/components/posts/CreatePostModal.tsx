@@ -1,14 +1,20 @@
 import { useState } from 'react';
+
 import { useAppDispatch } from '../../app/hooks';
 import { nanoid } from '@reduxjs/toolkit';
 import { addNewPost } from '../../redux/postsSlice';
+
+import { FormattedMessage, useIntl } from 'react-intl';
+
+import userTypes from '../../types/userTypes';
+
 import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import MuiAlert from '@mui/material/Alert';
+
 import { CgClose } from 'react-icons/cg';
-import userTypes from '../../types/userTypes';
 
 interface propsTypes {
   currentUser: userTypes;
@@ -29,6 +35,8 @@ function CreatePostModal({
   const [errorMessage, setErrorMessage] = useState('');
 
   const dispatch = useAppDispatch();
+
+  const intl = useIntl();
 
   const renderErrorMessage = () => {
     if (errorMessage) {
@@ -52,7 +60,12 @@ function CreatePostModal({
     setConfirmationMessage(false);
 
     if (!postTitle) {
-      setErrorMessage('Title input cannot be empty!');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'CreatePostModal.errorMessage.titleEmpty',
+          defaultMessage: 'Title input cannot be empty!',
+        })
+      );
       return;
     }
 
@@ -65,7 +78,12 @@ function CreatePostModal({
         postImageURL.includes('.gif')
       )
     ) {
-      setErrorMessage('URL is invalid, please try another');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'CreatePostModal.errorMessage.invalidURL',
+          defaultMessage: 'URL is invalid, please try another',
+        })
+      );
       return;
     }
 
@@ -101,7 +119,12 @@ function CreatePostModal({
       setModalOpen(false);
     } catch (error: any) {
       console.error('Failed to save the post', error);
-      setErrorMessage('Post failed to add');
+      setErrorMessage(
+        intl.formatMessage({
+          id: 'CreatePostModal.errorMessage.failedAddPost',
+          defaultMessage: 'Post failed to add',
+        })
+      );
     }
   };
 
@@ -133,7 +156,10 @@ function CreatePostModal({
           <div className='w-full grid grid-cols-5'>
             <span className='col-span-1'></span>
             <h2 className='col-span-3 font-bold text-xl text-center'>
-              Create a new post
+              <FormattedMessage
+                id='CreatePostModal.createPost'
+                defaultMessage='Create a new post'
+              />
             </h2>
             <div className='col-span-1 flex items-center justify-end h-8'>
               <button
@@ -149,7 +175,10 @@ function CreatePostModal({
             <div className='w-full mb-3 mt-1 flex items-center justify-start'>
               <img
                 src={currentUser.profilePictureURL}
-                alt='profile pic'
+                alt={intl.formatMessage({
+                  id: 'AddNewPost.profilePicAlt',
+                  defaultMessage: 'Your profile picture',
+                })}
                 className='object-cover rounded-full h-10 w-10'
               />
               <span className='ml-3 flex flex-col justify-center font-bold'>
@@ -159,13 +188,20 @@ function CreatePostModal({
             <form onSubmit={(e) => onSubmitPost(e)} className='mt-3'>
               <div className='my-3'>
                 <label htmlFor='title' className='block mb-1 ml-0.5'>
-                  Title<span className='text-red-500'>*</span>
+                  <FormattedMessage
+                    id='CreatePostModal.title'
+                    defaultMessage='Title'
+                  />
+                  <span className='text-red-500'>*</span>
                 </label>
                 <input
                   type='text'
                   name='title'
                   className='w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-xl'
-                  placeholder='Post title'
+                  placeholder={intl.formatMessage({
+                    id: 'CreatePostModal.titlePlaceholder',
+                    defaultMessage: 'Post title',
+                  })}
                   value={postTitle}
                   onChange={(e) => setPostTitle(e.target.value)}
                   required
@@ -173,21 +209,30 @@ function CreatePostModal({
               </div>
               <div className='my-3'>
                 <label htmlFor='content' className='block mb-1 ml-0.5'>
-                  Content<span className='text-red-500'>*</span>
+                  <FormattedMessage
+                    id='CreatePostModal.content'
+                    defaultMessage='Content'
+                  />
                 </label>
                 <textarea
                   name='content'
                   cols={30}
                   rows={8}
                   className='w-full bg-[rgb(62,63,64)] rounded-lg p-2 text-sm sm:text-base resize-none'
-                  placeholder='Post content'
+                  placeholder={intl.formatMessage({
+                    id: 'CreatePostModal.contentPlacehonder',
+                    defaultMessage: 'Post content',
+                  })}
                   value={postContent}
                   onChange={(e) => setPostContent(e.target.value)}
                 />
               </div>
               <div className='my-3'>
                 <label htmlFor='image' className='block mb-1 ml-0.5'>
-                  Photo URL (optional)
+                  <FormattedMessage
+                    id='CreatePostModal.image'
+                    defaultMessage='Image URL (optional)'
+                  />
                 </label>
                 <input
                   type='text'
@@ -196,7 +241,10 @@ function CreatePostModal({
                     errorMessage === 'URL is invalid, please try another' &&
                     'border border-red-500'
                   }`}
-                  placeholder='Image URL'
+                  placeholder={intl.formatMessage({
+                    id: 'CreatePostModal.imagePlaceholder',
+                    defaultMessage: 'Image URL',
+                  })}
                   value={postImageURL}
                   onChange={(e) => setPostImageURL(e.target.value)}
                 />
@@ -207,7 +255,10 @@ function CreatePostModal({
                 className='w-full h-12 text-center bg-green-600 rounded-lg py-2 mt-4 disabled:bg-zinc-700'
                 disabled={!postTitle}
               >
-                Add a new post
+                <FormattedMessage
+                  id='CreatePostModal.addPostButton'
+                  defaultMessage='Add a new post'
+                />
               </button>
             </form>
           </div>
