@@ -4,6 +4,8 @@
   "AddNewPost.postPlaceholder": "What's on your mind?",
   "AddNewPost.profilePicAlt": "Your profile picture",
   "AddNewPost.defaultProfilePicAlt": "Default profile picture",
+  "AddNewPost.aria.section": "Adding a new post",
+  "AddNewPost.aria.button": "Click to create a new post",
 
   "CreatePostModal.errorMessage.titleEmpty": "Title input cannot be empty!",
   "CreatePostModal.errorMessage.invalidURL": "URL is invalid, please try another",
@@ -16,61 +18,29 @@
   "CreatePostModal.image": "Image URL (optional)",
   "CreatePostModal.imagePlaceholder": "Image URL",
   "CreatePostModal.addPostButton": "Add a new post",
+  "CreatePostModal.aria.modal": "Opened modal - creating a new post",
+  "CreatePostModal.aria.closeButton": "Close modal - creating a new post",
 
   "DeletePostModal.confirmationMessage": "Post successfully deteted",
   "DeletePostModal.heading": "Are you sure to delete post?",
   "DeletePostModal.confirmButton": "Yes, delete it",
   "DeletePostModal.cancelButton": "No, go back",
-
-  "EditPostModal.confirmationMessage": "Post was successfully updated",
-  "EditPostModal.errorMessage.failedToUpdate": "Post failed to update",
-  "EditPostModal.errorMessage.editPost": "Edit your post",
-  "EditPostModal.updatePostButton": "Update post",
-
-  "Post.showMoreButton": "Show more",
-  "Post.showLessButton": "Show less",
-  "Post.profilePicAlt": "'s profile picture",
-  "Post.postImageAlt": "Image posted by ",
-
-  "Post.aria.article": "Post by ",
-
-  "PostMenu.editLabel": "Edit",
-  "PostMenu.deleteLabel": "Delete",
-
-  "PostReactions.notLoggedInMessage": "You must be logged in to react",
-  "PostReactions.like": "Like",
-  "PostReactions.love": "Love",
-  "PostReactions.wow": "Wow",
-  "PostReactions.sad": "Sad",
-  "PostReactions.dislike": "Dislike",
-
-  "PostReactions.aria.reactionList": "List of reactions. ",
-  "PostReactions.aria.numberOfReactions": ". Number of reactions: ",
-
-  "PostsList.noPosts": "No posts to show",
-
-  "TimeAgo.years": " years ago",
-  "TimeAgo.1year": "1 year ago",
-  "TimeAgo.months": " months ago",
-  "TimeAgo.1month": "1 month ago",
-  "TimeAgo.days": " days ago",
-  "TimeAgo.1day": "1 day ago",
-  "TimeAgo.hours": " hours ago",
-  "TimeAgo.1hour": "1 hour ago",
-  "TimeAgo.minutes": " minutes ago",
-  "TimeAgo.1minute": "1 minute ago",
-  "TimeAgo.seconds": " seconds ago",
-  "TimeAgo.1second": "1 second ago",
+  "DeletePostModal.aria.modal": "Opened modal - deleting the post",
+  "DeletePostModal.aria.closeButton": "Close modal - deleting the post",
 
   "DeleteUserModal.headingMessage": "Are you sure to delete your account?",
   "DeleteUserModal.paragraphWarning": "This operation is irreversible. Your account and all your posts will be deleted permanently",
   "DeleteUserModal.confirmButton": "Yes, delete it",
   "DeleteUserModal.cancelButton": "No, go back",
+  "DeleteUserModal.aria.modal": "Opened modal - deleting the account",
+  "DeleteUserModal.aria.closeButton": "Close modal - deleting the account",
 
-  "UserMenu.manageProfile": "Manage Profile",
-  "UserMenu.logout": "Log Out",
-
-  "Header.logoutMessage": "Logged out successfully",
+  "EditPostModal.confirmationMessage": "Post was successfully updated",
+  "EditPostModal.errorMessage.failedToUpdate": "Post failed to update",
+  "EditPostModal.errorMessage.editPost": "Edit your post",
+  "EditPostModal.updatePostButton": "Update post",
+  "EditPostModal.aria.modal": "Opened modal - editing the post",
+  "EditPostModal.aria.closeButton": "Close modal - editing the post",
 
   "EditProfile.confirmationMessage": "Saved successfully",
   "EditProfile.error.notAllPasswordsFilled": "To change password all 3 fields must be filled",
@@ -87,12 +57,56 @@
   "EditProfile.save": "Save",
   "EditProfile.or": "or",
   "EditProfile.deleteAccount": "Delete my account",
+  "EditProfile.aria.main": "Profile editing page",
+
+  "Header.logoutMessage": "Logged out successfully",
+  "Header.aria.header": "Navigation",
+  "Header.aria.linkHome": "Navigate to home page",
+  "Header.aria.homeClicked": "Redirected to home page.",
+  "Header.aria.notLoggedInLink": "Avatar of not logged in user. Navigate to login page",
+  "Header.aria.loginClicked": "Redirected to login page",
+
+  "Home.aria.main": "Home page",
+
+  "LanguageMenu.aria.button": "Open language selection menu",
+  "LanguageMenu.aria.menu": "List of languages",
+  "LanguageMenu.aria.selectedMessage": "Selected ",
 
   "Login.incorrectUserData": "Username or password incorrect!",
   "Login.welcomeBack": "Welcome back!",
   "Login.login": "Log in",
   "Login.doNotHaveAccount": "Don't have an account?",
   "Login.registerHere": "Register here",
+  "Login.aria.main": "Login page",
+
+  "PageNotFound.pageNotFound": "Page Not Found",
+  "PageNotFound.resourceMessage": "The resource could not be found on this server",
+  "PageNotFound.takeMeHome": "Take me home",
+
+  "Post.showMoreButton": "Show more",
+  "Post.showLessButton": "Show less",
+  "Post.profilePicAlt": "'s profile picture",
+  "Post.postImageAlt": "Image posted by ",
+  "Post.aria.article": "Post by ",
+  "Post.aria.yourPost": "Your post",
+  "Post.aria.authorNameLink": "Navigate to author's profile page",
+
+  "PostMenu.editLabel": "Edit",
+  "PostMenu.deleteLabel": "Delete",
+  "PostMenu.aria.button": "Open your post management menu",
+
+  "PostReactions.notLoggedInMessage": "You must be logged in to react",
+  "PostReactions.like": "Like",
+  "PostReactions.love": "Love",
+  "PostReactions.wow": "Wow",
+  "PostReactions.sad": "Sad",
+  "PostReactions.dislike": "Dislike",
+  "PostReactions.aria.reactionGiven": "Your reaction given",
+
+  "PostReactions.aria.reactionList": "List of reactions. ",
+  "PostReactions.aria.numberOfReactions": ". Number of reactions: ",
+
+  "PostsList.noPosts": "No posts to show",
 
   "Register.error.usernameNoSpace": "Username cannot contain space",
   "Register.error.usernameNoQuotation": "Username cannot contain \"",
@@ -112,10 +126,28 @@
   "Register.profilePhotoURLLabel": "Profile photo URL (optional)",
   "Register.alreadyHaveAccount": "Already have an account?",
   "Register.loginHere": "Log in here",
+  "Register.aria.main": "Register page",
+
+  "TimeAgo.years": " years ago",
+  "TimeAgo.1year": "1 year ago",
+  "TimeAgo.months": " months ago",
+  "TimeAgo.1month": "1 month ago",
+  "TimeAgo.days": " days ago",
+  "TimeAgo.1day": "1 day ago",
+  "TimeAgo.hours": " hours ago",
+  "TimeAgo.1hour": "1 hour ago",
+  "TimeAgo.minutes": " minutes ago",
+  "TimeAgo.1minute": "1 minute ago",
+  "TimeAgo.seconds": " seconds ago",
+  "TimeAgo.1second": "1 second ago",
+
+  "UserMenu.manageProfile": "Manage Profile",
+  "UserMenu.logout": "Log Out",
+  "UserMenu.aria.openUserMenu": "Open user menu",
+  "UserMenu.aria.profileLink": "Navigate to your profile page - link",
+  "UserMenu.aria.manageAccount": "Manage account - link",
 
   "UserProfile.userDoesNotExist": "This user does not exist",
-
-  "PageNotFound.pageNotFound": "Page Not Found",
-  "PageNotFound.resourceMessage": "The resource could not be found on this server",
-  "PageNotFound.takeMeHome": "Take me home"
+  "UserProfile.aria.userProfilePage": "Profile page of user - ",
+  "UserProfile.aria.yourProfilePage": "Your profile page"
 }

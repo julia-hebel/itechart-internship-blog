@@ -12,7 +12,7 @@ import { deleteUser } from '../../redux/userSlice';
 
 import { useNavigate } from 'react-router-dom';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import postTypes from '../../types/postTypes';
 import userTypes from '../../types/userTypes';
@@ -41,6 +41,8 @@ function DeleteUserModal({
   const posts = useSelector(getAllPosts);
 
   const navigate = useNavigate();
+
+  const intl = useIntl();
 
   useEffect(() => {
     if (deleteModalOpen && postsStatus === 'idle') {
@@ -84,11 +86,18 @@ function DeleteUserModal({
             color: 'white',
           }}
           className='pt-3 pb-5 px-5 rounded-xl'
+          aria-label={intl.formatMessage({
+            id: 'DeleteUserModal.aria.modal',
+            defaultMessage: 'Opened modal - deleting the account',
+          })}
         >
           <div className='text-center'>
             <div className='w-full grid grid-cols-5'>
               <span className='col-span-1'></span>
-              <h2 className='col-span-3 font-bold text-xl text-center'>
+              <h2
+                className='col-span-3 font-bold text-xl text-center'
+                tabIndex={0}
+              >
                 <FormattedMessage
                   id='DeleteUserModal.headingMessage'
                   defaultMessage='Are you sure to delete your account?'
@@ -98,12 +107,16 @@ function DeleteUserModal({
                 <button
                   onClick={() => setDeleteModalOpen(false)}
                   className='h-8 w-8 bg-[rgb(62,63,64)] hover:bg-[rgb(80,81,82)] rounded-full'
+                  aria-label={intl.formatMessage({
+                    id: 'EditPostModal.aria.closeButton',
+                    defaultMessage: 'Close modal - editing the post',
+                  })}
                 >
                   <CgClose className='h-full w-full p-1' />
                 </button>
               </div>
             </div>
-            <p className='mt-6'>
+            <p className='mt-6' tabIndex={0}>
               <FormattedMessage
                 id='DeleteUserModal.paragraphWarning'
                 defaultMessage='This operation is irreversible. Your account and all your posts will be deleted permanently'

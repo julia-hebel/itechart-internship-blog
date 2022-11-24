@@ -14,7 +14,7 @@ export default interface stateTypes {
     error: any;
   };
   language: {
-    language: string;
+    currentLanguage: string;
     status: string;
   };
 }

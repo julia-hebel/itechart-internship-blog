@@ -152,6 +152,10 @@ function EditPostModal({
             color: 'white',
           }}
           className='pt-3 pb-5 px-5 rounded-xl'
+          aria-label={intl.formatMessage({
+            id: 'EditPostModal.aria.modal',
+            defaultMessage: 'Opened modal - editing the post',
+          })}
         >
           <div className='w-full grid grid-cols-5'>
             <span className='col-span-1'></span>
@@ -165,6 +169,10 @@ function EditPostModal({
               <button
                 onClick={() => setEditModalOpen(false)}
                 className='h-8 w-8 bg-[rgb(62,63,64)] hover:bg-[rgb(80,81,82)] rounded-full'
+                aria-label={intl.formatMessage({
+                  id: 'EditPostModal.aria.closeButton',
+                  defaultMessage: 'Close modal - editing the post',
+                })}
               >
                 <CgClose className='h-full w-full p-1' />
               </button>
@@ -205,6 +213,7 @@ function EditPostModal({
                   value={postTitle}
                   onChange={(e) => setPostTitle(e.target.value)}
                   required
+                  aria-required={true}
                 />
               </div>
               <div className='my-3'>
@@ -225,6 +234,10 @@ function EditPostModal({
                   })}
                   value={postContent}
                   onChange={(e) => setPostContent(e.target.value)}
+                  aria-label={intl.formatMessage({
+                    id: 'CreatePostModal.contentPlacehonder',
+                    defaultMessage: 'Post content',
+                  })}
                 />
               </div>
               <div className='my-3'>
@@ -247,6 +260,10 @@ function EditPostModal({
                   })}
                   value={postImageURL}
                   onChange={(e) => setPostImageURL(e.target.value)}
+                  aria-label={intl.formatMessage({
+                    id: 'CreatePostModal.image',
+                    defaultMessage: 'Image URL (optional)',
+                  })}
                 />
               </div>
               {renderErrorMessage()}

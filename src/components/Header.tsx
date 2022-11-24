@@ -21,6 +21,8 @@ function Header() {
   const currentUser = useSelector(getCurrentUser);
 
   const [showLogoutMessage, setShowLogoutMessage] = useState(false);
+  const [homeLinkClicked, setHomeLinkClicked] = useState(false);
+  const [loginLinkClicked, setLoginLinkClicked] = useState(false);
 
   const intl = useIntl();
 
@@ -47,11 +49,24 @@ function Header() {
   };
 
   return (
-    <header className='grid grid-cols-4 grid-rows-1 justify-items-center content-center px-3 sm:px-4 h-12 bg-[rgb(117,11,150)]'>
+    <header
+      className='grid grid-cols-4 grid-rows-1 justify-items-center content-center px-3 sm:px-4 h-12 bg-[rgb(117,11,150)]'
+      tabIndex={0}
+      aria-label={intl.formatMessage({
+        id: 'Header.aria.header',
+        defaultMessage: 'Navigation',
+      })}
+    >
       <LanguageMenu />
       <Link
         to='/'
         className='col-span-2 flex items-center text-2xl sm:text-3xl'
+        role='link'
+        aria-label={intl.formatMessage({
+          id: 'Header.aria.linkHome',
+          defaultMessage: 'Navigate to home page',
+        })}
+        onClick={() => document.getElementsByTagName('main')[0]?.focus()}
       >
         <BiBook className='mr-1 h-[32px] w-full' />
         <h1 className='mb-[3px]'>PostBook</h1>
@@ -65,6 +80,12 @@ function Header() {
         <Link
           to='/login'
           className='justify-self-end flex items-center sm:text-base'
+          aria-label={intl.formatMessage({
+            id: 'Header.aria.notLoggedInLink',
+            defaultMessage:
+              'Avatar of not logged in user. Navigate to login page',
+          })}
+          onClick={() => document.getElementsByTagName('main')[0]?.focus()}
         >
           <VscAccount className='h-8 sm:h-9 w-full mr-0.5' />
         </Link>

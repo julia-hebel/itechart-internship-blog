@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import postTypes from '../../types/postTypes';
 
@@ -11,6 +11,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -23,8 +24,12 @@ function PostMenu({ post }: propsTypes) {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState('');
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const intl = useIntl();
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -54,13 +59,16 @@ function PostMenu({ post }: propsTypes) {
   return (
     <div className='h-max'>
       <IconButton
-        aria-label='more'
-        id='long-button'
+        aria-label={intl.formatMessage({
+          id: 'PostMenu.aria.button',
+          defaultMessage: 'Open your post management menu',
+        })}
         aria-controls={open ? 'long-menu' : undefined}
-        aria-expanded={open ? 'true' : undefined}
+        aria-expanded={open ? 'true' : 'false'}
         aria-haspopup='true'
         onClick={handleClick}
         sx={{ color: 'rgb(210,210,210)', padding: '0' }}
+        tabIndex={0}
       >
         <MoreVertIcon sx={{ height: '30px', width: '30px' }} />
       </IconButton>
@@ -73,8 +81,13 @@ function PostMenu({ post }: propsTypes) {
         open={open}
         onClose={handleClose}
       >
-        <li>
+        <MenuItem
+          onClick={() =>
+            document.getElementById('postmenu-editbutton')?.click()
+          }
+        >
           <button
+            id='postmenu-editbutton'
             className='px-1 py-1 w-full flex items-center rounded-md hover:bg-[rgb(74,75,76)] cursor-pointer'
             onClick={() => {
               setEditModalOpen(true);
@@ -82,13 +95,18 @@ function PostMenu({ post }: propsTypes) {
             }}
           >
             <EditIcon className='p-[2px] ml-1' />
-            <span className='mx-4 mb-[3px] w-full text-left'>
+            <span className='mx-4 mb-[1px] w-full text-left'>
               <FormattedMessage id='PostMenu.editLabel' defaultMessage='Edit' />
             </span>
           </button>
-        </li>
-        <li>
+        </MenuItem>
+        <MenuItem
+          onClick={() =>
+            document.getElementById('postmenu-deletebutton')?.click()
+          }
+        >
           <button
+            id='postmenu-deletebutton'
             className='px-1 py-1 w-full flex items-center rounded-md hover:bg-[rgb(74,75,76)] cursor-pointer'
             onClick={() => {
               setDeleteModalOpen(true);
@@ -96,14 +114,14 @@ function PostMenu({ post }: propsTypes) {
             }}
           >
             <DeleteIcon className='p-[2px] ml-1' />
-            <span className='mx-4 mb-[3px] w-full text-left'>
+            <span className='mx-4 mb-[1px] w-full text-left'>
               <FormattedMessage
                 id='PostMenu.deleteLabel'
                 defaultMessage='Delete'
               />
             </span>
           </button>
-        </li>
+        </MenuItem>
       </Menu>
       <EditPostModal
         post={post}

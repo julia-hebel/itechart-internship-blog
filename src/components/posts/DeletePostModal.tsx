@@ -64,11 +64,18 @@ function DeletePostModal({
             color: 'white',
           }}
           className='pt-3 pb-5 px-5 rounded-xl'
+          aria-label={intl.formatMessage({
+            id: 'DeletePostModal.aria.modal',
+            defaultMessage: 'Opened modal - deleting the post',
+          })}
         >
           <div className='text-center'>
             <div className='w-full grid grid-cols-5'>
               <span className='col-span-1'></span>
-              <h2 className='col-span-3 font-bold text-xl text-center'>
+              <h2
+                className='col-span-3 font-bold text-xl text-center'
+                tabIndex={0}
+              >
                 <FormattedMessage
                   id='DeletePostModal.heading'
                   defaultMessage='Are you sure to delete post?'
@@ -78,6 +85,10 @@ function DeletePostModal({
                 <button
                   onClick={() => setDeleteModalOpen(false)}
                   className='h-8 w-8 bg-[rgb(62,63,64)] hover:bg-[rgb(80,81,82)] rounded-full'
+                  aria-label={intl.formatMessage({
+                    id: 'DeletePostModal.aria.closeButton',
+                    defaultMessage: 'Close modal - deleting the post',
+                  })}
                 >
                   <CgClose className='h-full w-full p-1' />
                 </button>

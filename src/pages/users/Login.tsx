@@ -93,7 +93,14 @@ function Login() {
 
   if (isLoggedIn) {
     return (
-      <main className='h-screen w-full flex flex-col justify-center items-center'>
+      <main
+        className='h-screen w-full flex flex-col justify-center items-center'
+        tabIndex={0}
+        aria-label={intl.formatMessage({
+          id: 'Register.alreadyLoggedIn',
+          defaultMessage: 'Already logged in',
+        })}
+      >
         <span className='text-xl font-bold mb-12'>
           <FormattedMessage
             id='Register.alreadyLoggedIn'
@@ -105,7 +112,16 @@ function Login() {
   }
 
   return (
-    <div className='pb-2 max-w-[500px] m-auto'>
+    <main
+      className='pb-2 max-w-[500px] m-auto'
+      tabIndex={-1}
+      aria-label={intl.formatMessage({
+        id: 'Login.aria.main',
+        defaultMessage: 'Login page',
+      })}
+      aria-live='polite'
+      aria-atomic={true}
+    >
       <div className='m-3 sm:m-6 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
         <div className='text-center my-2'>
           <h2 className='ml-0.5 text-xl sm:text-2xl font-bold'>
@@ -167,13 +183,17 @@ function Login() {
       </div>
       <hr className='border-zinc-500 mt-5 mb-4 sm:mt-10 sm:mb-8' />
       <div className='px-4 w-full text-center'>
-        <div className='text-lg sm:text-xl'>
+        <div className='text-lg sm:text-xl' tabIndex={0}>
           <FormattedMessage
             id='Login.doNotHaveAccount'
             defaultMessage="Don't have an account?"
           />{' '}
         </div>
-        <Link to='/register'>
+        <Link
+          to='/register'
+          role='link'
+          onClick={() => document.getElementsByTagName('main')[0]?.focus()}
+        >
           <div className='h-10 sm:h-11 p-2 mt-3 mx-3 sm:mx-6 bg-blue-700 rounded-lg sm:text-lg'>
             <FormattedMessage
               id='Login.registerHere'
@@ -182,7 +202,7 @@ function Login() {
           </div>
         </Link>
       </div>
-    </div>
+    </main>
   );
 }
 

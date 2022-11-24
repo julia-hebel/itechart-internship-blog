@@ -370,13 +370,22 @@ function EditProfile() {
   };
 
   return (
-    <main className='px-3 sm:px-6 pb-0.5 max-w-[500px] m-auto mt-6'>
+    <main
+      className='px-3 sm:px-6 pb-0.5 max-w-[500px] m-auto mt-6'
+      tabIndex={-1}
+      aria-label={intl.formatMessage({
+        id: 'EditProfile.aria.main',
+        defaultMessage: 'Profile editing page',
+      })}
+      aria-live='polite'
+      aria-atomic={true}
+    >
       <form
         onSubmit={(e) => onSubmitEdit(e)}
         className='px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'
       >
         <div className='my-3 mb-16'>
-          <h3 className='text-xl font-bold text-center mb-2'>
+          <h3 className='text-xl font-bold text-center mb-2' tabIndex={0}>
             <FormattedMessage
               id='EditProfile.changeUsername'
               defaultMessage='Change username?'
@@ -401,10 +410,11 @@ function EditProfile() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            aria-required={true}
           />
         </div>
         <div className='my-3'>
-          <h3 className='text-xl font-bold text-center mb-2'>
+          <h3 className='text-xl font-bold text-center mb-2' tabIndex={0}>
             <FormattedMessage
               id='EditProfile.changePassword'
               defaultMessage='Change password?'
@@ -469,7 +479,7 @@ function EditProfile() {
           />
         </div>
         <div className='mt-3 mb-12'>
-          <h3 className='text-xl font-bold text-center mb-4'>
+          <h3 className='text-xl font-bold text-center mb-4' tabIndex={0}>
             <FormattedMessage
               id='EditProfile.changeProfilePicture'
               defaultMessage='Change or remove profile picture?'
@@ -504,13 +514,14 @@ function EditProfile() {
         </button>
       </form>
       {renderConfirmationMessage()}
-      <div className='my-16 text-center font-bold text-xl'>
+      <div className='my-16 text-center font-bold text-xl' tabIndex={0}>
         <FormattedMessage id='EditProfile.or' defaultMessage='or' />
       </div>
       <div className='flex justify-center mx-3'>
         <button
           onClick={() => setDeleteModalOpen(true)}
           className='w-full h-10 sm:h-11 text-center bg-red-600 rounded-lg py-2 mb-10 sm:text-lg'
+          aria-haspopup={true}
         >
           <FormattedMessage
             id='EditProfile.deleteAccount'

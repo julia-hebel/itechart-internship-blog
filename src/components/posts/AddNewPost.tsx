@@ -67,17 +67,31 @@ function AddNewPost() {
   };
 
   return (
-    <div className='w-full'>
+    <section
+      className='w-full'
+      tabIndex={0}
+      aria-label={intl.formatMessage({
+        id: 'AddNewPost.aria.section',
+        defaultMessage: 'Adding a new post',
+      })}
+    >
       <div className='px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
         <div className='w-full h-10 my-1 flex items-center justify-start'>
           {isLoggedIn ? (
             <Link to={`/profile/${currentUser.username}`}>
               <img
                 src={currentUser.profilePictureURL}
-                alt={intl.formatMessage({
-                  id: 'AddNewPost.profilePicAlt',
-                  defaultMessage: 'Your profile picture',
-                })}
+                alt={
+                  intl.formatMessage({
+                    id: 'AddNewPost.profilePicAlt',
+                    defaultMessage: 'Your profile picture',
+                  }) +
+                  intl.formatMessage({
+                    id: 'UserMenu.aria.profileLink',
+                    defaultMessage: 'Navigate to your profile page - link',
+                  })
+                }
+                role='link'
                 className='object-cover rounded-full h-10 w-10 mr-3 '
               />
             </Link>
@@ -95,12 +109,17 @@ function AddNewPost() {
           )}
 
           <button
-            className='grow pl-4 pb-[1px] h-full bg-[rgb(62,63,64)] hover:bg-[rgb(74,75,76)] text-zinc-400 text-left text-sm sm:text-base rounded-full'
+            className='grow pl-4 pb-[1px] h-full bg-[rgb(64,65,66)] hover:bg-[rgb(74,75,76)] text-[rgb(185,185,191)] text-left text-sm sm:text-base rounded-full'
             onClick={() =>
               isLoggedIn
                 ? setModalOpen(!modalOpen)
                 : setNotLoggedInMessage(true)
             }
+            aria-haspopup='true'
+            aria-label={intl.formatMessage({
+              id: 'AddNewPost.aria.button',
+              defaultMessage: 'Click to create a new post',
+            })}
           >
             <FormattedMessage
               id='AddNewPost.postPlaceholder'
@@ -117,7 +136,7 @@ function AddNewPost() {
           {renderConfirmationMessage()}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

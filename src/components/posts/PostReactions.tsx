@@ -111,7 +111,6 @@ function PostReactions({ post, currentUser }: propsTypes) {
   return (
     <ul
       className='w-full flex items-center justify-around text-center py-2'
-      role='reactionList'
       aria-label={intl.formatMessage({
         id: 'PostReactions.aria.reactionList',
         defaultMessage: 'List of reactions. ',
@@ -129,31 +128,38 @@ function PostReactions({ post, currentUser }: propsTypes) {
               })}
               placement='top'
               arrow
-              role='reaction details'
-              aria-label={
-                intl.formatMessage({
-                  id: `PostReactions.${reactionName}`,
-                  defaultMessage:
-                    reactionName.charAt(0).toUpperCase() +
-                    reactionName.slice(1),
-                }) +
-                intl.formatMessage({
-                  id: 'PostReactions.aria.numberOfReactions',
-                  defaultMessage: '. Number of reactions: ',
-                }) +
-                post.reactions[
-                  reactionName as keyof reactionsTypes
-                ].length.toString()
-              }
             >
               <button
                 className={`py-1.5 px-2 sm:px-3 text-sm sm:text-base hover:bg-zinc-600 rounded-md ${
                   getCurrentReaction() === reactionName && 'bg-zinc-600'
                 }`}
                 onClick={() => giveReaction(reactionName)}
+                aria-label={
+                  intl.formatMessage({
+                    id: `PostReactions.${reactionName}`,
+                    defaultMessage:
+                      reactionName.charAt(0).toUpperCase() +
+                      reactionName.slice(1),
+                  }) +
+                  intl.formatMessage({
+                    id: 'PostReactions.aria.numberOfReactions',
+                    defaultMessage: '. Number of reactions: ',
+                  }) +
+                  post.reactions[
+                    reactionName as keyof reactionsTypes
+                  ].length.toString() +
+                  (getCurrentReaction() === reactionName
+                    ? intl.formatMessage({
+                        id: 'PostReactions.aria.reactionGiven',
+                        defaultMessage: 'Your reaction given',
+                      })
+                    : '')
+                }
+                aria-live='polite'
+                aria-atomic={true}
               >
                 <div className='mx-1 mb-1'>{emoji}</div>
-                <span className='mx-1' role='numberofreactions'>
+                <span className='mx-1'>
                   {post.reactions[reactionName as keyof reactionsTypes].length}
                 </span>
               </button>
