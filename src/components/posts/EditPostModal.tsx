@@ -101,7 +101,9 @@ function EditPostModal({
       image: postImageURL,
       date: post.date,
       reactions: post.reactions,
-      user: post.user,
+      user: {
+        userId: post.user.userId,
+      },
     };
 
     try {
