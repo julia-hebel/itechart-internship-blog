@@ -92,7 +92,7 @@ function UserProfile() {
     <main className='max-w-[640px] m-auto p-5'>
       <div
         id='user-banner'
-        className='w-full flex flex-col items-center pt-5 pb-1 bg-[rgb(43,44,45)] rounded-lg'
+        className='w-full flex flex-col items-center pt-5 pb-1 bg-foreground-dark rounded-lg'
         tabIndex={0}
         aria-label={
           intl.formatMessage({

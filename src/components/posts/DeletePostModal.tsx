@@ -59,11 +59,9 @@ function DeletePostModal({
             transform: 'translate(-50%, -50%)',
             width: '90%',
             maxWidth: 500,
-            bgcolor: 'rgb(36,37,38)',
             boxShadow: 24,
-            color: 'white',
           }}
-          className='pt-3 pb-5 px-5 rounded-xl'
+          className='pt-3 pb-5 px-5 rounded-xl bg-foreground-dark text-white'
           aria-label={intl.formatMessage({
             id: 'DeletePostModal.aria.modal',
             defaultMessage: 'Opened modal - deleting the post',
@@ -84,7 +82,7 @@ function DeletePostModal({
               <div className='col-span-1 flex items-center justify-end h-8'>
                 <button
                   onClick={() => setDeleteModalOpen(false)}
-                  className='h-8 w-8 bg-[rgb(62,63,64)] hover:bg-[rgb(80,81,82)] rounded-full'
+                  className='h-8 w-8 bg-interactive-dark hover:bg-interactive-dark-hover rounded-full'
                   aria-label={intl.formatMessage({
                     id: 'DeletePostModal.aria.closeButton',
                     defaultMessage: 'Close modal - deleting the post',

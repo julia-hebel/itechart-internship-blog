@@ -132,7 +132,7 @@ function Post({ post }: propsTypes) {
 
   return (
     <article
-      className='my-5 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'
+      className='my-5 px-4 py-2 bg-foreground-dark rounded-lg'
       tabIndex={0}
       aria-label={
         post.user.username === currentUser.username

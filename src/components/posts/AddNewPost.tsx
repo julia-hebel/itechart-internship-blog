@@ -75,7 +75,7 @@ function AddNewPost() {
         defaultMessage: 'Adding a new post',
       })}
     >
-      <div className='px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
+      <div className='px-4 py-2 bg-foreground-dark rounded-lg'>
         <div className='w-full h-10 my-1 flex items-center justify-start'>
           {isLoggedIn ? (
             <Link to={`/profile/${currentUser.username}`}>
@@ -109,7 +109,7 @@ function AddNewPost() {
           )}
 
           <button
-            className='grow pl-4 pb-[1px] h-full bg-[rgb(64,65,66)] hover:bg-[rgb(74,75,76)] text-[rgb(185,185,191)] text-left text-sm sm:text-base rounded-full'
+            className='grow pl-4 pb-[1px] h-full bg-interactive-dark hover:bg-element-dark-hover text-[rgb(185,185,191)] text-left text-sm sm:text-base rounded-full'
             onClick={() =>
               isLoggedIn
                 ? setModalOpen(!modalOpen)

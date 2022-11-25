@@ -382,7 +382,7 @@ function EditProfile() {
     >
       <form
         onSubmit={(e) => onSubmitEdit(e)}
-        className='px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'
+        className='px-4 py-2 bg-foreground-dark rounded-lg'
       >
         <div className='my-3 mb-16'>
           <h3 className='text-xl font-bold text-center mb-2' tabIndex={0}>
@@ -405,7 +405,7 @@ function EditProfile() {
               id: 'Register.usernameLabel',
               defaultMessage: 'Username',
             })}
-            className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
+            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
             onKeyDown={(e) => preventInvalidCharsUsername(e)}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -433,7 +433,7 @@ function EditProfile() {
               id: 'EditProfile.oldPassword',
               defaultMessage: 'Old Password',
             })}
-            className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
+            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
           />
@@ -452,7 +452,7 @@ function EditProfile() {
               id: 'EditProfile.newPassword',
               defaultMessage: 'New Password',
             })}
-            className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
+            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
             onKeyDown={(e) => preventInvalidCharsPassword(e)}
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
@@ -472,7 +472,7 @@ function EditProfile() {
               id: 'EditProfile.confirmNewPassword',
               defaultMessage: 'Confirm New Password',
             })}
-            className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
+            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
             onKeyDown={(e) => preventInvalidCharsConfirmPassword(e)}
             value={confirmNewPassword}
             onChange={(e) => setConfirmNewPassword(e.target.value)}
@@ -494,7 +494,7 @@ function EditProfile() {
           <input
             type='text'
             name='image'
-            className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg ${
+            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg ${
               errorMessage.includes('URL') && 'border border-red-500'
             }`}
             placeholder={intl.formatMessage({

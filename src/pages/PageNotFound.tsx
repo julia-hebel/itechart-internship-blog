@@ -23,7 +23,7 @@ function PageNotFound() {
       <Link
         to='/'
         role='link'
-        className='my-4 border border-zinc-500 rounded-lg bg-[rgb(117,11,150)] p-2'
+        className='my-4 border border-zinc-500 rounded-lg bg-theme-purple p-2'
       >
         <FormattedMessage
           id='PageNotFound.takeMeHome'

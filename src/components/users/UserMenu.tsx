@@ -73,7 +73,7 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
             <Link
               id='profile-link'
               to={`/profile/${currentUser.username}`}
-              className='px-3 py-1 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
+              className='px-3 py-1 w-full rounded-md flex items-center hover:bg-element-dark-hover cursor-pointer'
               onClick={handleClose}
               tabIndex={0}
               role='link'
@@ -103,7 +103,7 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
           <Link
             id='editprofile-link'
             to='/editprofile'
-            className='mt-1 px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
+            className='mt-1 px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-element-dark-hover cursor-pointer'
             onClick={() => {
               handleClose();
               document.getElementsByTagName('main')[0]?.focus();
@@ -132,7 +132,7 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
         >
           <button
             id='logout-button'
-            className='mt-1 px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
+            className='mt-1 px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-element-dark-hover cursor-pointer'
             onClick={() => {
               dispatch(logoutUser());
               setShowLogoutMessage(true);

@@ -37,7 +37,7 @@ function LanguageMenu() {
     setTimeout(() => {
       setShowSelectionMessage('');
     }, 10);
-  }
+  };
 
   return (
     <div className='justify-self-start my-auto'>
@@ -90,7 +90,7 @@ function LanguageMenu() {
             tabIndex={0}
             aria-selected={currentLanguage === language.name ? 'true' : 'false'}
           >
-            <button className='px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'>
+            <button className='px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-element-dark-hover cursor-pointer'>
               <FiCheck
                 className={`mt-1 mr-3 ${
                   currentLanguage !== language.name ? 'invisible' : ''
@@ -100,38 +100,6 @@ function LanguageMenu() {
             </button>
           </MenuItem>
         ))}
-        {/* <MenuItem
-          onClick={() => {
-            dispatch(setLanguage('English'));
-            handleClose();
-          }}
-        >
-          <button className='px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'>
-            <FiCheck
-              className={`mt-1 mr-3 ${
-                currentLanguage !== 'English' ? 'invisible' : ''
-              }`}
-            />
-            <span className='mr-3'>English</span>
-          </button>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            dispatch(setLanguage('Polish'));
-            handleClose();
-          }}
-          tabIndex={0}
-          aria-selected={currentLanguage === 'Polish' ? 'true' : 'false'}
-        >
-          <button className='px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'>
-            <FiCheck
-              className={`mt-1 mr-3 ${
-                currentLanguage !== 'Polish' ? 'invisible' : ''
-              }`}
-            />
-            <span className='mr-3'>Polski</span>
-          </button>
-        </MenuItem> */}
       </Menu>
     </div>
   );

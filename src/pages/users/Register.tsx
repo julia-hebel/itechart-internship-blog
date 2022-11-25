@@ -292,7 +292,7 @@ function Register() {
       aria-live='polite'
       aria-atomic={true}
     >
-      <div className='m-3 sm:m-6 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
+      <div className='m-3 sm:m-6 px-4 py-2 bg-foreground-dark rounded-lg'>
         <div className='text-center my-2'>
           <h2 className='ml-0.5 text-xl sm:text-2xl font-bold'>
             <FormattedMessage
@@ -317,7 +317,7 @@ function Register() {
                 id: 'Register.usernameLabel',
                 defaultMessage: 'Username',
               })}
-              className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
+              className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
               onKeyDown={(e) => preventInvalidCharsUsername(e)}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -340,7 +340,7 @@ function Register() {
                 id: 'Register.passwordLabel',
                 defaultMessage: 'Password',
               })}
-              className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
+              className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
               onKeyDown={(e) => preventInvalidCharsPassword(e)}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -363,7 +363,7 @@ function Register() {
                 id: 'Register.confirmPasswordLabel',
                 defaultMessage: 'Confirm Password',
               })}
-              className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
+              className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
               onKeyDown={(e) => preventInvalidCharsConfirmPassword(e)}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -381,7 +381,7 @@ function Register() {
             <input
               type='text'
               name='image'
-              className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg ${
+              className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg ${
                 errorMessage.includes('URL') && 'border border-red-500'
               }`}
               placeholder={intl.formatMessage({

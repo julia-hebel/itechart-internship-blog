@@ -88,7 +88,7 @@ function PostMenu({ post }: propsTypes) {
         >
           <button
             id='postmenu-editbutton'
-            className='px-1 py-1 w-full flex items-center rounded-md hover:bg-[rgb(74,75,76)] cursor-pointer'
+            className='px-1 py-1 w-full flex items-center rounded-md hover:bg-element-dark-hover cursor-pointer'
             onClick={() => {
               setEditModalOpen(true);
               handleClose();
@@ -107,7 +107,7 @@ function PostMenu({ post }: propsTypes) {
         >
           <button
             id='postmenu-deletebutton'
-            className='px-1 py-1 w-full flex items-center rounded-md hover:bg-[rgb(74,75,76)] cursor-pointer'
+            className='px-1 py-1 w-full flex items-center rounded-md hover:bg-element-dark-hover cursor-pointer'
             onClick={() => {
               setDeleteModalOpen(true);
               handleClose();

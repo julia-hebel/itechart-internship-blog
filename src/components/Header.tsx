@@ -21,8 +21,6 @@ function Header() {
   const currentUser = useSelector(getCurrentUser);
 
   const [showLogoutMessage, setShowLogoutMessage] = useState(false);
-  const [homeLinkClicked, setHomeLinkClicked] = useState(false);
-  const [loginLinkClicked, setLoginLinkClicked] = useState(false);
 
   const intl = useIntl();
 
@@ -50,7 +48,7 @@ function Header() {
 
   return (
     <header
-      className='grid grid-cols-4 grid-rows-1 justify-items-center content-center px-3 sm:px-4 h-12 bg-[rgb(117,11,150)]'
+      className='grid grid-cols-4 grid-rows-1 justify-items-center content-center px-3 sm:px-4 h-12 bg-theme-purple'
       tabIndex={0}
       aria-label={intl.formatMessage({
         id: 'Header.aria.header',

@@ -46,7 +46,8 @@ const languageSlice = createSlice({
   },
 });
 
-export const getLanguage = (state: stateTypes) => state.language.currentLanguage;
+export const getLanguage = (state: stateTypes) =>
+  state.language.currentLanguage;
 export const getLanguageStatus = (state: stateTypes) => state.language.status;
 
 export const { setLanguage, loadLanguageFromCookie } = languageSlice.actions;
