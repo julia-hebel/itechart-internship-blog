@@ -101,7 +101,9 @@ function EditPostModal({
       image: postImageURL,
       date: post.date,
       reactions: post.reactions,
-      user: post.user,
+      user: {
+        userId: post.user.userId,
+      },
     };
 
     try {
@@ -147,11 +149,13 @@ function EditPostModal({
             transform: 'translate(-50%, -50%)',
             width: '90%',
             maxWidth: 500,
-            bgcolor: 'rgb(36,37,38)',
             boxShadow: 24,
-            color: 'white',
           }}
-          className='pt-3 pb-5 px-5 rounded-xl'
+          className='pt-3 pb-5 px-5 rounded-xl bg-foreground-dark text-white'
+          aria-label={intl.formatMessage({
+            id: 'EditPostModal.aria.modal',
+            defaultMessage: 'Opened modal - editing the post',
+          })}
         >
           <div className='w-full grid grid-cols-5'>
             <span className='col-span-1'></span>
@@ -164,7 +168,11 @@ function EditPostModal({
             <div className='col-span-1 flex items-center justify-end h-8'>
               <button
                 onClick={() => setEditModalOpen(false)}
-                className='h-8 w-8 bg-[rgb(62,63,64)] hover:bg-[rgb(80,81,82)] rounded-full'
+                className='h-8 w-8 bg-interactive-dark hover:bg-interactive-dark-hover rounded-full'
+                aria-label={intl.formatMessage({
+                  id: 'EditPostModal.aria.closeButton',
+                  defaultMessage: 'Close modal - editing the post',
+                })}
               >
                 <CgClose className='h-full w-full p-1' />
               </button>
@@ -197,7 +205,7 @@ function EditPostModal({
                 <input
                   type='text'
                   name='title'
-                  className='w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-xl'
+                  className='w-full bg-interactive-dark rounded-lg p-2 sm:text-xl'
                   placeholder={intl.formatMessage({
                     id: 'CreatePostModal.titlePlaceholder',
                     defaultMessage: 'Post title',
@@ -205,6 +213,7 @@ function EditPostModal({
                   value={postTitle}
                   onChange={(e) => setPostTitle(e.target.value)}
                   required
+                  aria-required={true}
                 />
               </div>
               <div className='my-3'>
@@ -218,13 +227,17 @@ function EditPostModal({
                   name='content'
                   cols={30}
                   rows={8}
-                  className='w-full bg-[rgb(62,63,64)] rounded-lg p-2 text-sm sm:text-base resize-none'
+                  className='w-full bg-interactive-dark rounded-lg p-2 text-sm sm:text-base resize-none'
                   placeholder={intl.formatMessage({
                     id: 'CreatePostModal.contentPlacehonder',
                     defaultMessage: 'Post content',
                   })}
                   value={postContent}
                   onChange={(e) => setPostContent(e.target.value)}
+                  aria-label={intl.formatMessage({
+                    id: 'CreatePostModal.contentPlacehonder',
+                    defaultMessage: 'Post content',
+                  })}
                 />
               </div>
               <div className='my-3'>
@@ -237,7 +250,7 @@ function EditPostModal({
                 <input
                   type='text'
                   name='image'
-                  className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 text-sm sm:text-base ${
+                  className={`w-full bg-interactive-dark rounded-lg p-2 text-sm sm:text-base ${
                     errorMessage === 'URL is invalid, please try another' &&
                     'border border-red-500'
                   }`}
@@ -247,6 +260,10 @@ function EditPostModal({
                   })}
                   value={postImageURL}
                   onChange={(e) => setPostImageURL(e.target.value)}
+                  aria-label={intl.formatMessage({
+                    id: 'CreatePostModal.image',
+                    defaultMessage: 'Image URL (optional)',
+                  })}
                 />
               </div>
               {renderErrorMessage()}

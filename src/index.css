@@ -8,6 +8,8 @@ body {
   margin: 0;
   padding: 0;
   background-color: rgb(24, 25, 26);
+  min-height: 100vh;
+  color: white !important;
   scrollbar-width: none;
   overflow: scroll;
   overflow-x: hidden;
@@ -33,7 +35,7 @@ body {
   background-color: #919191;
 }
 
-.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+.MuiMenu-paper {
   margin-top: 6px;
   background-color: rgb(43, 44, 45) !important;
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
@@ -42,24 +44,31 @@ body {
   color: white !important;
 }
 
-.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper ul {
-  padding: 0 2 !important;
-  display: flex;
-  flex-direction: column;
-}
-
-#user-menu
-  .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
-  right: 12px !important;
-  left: initial !important;
-}
-
-#language-menu
-  .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+#language-menu .MuiMenu-paper {
   top: 44px !important;
   left: 10px !important;
 }
 
-#post-menu ul {
+#user-menu .MuiMenu-paper {
+  right: 12px !important;
+  left: unset !important;
+}
+
+.MuiMenu-list {
+  display: flex;
+  flex-direction: column;
+}
+
+#post-menu .MuiMenu-list {
   padding: 8px !important;
+}
+
+.MuiMenuItem-root {
+  font-family: 'Lato', sans-serif !important;
+  all: unset;
+  padding: 0 !important;
+}
+
+#language-menu .MuiMenuItem-root {
+  padding: 0 8px !important;
 }

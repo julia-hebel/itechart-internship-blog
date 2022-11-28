@@ -3,7 +3,7 @@ import stateTypes from '../types/stateTypes';
 const Cookies = require('js-cookie');
 
 const initialState = {
-  language: 'English',
+  currentLanguage: 'English',
   status: 'idle', // idle | loading | succeeded | failed
 };
 
@@ -12,7 +12,7 @@ const languageSlice = createSlice({
   initialState,
   reducers: {
     setLanguage: (state, action) => {
-      state.language = action.payload;
+      state.currentLanguage = action.payload;
       Cookies.set('language', action.payload, {
         expires: 365,
         sameSite: 'strict',
@@ -21,7 +21,7 @@ const languageSlice = createSlice({
     loadLanguageFromCookie: (state) => {
       const cookieLanguage = Cookies.get('language');
       if (cookieLanguage) {
-        state.language = cookieLanguage;
+        state.currentLanguage = cookieLanguage;
       } else {
         const locale = navigator.language;
 
@@ -36,7 +36,7 @@ const languageSlice = createSlice({
             break;
         }
 
-        state.language = localLanguage;
+        state.currentLanguage = localLanguage;
         Cookies.set('language', localLanguage, {
           expires: 365,
           sameSite: 'strict',
@@ -46,7 +46,8 @@ const languageSlice = createSlice({
   },
 });
 
-export const getLanguage = (state: stateTypes) => state.language.language;
+export const getLanguage = (state: stateTypes) =>
+  state.language.currentLanguage;
 export const getLanguageStatus = (state: stateTypes) => state.language.status;
 
 export const { setLanguage, loadLanguageFromCookie } = languageSlice.actions;

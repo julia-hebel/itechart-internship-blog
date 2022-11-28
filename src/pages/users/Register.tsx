@@ -263,7 +263,14 @@ function Register() {
 
   if (isLoggedIn) {
     return (
-      <main className='h-screen w-full flex flex-col justify-center items-center'>
+      <main
+        className='h-screen w-full flex flex-col justify-center items-center'
+        tabIndex={0}
+        aria-label={intl.formatMessage({
+          id: 'Register.alreadyLoggedIn',
+          defaultMessage: 'Already logged in',
+        })}
+      >
         <span className='text-xl font-bold mb-12'>
           <FormattedMessage
             id='Register.alreadyLoggedIn'
@@ -275,8 +282,17 @@ function Register() {
   }
 
   return (
-    <main className='pb-2 max-w-[500px] m-auto'>
-      <div className='m-3 sm:m-6 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'>
+    <main
+      className='pb-2 max-w-[500px] m-auto'
+      tabIndex={-1}
+      aria-label={intl.formatMessage({
+        id: 'Register.aria.main',
+        defaultMessage: 'Register page',
+      })}
+      aria-live='polite'
+      aria-atomic={true}
+    >
+      <div className='m-3 sm:m-6 px-4 py-2 bg-foreground-dark rounded-lg'>
         <div className='text-center my-2'>
           <h2 className='ml-0.5 text-xl sm:text-2xl font-bold'>
             <FormattedMessage
@@ -304,8 +320,9 @@ function Register() {
               className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
               onKeyDown={(e) => preventInvalidCharsUsername(e)}
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value.toLowerCase())}
               required
+              aria-required={true}
             />
           </div>
           <div className='my-3'>
@@ -328,6 +345,7 @@ function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              aria-required={true}
             />
           </div>
           <div className='my-3'>
@@ -350,6 +368,7 @@ function Register() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
+              aria-required={true}
             />
           </div>
           <div className='mt-3 mb-4'>
@@ -371,6 +390,10 @@ function Register() {
               })}
               value={profileImageURL}
               onChange={(e) => setProfileImageURL(e.target.value)}
+              aria-label={intl.formatMessage({
+                id: 'Register.profilePhotoURLLabel',
+                defaultMessage: 'Profile photo URL (optional)',
+              })}
             />
           </div>
           {renderErrorMessage()}
@@ -387,13 +410,17 @@ function Register() {
       </div>
       <hr className='border-zinc-500 mt-5 mb-4 sm:mt-10 sm:mb-8' />
       <div className='px-4 w-full text-center'>
-        <div className='text-lg sm:text-xl'>
+        <div className='text-lg sm:text-xl' tabIndex={0}>
           <FormattedMessage
             id='Register.alreadyHaveAccount'
             defaultMessage='Already have an account?'
           />
         </div>
-        <Link to='/login'>
+        <Link
+          to='/login'
+          role='link'
+          onClick={() => document.getElementsByTagName('main')[0]?.focus()}
+        >
           <div className='h-10 sm:h-11 p-2 mt-3 mx-3 sm:mx-6 bg-blue-700 rounded-lg sm:text-lg'>
             <FormattedMessage
               id='Register.loginHere'

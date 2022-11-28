@@ -4,18 +4,26 @@ import { useAppDispatch } from '../app/hooks';
 import { useSelector } from 'react-redux';
 import { getLanguage, setLanguage } from '../redux/languageSlice';
 
+import { useIntl } from 'react-intl';
+
+import { languages } from '../languages/languages';
+
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 import { IoLanguageOutline } from 'react-icons/io5';
 import { FiCheck } from 'react-icons/fi';
 
 function LanguageMenu() {
   const dispatch = useAppDispatch();
-  const language = useSelector(getLanguage);
+  const currentLanguage = useSelector(getLanguage);
 
+  const [showSelectionMessage, setShowSelectionMessage] = useState('');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const intl = useIntl();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -25,13 +33,31 @@ function LanguageMenu() {
     setAnchorEl(null);
   };
 
+  const ariaOnSelectLanguage = () => {
+    setTimeout(() => {
+      setShowSelectionMessage('');
+    }, 10);
+  };
+
   return (
     <div className='justify-self-start my-auto'>
       <Button
-        id='basic-button'
-        aria-controls={open ? 'basic-menu' : undefined}
+        id='language-menu-button'
+        aria-label={`
+          ${
+            showSelectionMessage &&
+            intl.formatMessage({
+              id: 'LanguageMenu.aria.selectedMessage',
+              defaultMessage: 'Selected ',
+            }) + showSelectionMessage
+          }. 
+          ${intl.formatMessage({
+            id: 'LanguageMenu.aria.button',
+            defaultMessage: 'Open language selection menu',
+          })}
+        `}
         aria-haspopup='true'
-        aria-expanded={open ? 'true' : undefined}
+        aria-expanded={open ? 'true' : 'false'}
         onClick={handleClick}
         sx={{ minHeight: 0, minWidth: 0, padding: 0 }}
         className='border border-white'
@@ -43,42 +69,37 @@ function LanguageMenu() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        role='menu'
+        aria-label={intl.formatMessage({
+          id: 'LanguageMenu.aria.menu',
+          defaultMessage: 'List of languages',
+        })}
         MenuListProps={{
-          'aria-labelledby': 'basic-button',
+          'aria-labelledby': 'language-menu-button',
         }}
       >
-        <li className='px-2'>
-          <button
+        {languages.map((language) => (
+          <MenuItem
+            key={language.name}
             onClick={() => {
-              dispatch(setLanguage('English'));
+              setShowSelectionMessage(language.label);
+              ariaOnSelectLanguage();
+              dispatch(setLanguage(language.name));
               handleClose();
             }}
-            className='px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
+            tabIndex={0}
+            aria-selected={currentLanguage === language.name ? 'true' : 'false'}
           >
-            <FiCheck
-              className={`mt-1 mr-3 ${
-                language !== 'English' ? 'invisible' : ''
-              }`}
-            />
-            <span className='mr-3'>English</span>
-          </button>
-        </li>
-        <li className='px-2'>
-          <button
-            onClick={() => {
-              dispatch(setLanguage('Polish'));
-              handleClose();
-            }}
-            className='px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-[rgb(74,75,76)] cursor-pointer'
-          >
-            <FiCheck
-              className={`mt-1 mr-3 ${
-                language !== 'Polish' ? 'invisible' : ''
-              }`}
-            />
-            <span className='mr-3'>Polski</span>
-          </button>
-        </li>
+            <button className='px-3 pt-1 pb-1.5 w-full rounded-md flex items-center hover:bg-element-dark-hover cursor-pointer'>
+              <FiCheck
+                className={`mt-1 mr-3 ${
+                  currentLanguage !== language.name ? 'invisible' : ''
+                }`}
+              />
+              <span className='mr-3'>{language.label}</span>
+            </button>
+          </MenuItem>
+        ))}
       </Menu>
     </div>
   );

@@ -9,7 +9,7 @@ import axios from 'axios';
 
 import { useParams } from 'react-router-dom';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import postTypes from '../../types/postTypes';
 
@@ -35,10 +35,14 @@ function UserProfile() {
   const [user, setUser] = useState({} as userInterface);
   const [fetchingUser, setFetchingUser] = useState(true);
 
+  const intl = useIntl();
+
   useEffect(() => {
     if (postsStatus === 'idle') {
       dispatch(getPosts());
     }
+
+    document.getElementById('user-banner')?.focus();
 
     const fetchUser = async () => {
       try {
@@ -69,7 +73,7 @@ function UserProfile() {
   } else if (Object.keys(user).length === 0) {
     return (
       <main className='h-screen w-full flex flex-col justify-center items-center'>
-        <span className='text-xl font-bold mb-12'>
+        <span className='text-xl font-bold mb-12' tabIndex={0}>
           <FormattedMessage
             id='UserProfile.userDoesNotExist'
             defaultMessage='This user does not exist'
@@ -86,7 +90,26 @@ function UserProfile() {
 
   return (
     <main className='max-w-[640px] m-auto p-5'>
-      <div className='w-full flex flex-col items-center pt-5 pb-1 bg-[rgb(43,44,45)] rounded-lg'>
+      <div
+        id='user-banner'
+        className='w-full flex flex-col items-center pt-5 pb-1 bg-foreground-dark rounded-lg'
+        tabIndex={0}
+        aria-label={
+          intl.formatMessage({
+            id: 'UserProfile.aria.userProfilePage',
+            defaultMessage: 'Profile page of user - ',
+          }) +
+          user.username +
+          (user.id === currentUser.id
+            ? intl.formatMessage({
+                id: 'UserProfile.aria.yourProfilePage',
+                defaultMessage: 'Your profile page',
+              })
+            : '')
+        }
+        aria-live='polite'
+        aria-atomic={true}
+      >
         <img
           src={user.profilePictureURL}
           alt='profile pic'

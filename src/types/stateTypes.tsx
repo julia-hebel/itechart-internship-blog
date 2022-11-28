@@ -4,17 +4,17 @@ import userTypes from './userTypes';
 export default interface stateTypes {
   posts: {
     posts: postTypes;
-    status: string;
+    status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: any;
   };
   user: {
     currentUser: userTypes;
     isLoggedIn: boolean;
-    status: string;
+    status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: any;
   };
   language: {
-    language: string;
-    status: string;
+    currentLanguage: string;
+    status: 'idle' | 'loading' | 'succeeded' | 'failed';
   };
 }

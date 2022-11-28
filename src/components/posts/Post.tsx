@@ -132,17 +132,26 @@ function Post({ post }: propsTypes) {
 
   return (
     <article
-      className='my-5 px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'
+      className='my-5 px-4 py-2 bg-foreground-dark rounded-lg'
       tabIndex={0}
       aria-label={
-        intl.formatMessage({
-          id: 'Post.aria.article',
-          defaultMessage: 'Post by ',
-        }) + post.user.username
+        post.user.username === currentUser.username
+          ? intl.formatMessage({
+              id: 'Post.aria.yourPost',
+              defaultMessage: 'Your post',
+            })
+          : intl.formatMessage({
+              id: 'Post.aria.article',
+              defaultMessage: 'Post by ',
+            }) + post.user.username
       }
     >
       <div className='w-full mb-3 mt-1 flex items-center justify-start'>
-        <Link to={`/profile/${post.user.username}`} className='w-10 h-10'>
+        <Link
+          to={`/profile/${post.user.username}`}
+          role='link'
+          className='w-10 h-10'
+        >
           <img
             src={post.user.profilePictureURL}
             alt={
@@ -160,6 +169,11 @@ function Post({ post }: propsTypes) {
             <Link
               to={`/profile/${post.user.username}`}
               className='font-bold hover:underline'
+              role='link'
+              aria-label={intl.formatMessage({
+                id: 'Post.aria.authorNameLink',
+                defaultMessage: "Navigate to author's profile page",
+              })}
             >
               {post.user.username}
             </Link>

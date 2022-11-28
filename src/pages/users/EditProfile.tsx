@@ -195,6 +195,7 @@ function EditProfile() {
   const onSubmitEdit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setUsername(username.toLowerCase());
     if (!username) {
       setErrorMessage(
         intl.formatMessage({
@@ -370,13 +371,22 @@ function EditProfile() {
   };
 
   return (
-    <main className='px-3 sm:px-6 pb-0.5 max-w-[500px] m-auto mt-6'>
+    <main
+      className='px-3 sm:px-6 pb-0.5 max-w-[500px] m-auto mt-6'
+      tabIndex={-1}
+      aria-label={intl.formatMessage({
+        id: 'EditProfile.aria.main',
+        defaultMessage: 'Profile editing page',
+      })}
+      aria-live='polite'
+      aria-atomic={true}
+    >
       <form
         onSubmit={(e) => onSubmitEdit(e)}
-        className='px-4 py-2 bg-[rgb(43,44,45)] rounded-lg'
+        className='px-4 py-2 bg-foreground-dark rounded-lg'
       >
         <div className='my-3 mb-16'>
-          <h3 className='text-xl font-bold text-center mb-2'>
+          <h3 className='text-xl font-bold text-center mb-2' tabIndex={0}>
             <FormattedMessage
               id='EditProfile.changeUsername'
               defaultMessage='Change username?'
@@ -396,15 +406,16 @@ function EditProfile() {
               id: 'Register.usernameLabel',
               defaultMessage: 'Username',
             })}
-            className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
+            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
             onKeyDown={(e) => preventInvalidCharsUsername(e)}
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value.toLowerCase())}
             required
+            aria-required={true}
           />
         </div>
         <div className='my-3'>
-          <h3 className='text-xl font-bold text-center mb-2'>
+          <h3 className='text-xl font-bold text-center mb-2' tabIndex={0}>
             <FormattedMessage
               id='EditProfile.changePassword'
               defaultMessage='Change password?'
@@ -423,7 +434,7 @@ function EditProfile() {
               id: 'EditProfile.oldPassword',
               defaultMessage: 'Old Password',
             })}
-            className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
+            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
           />
@@ -442,7 +453,7 @@ function EditProfile() {
               id: 'EditProfile.newPassword',
               defaultMessage: 'New Password',
             })}
-            className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
+            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
             onKeyDown={(e) => preventInvalidCharsPassword(e)}
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
@@ -462,14 +473,14 @@ function EditProfile() {
               id: 'EditProfile.confirmNewPassword',
               defaultMessage: 'Confirm New Password',
             })}
-            className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg`}
+            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
             onKeyDown={(e) => preventInvalidCharsConfirmPassword(e)}
             value={confirmNewPassword}
             onChange={(e) => setConfirmNewPassword(e.target.value)}
           />
         </div>
         <div className='mt-3 mb-12'>
-          <h3 className='text-xl font-bold text-center mb-4'>
+          <h3 className='text-xl font-bold text-center mb-4' tabIndex={0}>
             <FormattedMessage
               id='EditProfile.changeProfilePicture'
               defaultMessage='Change or remove profile picture?'
@@ -484,7 +495,7 @@ function EditProfile() {
           <input
             type='text'
             name='image'
-            className={`w-full bg-[rgb(62,63,64)] rounded-lg p-2 sm:text-lg ${
+            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg ${
               errorMessage.includes('URL') && 'border border-red-500'
             }`}
             placeholder={intl.formatMessage({
@@ -504,13 +515,14 @@ function EditProfile() {
         </button>
       </form>
       {renderConfirmationMessage()}
-      <div className='my-16 text-center font-bold text-xl'>
+      <div className='my-16 text-center font-bold text-xl' tabIndex={0}>
         <FormattedMessage id='EditProfile.or' defaultMessage='or' />
       </div>
       <div className='flex justify-center mx-3'>
         <button
           onClick={() => setDeleteModalOpen(true)}
           className='w-full h-10 sm:h-11 text-center bg-red-600 rounded-lg py-2 mb-10 sm:text-lg'
+          aria-haspopup={true}
         >
           <FormattedMessage
             id='EditProfile.deleteAccount'
