@@ -67,7 +67,11 @@ function PostMenu({ post }: propsTypes) {
         aria-expanded={open ? 'true' : 'false'}
         aria-haspopup='true'
         onClick={handleClick}
-        sx={{ color: 'rgb(210,210,210)', padding: '0' }}
+        sx={{
+          color: 'rgb(210,210,210)',
+          padding: '0',
+          '&:hover': { backgroundColor: 'rgb(74,75,76)' },
+        }}
         tabIndex={0}
       >
         <MoreVertIcon sx={{ height: '30px', width: '30px' }} />

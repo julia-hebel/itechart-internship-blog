@@ -148,7 +148,7 @@ function Login() {
               })}
               className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value.toLowerCase())}
               required
             />
           </div>

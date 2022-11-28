@@ -195,6 +195,7 @@ function EditProfile() {
   const onSubmitEdit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setUsername(username.toLowerCase());
     if (!username) {
       setErrorMessage(
         intl.formatMessage({
@@ -408,7 +409,7 @@ function EditProfile() {
             className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
             onKeyDown={(e) => preventInvalidCharsUsername(e)}
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value.toLowerCase())}
             required
             aria-required={true}
           />
