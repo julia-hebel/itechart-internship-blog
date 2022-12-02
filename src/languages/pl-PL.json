@@ -58,6 +58,7 @@
   "EditProfile.or": "albo",
   "EditProfile.deleteAccount": "Usuń moje konto",
   "EditProfile.aria.main": "Strona edytowania profilu",
+  "EditProfile.aria.title": "Edytuj profil",
 
   "Header.logoutMessage": "Wylogowano pomyślnie",
   "Header.aria.header": "Nawigacja",
@@ -78,6 +79,7 @@
   "Login.doNotHaveAccount": "Nie masz konta?",
   "Login.registerHere": "Zarejestruj się tutaj",
   "Login.aria.main": "Strona logowania",
+  "Login.description": "Zaloguj się aby móc udostępniać swoje posty lub reagować na wpisy innych osób",
 
   "PageNotFound.pageNotFound": "Nie znaleziono strony",
   "PageNotFound.resourceMessage": "Nasz serwer nie mógł odnaleźć wybranego zasobu",
@@ -128,6 +130,7 @@
   "Register.alreadyHaveAccount": "Masz już konto?",
   "Register.loginHere": "Zaloguj się tutaj",
   "Register.aria.main": "Strona rejestracji",
+  "Register.description": "Utwórz konto aby móc udostępniać swoje posty lub reagować na wpisy innych osób",
 
   "TimeAgo.years": " lat temu",
   "TimeAgo.1year": "1 rok temu",

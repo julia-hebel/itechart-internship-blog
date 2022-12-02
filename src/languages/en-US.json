@@ -58,6 +58,7 @@
   "EditProfile.or": "or",
   "EditProfile.deleteAccount": "Delete my account",
   "EditProfile.aria.main": "Profile editing page",
+  "EditProfile.aria.title": "Edit profile",
 
   "Header.logoutMessage": "Logged out successfully",
   "Header.aria.header": "Navigation",
@@ -78,6 +79,7 @@
   "Login.doNotHaveAccount": "Don't have an account?",
   "Login.registerHere": "Register here",
   "Login.aria.main": "Login page",
+  "Login.description": "Log in to add your own posts or react to others' ones",
 
   "PageNotFound.pageNotFound": "Page Not Found",
   "PageNotFound.resourceMessage": "The resource could not be found on this server",
@@ -127,6 +129,7 @@
   "Register.alreadyHaveAccount": "Already have an account?",
   "Register.loginHere": "Log in here",
   "Register.aria.main": "Register page",
+  "Register.description": "Create an account to add your own posts or react to others' ones",
 
   "TimeAgo.years": " years ago",
   "TimeAgo.1year": "1 year ago",

@@ -10,6 +10,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { Helmet } from 'react-helmet-async';
+
 import MuiAlert from '@mui/material/Alert';
 
 const bcrypt = require('bcryptjs');
@@ -93,116 +95,146 @@ function Login() {
 
   if (isLoggedIn) {
     return (
-      <main
-        className='h-screen w-full flex flex-col justify-center items-center'
-        tabIndex={0}
-        aria-label={intl.formatMessage({
-          id: 'Register.alreadyLoggedIn',
-          defaultMessage: 'Already logged in',
-        })}
-      >
-        <span className='text-xl font-bold mb-12'>
-          <FormattedMessage
-            id='Register.alreadyLoggedIn'
-            defaultMessage='Already logged in'
-          />
-        </span>
-      </main>
+      <>
+        <Helmet>
+          <title>
+            {intl.formatMessage({
+              id: 'Login.login',
+              defaultMessage: 'Log in',
+            })}
+          </title>
+          <link rel='canonical' href='http://localhost:3000/login' />
+        </Helmet>
+        <main
+          className='h-screen w-full flex flex-col justify-center items-center'
+          tabIndex={0}
+          aria-label={intl.formatMessage({
+            id: 'Register.alreadyLoggedIn',
+            defaultMessage: 'Already logged in',
+          })}
+        >
+          <span className='text-xl font-bold mb-12'>
+            <FormattedMessage
+              id='Register.alreadyLoggedIn'
+              defaultMessage='Already logged in'
+            />
+          </span>
+        </main>
+      </>
     );
   }
 
   return (
-    <main
-      className='pb-2 max-w-[500px] m-auto'
-      tabIndex={-1}
-      aria-label={intl.formatMessage({
-        id: 'Login.aria.main',
-        defaultMessage: 'Login page',
-      })}
-      aria-live='polite'
-      aria-atomic={true}
-    >
-      <div className='m-3 sm:m-6 px-4 py-2 bg-foreground-dark rounded-lg'>
-        <div className='text-center my-2'>
-          <h2 className='ml-0.5 text-xl sm:text-2xl font-bold'>
-            <FormattedMessage
-              id='Login.welcomeBack'
-              defaultMessage='Welcome back!'
-            />
-          </h2>
+    <>
+      <Helmet>
+        <title>
+          {intl.formatMessage({
+            id: 'Login.login',
+            defaultMessage: 'Log in',
+          })}
+        </title>
+        <meta
+          name='description'
+          content={intl.formatMessage({
+            id: 'Login.description',
+            defaultMessage:
+              "Log in to add your own posts or react to others' ones",
+          })}
+        />
+        <link rel='canonical' href='http://localhost:3000/login' />
+      </Helmet>
+      <main
+        className='pb-2 max-w-[500px] m-auto'
+        tabIndex={-1}
+        aria-label={intl.formatMessage({
+          id: 'Login.aria.main',
+          defaultMessage: 'Login page',
+        })}
+        aria-live='polite'
+        aria-atomic={true}
+      >
+        <div className='m-3 sm:m-6 px-4 py-2 bg-foreground-dark rounded-lg'>
+          <div className='text-center my-2'>
+            <h2 className='ml-0.5 text-xl sm:text-2xl font-bold'>
+              <FormattedMessage
+                id='Login.welcomeBack'
+                defaultMessage='Welcome back!'
+              />
+            </h2>
+          </div>
+          <form onSubmit={(e) => onSubmitLogin(e)}>
+            <div className='my-3'>
+              <label htmlFor='username' className='block mb-1 ml-0.5'>
+                <FormattedMessage
+                  id='Register.usernameLabel'
+                  defaultMessage='Username'
+                />
+              </label>
+              <input
+                type='text'
+                name='username'
+                placeholder={intl.formatMessage({
+                  id: 'Register.usernameLabel',
+                  defaultMessage: 'Username',
+                })}
+                className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
+                value={username}
+                onChange={(e) => setUsername(e.target.value.toLowerCase())}
+                required
+              />
+            </div>
+            <div className='mt-3 mb-4'>
+              <label htmlFor='password' className='block mb-1 ml-0.5'>
+                <FormattedMessage
+                  id='Register.passwordLabel'
+                  defaultMessage='Password'
+                />
+              </label>
+              <input
+                type='password'
+                name='password'
+                placeholder={intl.formatMessage({
+                  id: 'Register.passwordLabel',
+                  defaultMessage: 'Password',
+                })}
+                className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            {renderErrorMessage()}
+            <button
+              type='submit'
+              className='w-full h-10 sm:h-11 text-center bg-green-600 rounded-lg py-2 mt-4 mb-2 disabled:bg-zinc-700 sm:text-lg'
+            >
+              <FormattedMessage id='Login.login' defaultMessage='Log in' />
+            </button>
+          </form>
         </div>
-        <form onSubmit={(e) => onSubmitLogin(e)}>
-          <div className='my-3'>
-            <label htmlFor='username' className='block mb-1 ml-0.5'>
-              <FormattedMessage
-                id='Register.usernameLabel'
-                defaultMessage='Username'
-              />
-            </label>
-            <input
-              type='text'
-              name='username'
-              placeholder={intl.formatMessage({
-                id: 'Register.usernameLabel',
-                defaultMessage: 'Username',
-              })}
-              className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
-              value={username}
-              onChange={(e) => setUsername(e.target.value.toLowerCase())}
-              required
-            />
+        <hr className='border-zinc-500 mt-5 mb-4 sm:mt-10 sm:mb-8' />
+        <div className='px-4 w-full text-center'>
+          <div className='text-lg sm:text-xl' tabIndex={0}>
+            <FormattedMessage
+              id='Login.doNotHaveAccount'
+              defaultMessage="Don't have an account?"
+            />{' '}
           </div>
-          <div className='mt-3 mb-4'>
-            <label htmlFor='password' className='block mb-1 ml-0.5'>
-              <FormattedMessage
-                id='Register.passwordLabel'
-                defaultMessage='Password'
-              />
-            </label>
-            <input
-              type='password'
-              name='password'
-              placeholder={intl.formatMessage({
-                id: 'Register.passwordLabel',
-                defaultMessage: 'Password',
-              })}
-              className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          {renderErrorMessage()}
-          <button
-            type='submit'
-            className='w-full h-10 sm:h-11 text-center bg-green-600 rounded-lg py-2 mt-4 mb-2 disabled:bg-zinc-700 sm:text-lg'
+          <Link
+            to='/register'
+            role='link'
+            onClick={() => document.getElementsByTagName('main')[0]?.focus()}
           >
-            <FormattedMessage id='Login.login' defaultMessage='Log in' />
-          </button>
-        </form>
-      </div>
-      <hr className='border-zinc-500 mt-5 mb-4 sm:mt-10 sm:mb-8' />
-      <div className='px-4 w-full text-center'>
-        <div className='text-lg sm:text-xl' tabIndex={0}>
-          <FormattedMessage
-            id='Login.doNotHaveAccount'
-            defaultMessage="Don't have an account?"
-          />{' '}
+            <div className='h-10 sm:h-11 p-2 mt-3 mx-3 sm:mx-6 bg-blue-700 rounded-lg sm:text-lg'>
+              <FormattedMessage
+                id='Login.registerHere'
+                defaultMessage='Register here'
+              />
+            </div>
+          </Link>
         </div>
-        <Link
-          to='/register'
-          role='link'
-          onClick={() => document.getElementsByTagName('main')[0]?.focus()}
-        >
-          <div className='h-10 sm:h-11 p-2 mt-3 mx-3 sm:mx-6 bg-blue-700 rounded-lg sm:text-lg'>
-            <FormattedMessage
-              id='Login.registerHere'
-              defaultMessage='Register here'
-            />
-          </div>
-        </Link>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
 
