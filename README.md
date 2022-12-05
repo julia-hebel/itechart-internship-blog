@@ -1,7 +1,7 @@
 
-# Blog project of iTechArt internship
+# PostBook - a blog project
 
-This application was made as a project during internship in iTechArt. 
+This application was made as a project for iTechArt Group. 
 The main purpose of the project is gaining practical experience through implenenting 
 core functionalities inside of the application.
 
