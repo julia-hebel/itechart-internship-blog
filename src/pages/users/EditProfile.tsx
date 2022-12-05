@@ -15,6 +15,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { Helmet } from 'react-helmet-async';
+
 import DeleteUserModal from '../../components/users/DeleteUserModal';
 
 import Snackbar from '@mui/material/Snackbar';
@@ -371,171 +373,182 @@ function EditProfile() {
   };
 
   return (
-    <main
-      className='px-3 sm:px-6 pb-0.5 max-w-[500px] m-auto mt-6'
-      tabIndex={-1}
-      aria-label={intl.formatMessage({
-        id: 'EditProfile.aria.main',
-        defaultMessage: 'Profile editing page',
-      })}
-      aria-live='polite'
-      aria-atomic={true}
-    >
-      <form
-        onSubmit={(e) => onSubmitEdit(e)}
-        className='px-4 py-2 bg-foreground-dark rounded-lg'
+    <>
+      <Helmet>
+        <title>
+          {intl.formatMessage({
+            id: 'EditProfile.aria.title',
+            defaultMessage: 'Edit profile',
+          })}
+        </title>
+        <link rel='canonical' href='http://localhost:3000/editprofile' />
+      </Helmet>
+      <main
+        className='px-3 sm:px-6 pb-0.5 max-w-[500px] m-auto mt-6'
+        tabIndex={-1}
+        aria-label={intl.formatMessage({
+          id: 'EditProfile.aria.main',
+          defaultMessage: 'Profile editing page',
+        })}
+        aria-live='polite'
+        aria-atomic={true}
       >
-        <div className='my-3 mb-16'>
-          <h3 className='text-xl font-bold text-center mb-2' tabIndex={0}>
-            <FormattedMessage
-              id='EditProfile.changeUsername'
-              defaultMessage='Change username?'
-            />
-          </h3>
-          <label htmlFor='username' className='block mb-1 ml-0.5'>
-            <FormattedMessage
-              id='Register.usernameLabel'
-              defaultMessage='Username'
-            />
-            <span className='text-red-500'>*</span>
-          </label>
-          <input
-            type='text'
-            name='username'
-            placeholder={intl.formatMessage({
-              id: 'Register.usernameLabel',
-              defaultMessage: 'Username',
-            })}
-            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
-            onKeyDown={(e) => preventInvalidCharsUsername(e)}
-            value={username}
-            onChange={(e) => setUsername(e.target.value.toLowerCase())}
-            required
-            aria-required={true}
-          />
-        </div>
-        <div className='my-3'>
-          <h3 className='text-xl font-bold text-center mb-2' tabIndex={0}>
-            <FormattedMessage
-              id='EditProfile.changePassword'
-              defaultMessage='Change password?'
-            />
-          </h3>
-          <label htmlFor='password' className='block mb-1 ml-0.5'>
-            <FormattedMessage
-              id='EditProfile.oldPassword'
-              defaultMessage='Old Password'
-            />
-          </label>
-          <input
-            type='password'
-            name='oldPassword'
-            placeholder={intl.formatMessage({
-              id: 'EditProfile.oldPassword',
-              defaultMessage: 'Old Password',
-            })}
-            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
-            value={oldPassword}
-            onChange={(e) => setOldPassword(e.target.value)}
-          />
-        </div>
-        <div className='my-3'>
-          <label htmlFor='password' className='block mb-1 ml-0.5'>
-            <FormattedMessage
-              id='EditProfile.newPassword'
-              defaultMessage='New Password'
-            />
-          </label>
-          <input
-            type='password'
-            name='password'
-            placeholder={intl.formatMessage({
-              id: 'EditProfile.newPassword',
-              defaultMessage: 'New Password',
-            })}
-            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
-            onKeyDown={(e) => preventInvalidCharsPassword(e)}
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-          />
-        </div>
-        <div className='my-3 mb-16'>
-          <label htmlFor='confirmPassword' className='block mb-1 ml-0.5'>
-            <FormattedMessage
-              id='EditProfile.confirmNewPassword'
-              defaultMessage='Confirm New Password'
-            />
-          </label>
-          <input
-            type='password'
-            name='confirmPassword'
-            placeholder={intl.formatMessage({
-              id: 'EditProfile.confirmNewPassword',
-              defaultMessage: 'Confirm New Password',
-            })}
-            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
-            onKeyDown={(e) => preventInvalidCharsConfirmPassword(e)}
-            value={confirmNewPassword}
-            onChange={(e) => setConfirmNewPassword(e.target.value)}
-          />
-        </div>
-        <div className='mt-3 mb-12'>
-          <h3 className='text-xl font-bold text-center mb-4' tabIndex={0}>
-            <FormattedMessage
-              id='EditProfile.changeProfilePicture'
-              defaultMessage='Change or remove profile picture?'
-            />
-          </h3>
-          <label htmlFor='image' className='block mb-1 ml-0.5'>
-            <FormattedMessage
-              id='Register.profilePhotoURLLabel'
-              defaultMessage='Profile photo URL (optional)'
-            />
-          </label>
-          <input
-            type='text'
-            name='image'
-            className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg ${
-              errorMessage.includes('URL') && 'border border-red-500'
-            }`}
-            placeholder={intl.formatMessage({
-              id: 'Register.URL',
-              defaultMessage: 'URL',
-            })}
-            value={profileImageURL}
-            onChange={(e) => setProfileImageURL(e.target.value)}
-          />
-        </div>
-        {renderErrorMessage()}
-        <button
-          type='submit'
-          className='w-full h-10 sm:h-11 text-center bg-green-600 rounded-lg py-2 mt-4 mb-2 disabled:bg-zinc-700 sm:text-lg'
+        <form
+          onSubmit={(e) => onSubmitEdit(e)}
+          className='px-4 py-2 bg-foreground-dark rounded-lg'
         >
-          <FormattedMessage id='EditProfile.save' defaultMessage='Save' />
-        </button>
-      </form>
-      {renderConfirmationMessage()}
-      <div className='my-16 text-center font-bold text-xl' tabIndex={0}>
-        <FormattedMessage id='EditProfile.or' defaultMessage='or' />
-      </div>
-      <div className='flex justify-center mx-3'>
-        <button
-          onClick={() => setDeleteModalOpen(true)}
-          className='w-full h-10 sm:h-11 text-center bg-red-600 rounded-lg py-2 mb-10 sm:text-lg'
-          aria-haspopup={true}
-        >
-          <FormattedMessage
-            id='EditProfile.deleteAccount'
-            defaultMessage='Delete my account'
+          <div className='my-3 mb-16'>
+            <h2 className='text-xl font-bold text-center mb-2' tabIndex={0}>
+              <FormattedMessage
+                id='EditProfile.changeUsername'
+                defaultMessage='Change username?'
+              />
+            </h2>
+            <label htmlFor='username' className='block mb-1 ml-0.5'>
+              <FormattedMessage
+                id='Register.usernameLabel'
+                defaultMessage='Username'
+              />
+              <span className='text-red-500'>*</span>
+            </label>
+            <input
+              type='text'
+              name='username'
+              placeholder={intl.formatMessage({
+                id: 'Register.usernameLabel',
+                defaultMessage: 'Username',
+              })}
+              className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
+              onKeyDown={(e) => preventInvalidCharsUsername(e)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value.toLowerCase())}
+              required
+              aria-required={true}
+            />
+          </div>
+          <div className='my-3'>
+            <h2 className='text-xl font-bold text-center mb-2' tabIndex={0}>
+              <FormattedMessage
+                id='EditProfile.changePassword'
+                defaultMessage='Change password?'
+              />
+            </h2>
+            <label htmlFor='password' className='block mb-1 ml-0.5'>
+              <FormattedMessage
+                id='EditProfile.oldPassword'
+                defaultMessage='Old Password'
+              />
+            </label>
+            <input
+              type='password'
+              name='oldPassword'
+              placeholder={intl.formatMessage({
+                id: 'EditProfile.oldPassword',
+                defaultMessage: 'Old Password',
+              })}
+              className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+            />
+          </div>
+          <div className='my-3'>
+            <label htmlFor='password' className='block mb-1 ml-0.5'>
+              <FormattedMessage
+                id='EditProfile.newPassword'
+                defaultMessage='New Password'
+              />
+            </label>
+            <input
+              type='password'
+              name='password'
+              placeholder={intl.formatMessage({
+                id: 'EditProfile.newPassword',
+                defaultMessage: 'New Password',
+              })}
+              className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
+              onKeyDown={(e) => preventInvalidCharsPassword(e)}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </div>
+          <div className='my-3 mb-16'>
+            <label htmlFor='confirmPassword' className='block mb-1 ml-0.5'>
+              <FormattedMessage
+                id='EditProfile.confirmNewPassword'
+                defaultMessage='Confirm New Password'
+              />
+            </label>
+            <input
+              type='password'
+              name='confirmPassword'
+              placeholder={intl.formatMessage({
+                id: 'EditProfile.confirmNewPassword',
+                defaultMessage: 'Confirm New Password',
+              })}
+              className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg`}
+              onKeyDown={(e) => preventInvalidCharsConfirmPassword(e)}
+              value={confirmNewPassword}
+              onChange={(e) => setConfirmNewPassword(e.target.value)}
+            />
+          </div>
+          <div className='mt-3 mb-12'>
+            <h2 className='text-xl font-bold text-center mb-4' tabIndex={0}>
+              <FormattedMessage
+                id='EditProfile.changeProfilePicture'
+                defaultMessage='Change or remove profile picture?'
+              />
+            </h2>
+            <label htmlFor='image' className='block mb-1 ml-0.5'>
+              <FormattedMessage
+                id='Register.profilePhotoURLLabel'
+                defaultMessage='Profile photo URL (optional)'
+              />
+            </label>
+            <input
+              type='text'
+              name='image'
+              className={`w-full bg-interactive-dark rounded-lg p-2 sm:text-lg ${
+                errorMessage.includes('URL') && 'border border-red-500'
+              }`}
+              placeholder={intl.formatMessage({
+                id: 'Register.URL',
+                defaultMessage: 'URL',
+              })}
+              value={profileImageURL}
+              onChange={(e) => setProfileImageURL(e.target.value)}
+            />
+          </div>
+          {renderErrorMessage()}
+          <button
+            type='submit'
+            className='w-full h-10 sm:h-11 text-center bg-green-600 rounded-lg py-2 mt-4 mb-2 disabled:bg-zinc-700 sm:text-lg'
+          >
+            <FormattedMessage id='EditProfile.save' defaultMessage='Save' />
+          </button>
+        </form>
+        {renderConfirmationMessage()}
+        <div className='my-16 text-center font-bold text-xl' tabIndex={0}>
+          <FormattedMessage id='EditProfile.or' defaultMessage='or' />
+        </div>
+        <div className='flex justify-center mx-3'>
+          <button
+            onClick={() => setDeleteModalOpen(true)}
+            className='w-full h-10 sm:h-11 text-center bg-red-600 rounded-lg py-2 mb-10 sm:text-lg'
+            aria-haspopup={true}
+          >
+            <FormattedMessage
+              id='EditProfile.deleteAccount'
+              defaultMessage='Delete my account'
+            />
+          </button>
+          <DeleteUserModal
+            user={currentUser}
+            deleteModalOpen={deleteModalOpen}
+            setDeleteModalOpen={setDeleteModalOpen}
           />
-        </button>
-        <DeleteUserModal
-          user={currentUser}
-          deleteModalOpen={deleteModalOpen}
-          setDeleteModalOpen={setDeleteModalOpen}
-        />
-      </div>
-    </main>
+        </div>
+      </main>
+    </>
   );
 }
 

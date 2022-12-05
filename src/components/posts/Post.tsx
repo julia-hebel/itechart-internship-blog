@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { Helmet } from 'react-helmet-async';
+
 import axios from 'axios';
 
 import postTypes from '../../types/postTypes';
@@ -162,6 +164,8 @@ function Post({ post }: propsTypes) {
               })
             }
             className='object-cover rounded-full h-10 w-10'
+            width='40'
+            height='40'
           />
         </Link>
         <div className='flex-grow flex items-center justify-between'>
@@ -200,8 +204,10 @@ function Post({ post }: propsTypes) {
                 defaultMessage: 'Image posted by',
               }) + post.user.username
             }
-            className='object-cover mt-4 mx-auto max-h-[400px]'
+            className='object-cover mt-4 mx-auto max-h-[400px] w-max h-max'
             tabIndex={0}
+            width='400'
+            height='568'
           />
         )}
       </div>

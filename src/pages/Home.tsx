@@ -7,6 +7,8 @@ import { getIsLoggedIn } from '../redux/userSlice';
 
 import { useIntl } from 'react-intl';
 
+import { Helmet } from 'react-helmet-async';
+
 import postTypes from '../types/postTypes';
 
 import AddNewPost from '../components/posts/AddNewPost';
@@ -31,21 +33,26 @@ function Home() {
     .sort((a: postTypes, b: postTypes) => b.date.localeCompare(a.date));
 
   return (
-    <main
-      className='max-w-[640px] m-auto p-5'
-      tabIndex={-1}
-      aria-label={
-        intl.formatMessage({
-          id: 'Home.aria.main',
-          defaultMessage: 'Home page',
-        }) + (isLoggedIn ? 'zalogowano' : ' ')
-      }
-      aria-live='polite'
-      aria-atomic={true}
-    >
-      <AddNewPost />
-      <PostsList postsToShow={orderedPosts} />
-    </main>
+    <>
+      <Helmet>
+        <title>PostBook</title>
+      </Helmet>
+      <main
+        className='max-w-[640px] m-auto p-5'
+        tabIndex={-1}
+        aria-label={
+          intl.formatMessage({
+            id: 'Home.aria.main',
+            defaultMessage: 'Home page',
+          }) + (isLoggedIn ? 'zalogowano' : ' ')
+        }
+        aria-live='polite'
+        aria-atomic={true}
+      >
+        <AddNewPost />
+        <PostsList postsToShow={orderedPosts} />
+      </main>
+    </>
   );
 }
 

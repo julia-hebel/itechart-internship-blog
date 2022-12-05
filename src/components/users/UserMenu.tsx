@@ -58,6 +58,8 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
             defaultMessage: 'Your profile picture',
           })}
           className='object-cover rounded-full h-9 w-9 sm:w-10 sm:h-10'
+          width='auto'
+          height='auto'
         />
       </Button>
       <Menu
@@ -89,6 +91,8 @@ function UserMenu({ currentUser, setShowLogoutMessage }: propsTypes) {
                   defaultMessage: 'Your profile picture',
                 })}
                 className='object-cover rounded-full w-10 h-10'
+                width='40'
+                height='40'
               />
               <span className='ml-5 mr-2 font-bold'>
                 {currentUser.username}

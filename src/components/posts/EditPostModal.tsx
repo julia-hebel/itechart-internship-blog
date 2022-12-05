@@ -188,6 +188,8 @@ function EditPostModal({
                   defaultMessage: 'Your profile picture',
                 })}
                 className='object-cover rounded-full h-10 w-10'
+                width='40'
+                height='40'
               />
               <span className='ml-3 flex flex-col justify-center font-bold'>
                 {currentUser.username}

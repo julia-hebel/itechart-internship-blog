@@ -11,6 +11,8 @@ import { useParams } from 'react-router-dom';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { Helmet } from 'react-helmet-async';
+
 import postTypes from '../../types/postTypes';
 
 import AddNewPost from '../../components/posts/AddNewPost';
@@ -89,37 +91,45 @@ function UserProfile() {
     .sort((a: postTypes, b: postTypes) => b.date.localeCompare(a.date));
 
   return (
-    <main className='max-w-[640px] m-auto p-5'>
-      <div
-        id='user-banner'
-        className='w-full flex flex-col items-center pt-5 pb-1 bg-foreground-dark rounded-lg'
-        tabIndex={0}
-        aria-label={
-          intl.formatMessage({
-            id: 'UserProfile.aria.userProfilePage',
-            defaultMessage: 'Profile page of user - ',
-          }) +
-          user.username +
-          (user.id === currentUser.id
-            ? intl.formatMessage({
-                id: 'UserProfile.aria.yourProfilePage',
-                defaultMessage: 'Your profile page',
-              })
-            : '')
-        }
-        aria-live='polite'
-        aria-atomic={true}
-      >
-        <img
-          src={user.profilePictureURL}
-          alt='profile pic'
-          className='object-cover rounded-full h-40 w-40'
-        />
-        <h2 className='text-2xl font-bold mt-4 mb-2'>{user.username}</h2>
-        {user.username === currentUser.username ? <AddNewPost /> : null}
-      </div>
-      <PostsList postsToShow={userPosts} />
-    </main>
+    <>
+      <Helmet>
+        <title>{user.username} | PostBook</title>
+        <link rel='canonical' href={`http://localhost:3000/profile/${username}`} />
+      </Helmet>
+      <main className='max-w-[640px] m-auto p-5'>
+        <div
+          id='user-banner'
+          className='w-full flex flex-col items-center pt-5 pb-1 bg-foreground-dark rounded-lg'
+          tabIndex={0}
+          aria-label={
+            intl.formatMessage({
+              id: 'UserProfile.aria.userProfilePage',
+              defaultMessage: 'Profile page of user - ',
+            }) +
+            user.username +
+            (user.id === currentUser.id
+              ? intl.formatMessage({
+                  id: 'UserProfile.aria.yourProfilePage',
+                  defaultMessage: 'Your profile page',
+                })
+              : '')
+          }
+          aria-live='polite'
+          aria-atomic={true}
+        >
+          <img
+            src={user.profilePictureURL}
+            alt='profile pic'
+            className='object-cover rounded-full h-40 w-40'
+            width='160'
+            height='160'
+          />
+          <h2 className='text-2xl font-bold mt-4 mb-2'>{user.username}</h2>
+          {user.username === currentUser.username ? <AddNewPost /> : null}
+        </div>
+        <PostsList postsToShow={userPosts} />
+      </main>
+    </>
   );
 }
 

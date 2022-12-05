@@ -92,7 +92,9 @@ function AddNewPost() {
                   })
                 }
                 role='link'
-                className='object-cover rounded-full h-10 w-10 mr-3 '
+                className='object-cover rounded-full h-10 w-10 mr-3'
+                width='40'
+                height='40'
               />
             </Link>
           ) : (
