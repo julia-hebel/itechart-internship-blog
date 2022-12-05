@@ -10,7 +10,7 @@
         "like": [],
         "love": [
           "admin",
-          "Julia"
+          "julia"
         ],
         "wow": [],
         "sad": [],
@@ -53,7 +53,9 @@
         "dislike": []
       },
       "user": {
-        "userId": "x7SqZevMh4CQ5tOk7RotQ"
+        "userId": "x7SqZevMh4CQ5tOk7RotQ",
+        "username": "julia",
+        "profilePictureURL": "https://whatnerd.com/wp-content/uploads/2022/04/cute-anime-girls-who-are-lovable-marin-kitagawa-my-dress-up-darling.jpg"
       }
     }
   ],
