@@ -89,7 +89,7 @@ function Post({ post }: propsTypes) {
       if (!showMore) {
         return (
           <div className='text-sm sm:text-base'>
-            <p className='text-justify' tabIndex={0}>
+            <p className='text-justify whitespace-pre-line' tabIndex={0}>
               {post.content.substring(0, 300)}...
             </p>
             <div className='text-center'>
@@ -108,7 +108,7 @@ function Post({ post }: propsTypes) {
       }
       return (
         <div className='text-sm sm:text-base'>
-          <p className='text-justify' tabIndex={0}>
+          <p className='text-justify whitespace-pre-line' tabIndex={0}>
             {post.content}
           </p>
           <div className='text-center'>
@@ -126,7 +126,10 @@ function Post({ post }: propsTypes) {
       );
     }
     return (
-      <p className='text-justify text-sm sm:text-base' tabIndex={0}>
+      <p
+        className='text-justify text-sm sm:text-base whitespace-pre-line'
+        tabIndex={0}
+      >
         {post.content}
       </p>
     );
