@@ -10,7 +10,8 @@
   font-display: swap;
   src: local(''), url('./fonts/Lato-Regular.woff2') format('woff2'),
     /* Chrome 26+, Opera 23+, Firefox 39+ */
-      /* url('./fonts/lato-v23-latin-regular.woff') format('woff'); */ /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+      /* url('./fonts/lato-v23-latin-regular.woff') format('woff'); */
+      /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
       url('./fonts/Lato-Regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
@@ -21,8 +22,8 @@
   font-weight: 700;
   font-display: swap;
   src: local(''), url('./fonts/Lato-Bold.woff2') format('woff2'),
-    /* Chrome 26+, Opera 23+, Firefox 39+ */
-      url('./fonts/Lato-Bold.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    /* Chrome 26+, Opera 23+, Firefox 39+ */ url('./fonts/Lato-Bold.woff')
+      format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 body {
@@ -56,6 +57,14 @@ body {
   background-clip: padding-box;
   border-radius: 16px;
   background-color: #919191;
+}
+
+pre {
+  font-size: inherit;
+  color: inherit;
+  border: initial;
+  padding: initial;
+  font-family: inherit;
 }
 
 .MuiMenu-paper {
