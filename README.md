@@ -21,12 +21,6 @@ The blog is a single page front-end application with a json-based REST API.
 
 ## How to use the application
 
-### Cloning the repository
-
-```sh
-git clone https://github.com/julia-hebel/itechart-internship-blog.git
-```
-
 ### Running app in development mode
 
 ```sh 
